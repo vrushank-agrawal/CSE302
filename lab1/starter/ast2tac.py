@@ -3,6 +3,7 @@ from typing import List
 
 # ------------------------------------------------------------------------------#
 # tac file delivery
+# ------------------------------------------------------------------------------#
 
 class Code_as_tac_json:
     """ 
@@ -15,7 +16,7 @@ class Code_as_tac_json:
     
     def json_tac(self) -> json:
         return {"proc": "@main",
-                "body": [statement.json_field for statement in self.ast_code.instructions] }
+                "body": [print(statement.json_field) for statement in self.ast_code.instructions] }
 
 
 class Tac_statement:
@@ -36,6 +37,7 @@ class Tac_statement:
 
 # ------------------------------------------------------------------------------#
 # Expression Classes
+# ------------------------------------------------------------------------------#
 
 class Expression:
     def __init__(self) -> None:
@@ -89,6 +91,7 @@ def json_to_expr(js_obj: json) -> Expression:
 
 # ------------------------------------------------------------------------------#
 # Other Statement Classes
+# ------------------------------------------------------------------------------#
 
 class Statement:
     def __init__(self) -> None:
@@ -119,13 +122,14 @@ class Eval(Statement):
 
 # ------------------------------------------------------------------------------#
 # ast to tac code conversion class
+# ------------------------------------------------------------------------------#
 
 binopcode_dict = { 
     "addition": "add", "substraction": "sub", 
     "multiplication": "mul", "division": "div", 
     "modulus": "mod", "bitwise-and": "and", 
-    "bitwise-shr": "shr", "bitwise-or": "or", 
-    "bitwise-xor": "xor", "bitwise-shl": "shl"
+    "logical-shift-right": "shr", "bitwise-or": "or", 
+    "logical-shift-left": "shl", "bitwise-xor": "xor"
 }
 
 uniopcode_dict = {
@@ -145,7 +149,7 @@ class Code:
         """ Creates and returns a fresh temporary """
         fresh_temp = f"%{self.global_reg_counter}"
         self.global_reg_counter += 1
-        self.temp_var_map[fresh_temp] = value
+        self.temp_var_map[value] = fresh_temp
         return fresh_temp
 
     def return_temp(self, name: str) -> str:
@@ -175,30 +179,35 @@ class Code:
                 print("This is not supposed to happen. Apocalypse!")
                 exit(1)
 
-    # ------------------------------------------------------------#
+    # ---------------------------------------------------------------------#
     # tmm method
+    # ---------------------------------------------------------------------#
 
-    def tmm_expression(self, expression: Expression, result: str) -> None:
+    def tmm_expression(self, expression: Expression, final_result: str) -> None:
         """ Evaluates the expression and adds it to instructions list as json object """
 
         if isinstance(expression, ExpressionVar):
             stored_temp = self.return_temp(expression.name)
-            self.instructions.append(Tac_statement('copy', [stored_temp], result))
-        
+            self.instructions.append(Tac_statement('copy', 
+                                                    [stored_temp], 
+                                                    final_result))
         elif isinstance(expression, ExpressionInt):
-            self.instructions.append(Tac_statement('const', [expression.value], result))
-        
+            self.instructions.append(Tac_statement('const', 
+                                                    [expression.value], 
+                                                    final_result))
         elif isinstance(expression, ExpressionUniOp):
             result_temp = self.fresh_temp()
             self.tmm_expression(expression.argument, result_temp)
             self.instructions.append(Tac_statement(uniopcode_dict[expression.operator],
-                                                   [result_temp], result))
+                                                   [result_temp], 
+                                                   final_result))
         elif isinstance(expression, ExpressionBinOp):
             result_temp = [self.fresh_temp(), self.fresh_temp]
             arguments = [self.tmm_expression(expression.left_arg, result_temp[0]), 
                          self.tmm_expression(expression.right_arg, result_temp[1])]
             self.instructions.append(Tac_statement(binopcode_dict[expression.operator], 
-                                                   arguments, result))
+                                                   arguments, 
+                                                   final_result))
         else:
             raise ValueError(f'Unrecognized <expression>: {expression}')
 
@@ -212,13 +221,15 @@ class Code:
         elif isinstance(statement, Eval):
             result_temp = self.fresh_temp()
             self.tmm_expression(statement.eval_argument, result_temp)
-            self.instructions.append(Tac_statement("print", [result_temp], None))
-        
+            self.instructions.append(Tac_statement("print", 
+                                                    [result_temp], 
+                                                    None))
         else:
             raise ValueError(f'Unrecognized <statement>: {statement}')
 
-    # ------------------------------------------------------------#
+    # ---------------------------------------------------------------------#
     # bmm method
+    # ---------------------------------------------------------------------#
 
     def bmm_expression(self, expression: Expression) -> str:
         """ Evaluates the expression and adds it to instructions list as json object """
@@ -228,23 +239,24 @@ class Code:
         
         elif isinstance(expression, ExpressionInt):
             result_temp = self.fresh_temp()
-            self.instructions.append(Tac_statement('const', [expression.value], result_temp))
+            self.instructions.append(Tac_statement('const', 
+                                                    [expression.value], 
+                                                    result_temp))
             return result_temp
-        
         elif isinstance(expression, ExpressionUniOp):
             result_temp = self.fresh_temp()
             self.instructions.append(Tac_statement(uniopcode_dict[expression.operator], 
                                                    [self.bmm_expression(expression.argument)],
                                                    result_temp))
             return result_temp
-        
         elif isinstance(expression, ExpressionBinOp):
-            arguments = [self.bmm_expression(expression.left_arg), self.bmm_expression(expression.right_arg)]
+            arguments = [self.bmm_expression(expression.left_arg), 
+                         self.bmm_expression(expression.right_arg)]
             result_temp = self.fresh_temp()
             self.instructions.append(Tac_statement(binopcode_dict[expression.operator], 
-                                                   arguments, result_temp))
+                                                   arguments, 
+                                                   result_temp))
             return result_temp
-        
         else:
             raise ValueError(f'Unrecognized <expression>: {expression}')
 
@@ -253,17 +265,20 @@ class Code:
 
         if isinstance(statement, Assign):
             result_temp = self.return_temp(statement.left.name)
-            self.instructions.append(Tac_statement("copy", [result_temp], 
+            self.instructions.append(Tac_statement("copy", 
+                                                    [result_temp], 
                                                     self.bmm_expression(statement.right)))
         elif isinstance(statement, Eval):
             result_temp = self.bmm_expression(statement.eval_argument)
-            self.instructions.append(Tac_statement("print", [result_temp], None))
-        
+            self.instructions.append(Tac_statement("print", 
+                                                    [result_temp], 
+                                                    None))
         else:
             raise ValueError(f'Unrecognized <statement>: {statement}')
 
 # ------------------------------------------------------------------------------#
 # Main parsing function
+# ------------------------------------------------------------------------------#
 
 if __name__=="__main__":
 
