@@ -1,5 +1,5 @@
 import sys, argparse, json
-from typing import List
+from typing import List, Union
 
 # ------------------------------------------------------------------------------#
 # tac file delivery
@@ -16,7 +16,7 @@ class Code_as_tac_json:
     
     def json_tac(self) -> json:
         return {"proc": "@main",
-                "body": [print(statement.json_field) for statement in self.ast_code.instructions] }
+                "body": [statement.json_field for statement in self.ast_code.instructions] }
 
 
 class Tac_statement:
@@ -44,7 +44,7 @@ class Expression:
         pass
 
 class ExpressionVar(Expression):
-    def __init__(self, name):
+    def __init__(self, name: str):
         self.name = name
 
 class ExpressionInt(Expression):
@@ -52,25 +52,28 @@ class ExpressionInt(Expression):
         self.value = value
 
 class ExpressionUniOp(Expression):
-    def __init__(self, operator, argument):
+    def __init__(self, operator: str, argument: Union[int, str]):
         self.operator = operator
         self.argument = argument
 
 class ExpressionBinOp(Expression):
-    def __init__(self, operator : str, left_arg : int, right_arg : int) -> None:
+    def __init__(self, operator : str, left_arg : Union[int, str], right_arg : Union[int, str]) -> None:
         self.operator = operator
         self.left_arg = left_arg
         self.right_arg = right_arg
 
 def json_to_name(js_obj: json) -> str:
-    """ Returns the value of the """
+    """ Returns the value of the variable """
     return js_obj[1]['value']
 
 def json_to_expr(js_obj: json) -> Expression:
     """ Function that returns the expression as a class 
         hierarchy from a json object recursively """
 
-    if js_obj[0] == '<expression:var>' or js_obj[0] == '<lvalue:var>':
+    if js_obj[0] == '<expression:var>':
+        return ExpressionVar(json_to_name(js_obj[1]['name']))
+    
+    if js_obj[0] == '<lvalue:var>':
         return ExpressionVar(json_to_name(js_obj[1]['name']))
     
     if js_obj[0] == '<expression:int>':
@@ -97,20 +100,6 @@ class Statement:
     def __init__(self) -> None:
         pass
 
-    def json_to_statement(js_obj) -> None:
-        """ Function that returns the statement as
-            a class hierarchy from a json object """
-
-        if js_obj[0] == '<statement:assign>':
-            return Assign(json_to_expr(js_obj[1]["lvalue"]),
-                          json_to_expr(js_obj[1]["rvalue"]))
-        
-        if js_obj[0] == '<statement:eval>':
-            return Eval(json_to_expr(js_obj[1]["expression"]\
-                                            [1]["arguments"][0]))
-        
-        raise ValueError(f'Unrecognized <statement>: {js_obj[0]}')
-
 class Assign(Statement):
     def __init__(self, left: ExpressionVar, right: Expression) -> None:
         self.left = left
@@ -119,6 +108,21 @@ class Assign(Statement):
 class Eval(Statement):
     def __init__(self, arg: Expression) -> None:
         self.eval_argument = arg
+
+
+def json_to_statement(js_obj) -> None:
+    """ Function that returns the statement as
+        a class hierarchy from a json object """
+
+    if js_obj[0] == '<statement:assign>':
+        return Assign(json_to_expr(js_obj[1]["lvalue"]),
+                      json_to_expr(js_obj[1]["rvalue"]))
+    
+    if js_obj[0] == '<statement:eval>':
+        return Eval(json_to_expr(js_obj[1]["expression"]\
+                                        [1]["arguments"][0]))
+    
+    raise ValueError(f'Unrecognized <statement>: {js_obj[0]}')
 
 # ------------------------------------------------------------------------------#
 # ast to tac code conversion class
@@ -145,19 +149,21 @@ class Code:
         self.instructions: List = []
         self.init_parse()
 
-    def fresh_temp(self, value: str = '') -> str:
+    def fresh_temp(self, name: str = '') -> str:
         """ Creates and returns a fresh temporary """
         fresh_temp = f"%{self.global_reg_counter}"
         self.global_reg_counter += 1
-        self.temp_var_map[value] = fresh_temp
+        if name != '':
+            self.temp_var_map[name] = fresh_temp
         return fresh_temp
 
     def return_temp(self, name: str) -> str:
         """ Returns the temp reg allocator """
         if name in self.temp_var_map:
-            return self.temp_var_map[name]
+            temp = self.temp_var_map[name]
         else:
-            return self.fresh_temp(name)
+            temp = self.fresh_temp(name)
+        return temp
 
     def init_parse(self) -> None:
         """ Converts all statements to singluar json objects 
@@ -172,9 +178,9 @@ class Code:
                 temp_reg = self.return_temp(variable_value)
                 self.instructions.append(Tac_statement("const", [0], temp_reg))
             elif self.method == "bmm":   # Otherwise treat the statement as bmm
-                self.bmm_statement(Statement.json_to_statement(elem))
+                self.bmm_statement(json_to_statement(elem))
             elif self.method == "tmm":   # Otherwise treat the statement as tmm
-                self.tmm_statement(Statement.json_to_statement(elem))
+                self.tmm_statement(json_to_statement(elem))
             else:
                 print("This is not supposed to happen. Apocalypse!")
                 exit(1)
@@ -188,43 +194,47 @@ class Code:
 
         if isinstance(expression, ExpressionVar):
             stored_temp = self.return_temp(expression.name)
+            # print(expression.name, final_result)
             self.instructions.append(Tac_statement('copy', 
                                                     [stored_temp], 
                                                     final_result))
         elif isinstance(expression, ExpressionInt):
-            self.instructions.append(Tac_statement('const', 
-                                                    [expression.value], 
+            # print(expression.value, final_result)
+            self.instructions.append(Tac_statement('const',
+                                                    [expression.value],
                                                     final_result))
         elif isinstance(expression, ExpressionUniOp):
             result_temp = self.fresh_temp()
+            # print(expression.argument, final_result)
             self.tmm_expression(expression.argument, result_temp)
             self.instructions.append(Tac_statement(uniopcode_dict[expression.operator],
                                                    [result_temp], 
                                                    final_result))
         elif isinstance(expression, ExpressionBinOp):
-            result_temp = [self.fresh_temp(), self.fresh_temp]
-            arguments = [self.tmm_expression(expression.left_arg, result_temp[0]), 
-                         self.tmm_expression(expression.right_arg, result_temp[1])]
+            result_temp_left = self.fresh_temp()
+            result_temp_right = self.fresh_temp()
+            self.tmm_expression(expression.left_arg, result_temp_left)
+            self.tmm_expression(expression.right_arg, result_temp_right)
             self.instructions.append(Tac_statement(binopcode_dict[expression.operator], 
-                                                   arguments, 
+                                                   [result_temp_left, result_temp_right], 
                                                    final_result))
-        else:
+        else:   # Should be unreachable
             raise ValueError(f'Unrecognized <expression>: {expression}')
 
     def tmm_statement(self, statement: Statement) -> None :
         """ Appends instructions as singluar json objects using the tmm method """
 
         if isinstance(statement, Assign):
-            result_reg = self.return_temp(statement.left.name)
-            self.tmm_expression(statement.right, result_reg)
-        
+            result_temp = self.return_temp(statement.left.name)
+            self.tmm_expression(statement.right, 
+                                result_temp)
         elif isinstance(statement, Eval):
             result_temp = self.fresh_temp()
             self.tmm_expression(statement.eval_argument, result_temp)
             self.instructions.append(Tac_statement("print", 
                                                     [result_temp], 
                                                     None))
-        else:
+        else:   # Should be unreachable
             raise ValueError(f'Unrecognized <statement>: {statement}')
 
     # ---------------------------------------------------------------------#
@@ -257,7 +267,7 @@ class Code:
                                                    arguments, 
                                                    result_temp))
             return result_temp
-        else:
+        else:   # Should be unreachable
             raise ValueError(f'Unrecognized <expression>: {expression}')
 
     def bmm_statement(self, statement: Statement) -> None:
@@ -266,14 +276,14 @@ class Code:
         if isinstance(statement, Assign):
             result_temp = self.return_temp(statement.left.name)
             self.instructions.append(Tac_statement("copy", 
-                                                    [result_temp], 
-                                                    self.bmm_expression(statement.right)))
+                                                    [self.bmm_expression(statement.right)], 
+                                                    result_temp))
         elif isinstance(statement, Eval):
             result_temp = self.bmm_expression(statement.eval_argument)
             self.instructions.append(Tac_statement("print", 
                                                     [result_temp], 
                                                     None))
-        else:
+        else:   # Should be unreachable
             raise ValueError(f'Unrecognized <statement>: {statement}')
 
 # ------------------------------------------------------------------------------#
