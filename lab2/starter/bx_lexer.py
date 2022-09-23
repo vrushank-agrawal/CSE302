@@ -15,7 +15,7 @@ class MyLexer:
         'def':      "DEF",
         'main':     "MAIN",
         'int':      "INT",
-        'var':      "Var"
+        'var':      "Var",
     }
 
     # List of token names.   This is always required
@@ -23,7 +23,7 @@ class MyLexer:
         'IDENT', 'NUMBER',
         'SEMICOLON', 'EQUAL', 'COLON', 'LPAREN', 'RPAREN', 'RBRACE', 'LBRACE', 'EOF',
         'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'MODULUS',
-        'BITWISE_AND', 'BITWISE_OR', 'BITWISE_XOR', 'BITWISE_SHL', 'BITWISE_SHR', 'BITWISE_NOT'
+        'BITWISE_AND', 'BITWISE_OR', 'BITWISE_XOR', 'BITWISE_SHL', 'BITWISE_SHR', 'BITWISE_NOT',
     ) + tuple(reserved.values())
 
     # MACROS
@@ -100,7 +100,6 @@ class MyLexer:
             if tok:
                 self.token_list.append(tok)
                 print(tok)
-
 
 
 if __name__=="__main__":
