@@ -310,18 +310,3 @@ if __name__=="__main__":
     tac_filename = tac_filename[:-4] + 'tac.json'
     with open(tac_filename, 'w') as fp:
         json.dump(code.json_tac(), fp, indent=4)
-
-
-    # DEBUGGING CODE
-
-    # print(js_obj["ast"][0][0])
-    # js_obj = js_obj["ast"][0][1]
-    # body = js_obj["body"][:]
-    # elem = body[1]
-    # eval_elem = body[4]
-
-    # print(body[1][0])                 # <statement:vardecl>
-    # print(type(elem[0]))              # <class 'str'>
-    # print(elem[1]["name"][1]["value"])  # y
-    # print(eval_elem[1]["expression"][1]["arguments"][0])
-    # print(js_obj["ast"][0][1][4][0])
