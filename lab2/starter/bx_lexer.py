@@ -1,10 +1,8 @@
-import argparse, sys, json
 from typing import List
 from py.ply import lex as lex
 
-lst = []
-
-class MyLexer(object):
+class MyLexer:
+    """ Class for lexing the source code """
 
     def __init__(self, code: str) -> None:
         self.lexer = lex.lex(module=self)
@@ -106,6 +104,8 @@ class MyLexer(object):
 
 
 if __name__=="__main__":
+    
+    import argparse, sys        # Import only if running main from this module
 
     parser = argparse.ArgumentParser(description='Process filename.')
     parser.add_argument('filename', metavar="FILE", type=str, nargs=1)
@@ -115,8 +115,5 @@ if __name__=="__main__":
     with open(tac_filename, 'r') as fp:
         code = fp.read()
 
-    # print(code)
-
     m = MyLexer(code)
-    # m.test(code)
     
