@@ -32,8 +32,8 @@ class MyLexer:
     t_COLON     = r':'
     t_LPAREN    = r'\('
     t_RPAREN    = r'\)'
-    t_RBRACE    = r'\{'
-    t_LBRACE    = r'\}'
+    t_RBRACE    = r'\}'
+    t_LBRACE    = r'\{'
 
     t_PLUS      = r'\+'
     t_MINUS     = r'-'
@@ -49,48 +49,48 @@ class MyLexer:
     t_BITWISE_NOT   = r'~'
 
     # For token identifiers
-    id_identifier    = r'[A-Za-z_][A-Za-z0-9_]*'
-    num_identifier   = r'0|[1-9][0-9]*'
+    ident_identifier    = r'[A-Za-z_][A-Za-z0-9_]*'
+    number_identifier   = r'0|[1-9][0-9]*'
+    comment_identifier  = r'//.*\n?'
+    newline_identifier  = r'\n+'
 
-    @lex.TOKEN(id_identifier)
+    @lex.TOKEN(ident_identifier)
     def t_IDENT(self, t):
         """ Returns an identifier token """
         t.type = self.reserved.get(t.value, "IDENT")
         return t
 
-    @lex.TOKEN(num_identifier)
+    @lex.TOKEN(number_identifier)
     def t_NUMBER(self, t):
         """ Returns a Number token """
         t.value = int(t.value)
         return t
 
+    @lex.TOKEN(comment_identifier)       
     def t_COMMENT(self, t) -> None:
         """ Ignores all characters until newline character """
-        r'//.*\n?'
+
+    @lex.TOKEN(newline_identifier)
+    def t_newline(self, t) -> None:
+        """ Ignores the newline character and augments the line number """
+        t.lexer.lineno += len(t.value)
 
     def t_eof(self, t) -> None:
         """ EOF handler """
         return None
 
-    def find_column(input, token):
-        """ Finds the column number of the pointer """
-        line_start = input.rfind('\n', 0, token.lexpos) + 1
-        return (token.lexpos - line_start) + 1
-
     def t_error(self, t) -> None:
         """ Prints an error message on unsuccessful line parsing """
-        if t.value[0] == '\n': print("newline")
         print("Illegal character '%s' at line '%s'" % (t.value[0], t.lexer.lineno))
         t.lexer.skip(1)
         sys.exit(1)
 
-    def t_newline(self, t) -> None:
-        """ Ignores the newline character and augments the line number """
-        r'\n+'
-        t.lexer.lineno += len(t.value)
-
-    # A string containing ignored characters (spaces and tabs)
-    t_ignore  = ' \t\r\f\v'
+    def find_column(input, token):
+        """ Finds the column number of the pointer """
+        line_start = input.rfind('\n', 0, token.lexpos) + 1
+        return (token.lexpos - line_start) + 1
+    
+    t_ignore  = ' \t\r\f\v' # A string containing ignored characters (spaces and tabs)
 
     def test(self) -> None:
         """ Runs the lexer to tokenize all code """
