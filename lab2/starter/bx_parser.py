@@ -1,6 +1,16 @@
 from py.ply import yacc as yacc
 import bx_lexer as my_lexer
-import bx_ast_classes as ast
+import bx_ast_classes as ast_classes
+
+operator_name = {        
+    'PLUS': 'addition', 'MINUS': "subtraction", 
+    'TIMES': "multiplication", 'DIVIDE': "division", 
+    'MODULUS': "modulus", 'UMINUS': "subtraction",
+    'BITWISE_AND': "bitwise-and", 'BITWISE_OR': "bitwise-or", 
+    'BITWISE_XOR': "bitwise-xor", 'BITWISE_NOT': "bitwise-negation",
+    'BITWISE_SHL': "logical-shift-right", 
+    'BITWISE_SHR': "logical-shift-left",
+}
 
 class MyParser:
     """ Class for parsing the lexer code """
@@ -31,7 +41,8 @@ class MyParser:
         self.parser = yacc.yacc(module=self, start="astcode")
 
     def p_error(self, p):
-        if not p: return    # EOF
+        if not p:   #EOF
+            return
         print(f"Syntax error while processing {p.type}")
 
     def init_parse(self):
@@ -55,46 +66,59 @@ class MyParser:
     def p_astcode(self, p):
         """astcode : DEF MAIN LPAREN RPAREN LBRACE statements RBRACE EOF"""
         print("entered main")
-        p[0] = ast.AstCode(p[6])   
+        p[0] = ast_classes.AstCode(p[6])   
 
     # ---------------------------------------------------------------------#
     # statement parsers
     # ---------------------------------------------------------------------#
 
-    def p_statement_vardecl(self, p):
-        """statement : VAR IDENT EQUAL expression COLON INT SEMICOLON"""
-        p[0] = ast.Vardecl(ast.ExpressionVar(p[2]), p[4])
+    def p_statement(self, p):
+        """statement : vardecl
+                     | assign
+                     | eval """
+        p[0] = p[1]
 
-    def p_statement_assign(self, p):
-        """statement : IDENT EQUAL expression SEMICOLON"""
-        p[0] = ast.Assign(p[1], p[3])
+    def p_vardecl(self, p):
+        """vardecl : VAR IDENT EQUAL expression COLON INT SEMICOLON"""
+        p[0] = ast_classes.Vardecl(ast_classes.ExpressionVar(p[2]), p[4])
+
+    def p_assign(self, p):
+        """assign : IDENT EQUAL expression SEMICOLON"""
+        p[0] = ast_classes.Assign(p[1], p[3])
         print(p[0])
 
-    def p_statement_eval(self, p):
-        """statement : PRINT LPAREN expression RPAREN SEMICOLON"""
-        p[0] = ast.Eval(p[3])
+    def p_eval(self, p):
+        """eval : PRINT LPAREN expression RPAREN SEMICOLON"""
+        p[0] = ast_classes.Eval(p[3])
         print("entered eval")
-        print(p[0].jsonify)
+        print(p[0])
 
     # ---------------------------------------------------------------------#
     # expression parsers
     # ---------------------------------------------------------------------#
 
-    def p_expression_ident(self, p):
-        """expression : IDENT"""
-        p[0] = ast.ExpressionVar(p[1])
+    def p_expression(self, p):
+        """expression : iden
+                      | numb
+                      | uniop
+                      | binop """
+        p[0] = p[1]
 
-    def p_expression_number(self, p):
-        """expression : NUMBER"""
-        p[0] = ast.ExpressionInt(p[1])
+    def p_iden(self, p):
+        """iden : IDENT"""
+        p[0] = ast_classes.ExpressionVar(p[1])
 
-    def p_expression_uniop(self, p):
-        """expression : UMINUS expression
+    def p_numb(self, p):
+        """numb : NUMBER"""
+        p[0] = ast_classes.ExpressionInt(p[1])
+
+    def p_uniop(self, p):
+        """uniop : UMINUS expression
                        | BITWISE_NOT expression"""
-        p[0] = ast.ExpressionUniOp(p[1], p[2])
+        p[0] = ast_classes.ExpressionUniOp(p[1], p[2])
 
-    def p_expression_binop(self, p):
-        """expression : expression PLUS expression
+    def p_binop(self, p):
+        """binop : expression PLUS expression
                        | expression MINUS expression
                        | expression TIMES expression
                        | expression DIVIDE expression
@@ -104,7 +128,7 @@ class MyParser:
                        | expression BITWISE_XOR expression
                        | expression BITWISE_SHL expression
                        | expression BITWISE_SHR expression"""
-        p[0] = ast.ExpressionBinOp(p[2], p[1], p[3])
+        p[0] = ast_classes.ExpressionBinOp(p[2], p[1], p[3])
 
     def p_expression_parens(self, p):    # Remove parentheses
         """expression : LPAREN expression RPAREN"""
@@ -118,9 +142,11 @@ class MyParser:
 def run_parser(code):
     """ Runs the lexer and the parser to return a json ast"""
     lex = my_lexer.MyLexer(code)
+    # print("lexer created")
     par = MyParser(lex)
+    # print("start code parsing")
     astcode = par.init_parse()
-    astcode.check_syntax()
+    # astcode.check_syntax()
     print(astcode)
 
 
