@@ -26,24 +26,26 @@ class Expression:
         pass
 
 class ExpressionVar(Expression):
-    def __init__(self, name: str):
+    def __init__(self, name: str, pos: int = None):
         self.name = name
+        self.pos = pos
 
     def check_syntax(self, vars) -> None :
         if self.name not in vars:
-            print("Syntax Error: Variable not defined")
+            print(f"Syntax Error: Variable not defined at line {self.pos}")
 
     def __str__(self) -> json :
         return {"name" : self.name }
 
 class ExpressionInt(Expression):
-    def __init__(self, value: int):
+    def __init__(self, value: int, pos: int = None):
         self.value = value
         self._max = 1<<63
+        self.pos = pos
 
     def check_syntax(self) -> None :
         if self.value < 0 or self.value < self._max:
-            print("Syntax Error: Value not in range [0, 2^63]")
+            print(f"Syntax Error: Value not in range [0, 2^63] at line {self.pos}")
 
     def __str__(self) -> json :
         return {"value" : self.value }
@@ -58,7 +60,7 @@ class ExpressionUniOp(Expression):
 
     def __str__(self) -> json :
         return {"operator" : self.operator,
-                "argument": self.argument }
+                "argument": self.argument() }
                 
 class ExpressionBinOp(Expression):
     def __init__(self, operator : str, left_arg : Expression, right_arg : Expression) -> None:
@@ -72,8 +74,8 @@ class ExpressionBinOp(Expression):
 
     def __str__(self) -> json :
         return {"operator" : self.operator,
-                "left": self.left_arg,
-                "right": self.right_arg}
+                "left": self.left_arg(),
+                "right": self.right_arg()}
 
 def json_to_name(js_obj: json) -> str:
     """ Returns the value of the variable """
@@ -123,8 +125,8 @@ class Assign(Statement):
         self.right.syntax_check(vars)
 
     def __str__(self) -> json :
-        return {"lvalue" : self.left,
-                "rvalue" : self.right}
+        return {"lvalue" : self.left(),
+                "rvalue" : self.right()}
 
 class Eval(Statement):
     def __init__(self, arg: Expression) -> None:
@@ -134,19 +136,20 @@ class Eval(Statement):
         self.eval_argument.check_syntax(vars)
 
     def __str__(self) -> json :
-        return {"arguments" : self.eval_argument}
+        return {"arguments" : self.eval_argument()}
 
 class Vardecl(Statement):
-    def __init__(self, name: ExpressionVar, value: Expression) -> None:
+    def __init__(self, name: ExpressionVar, value: Expression, pos: int = None) -> None:
         self.name: ExpressionVar = name
         self.init: Expression = value
+        self.pos = pos
 
     def check_syntax(self, vars: list) -> None :
         if self.name.name not in vars:
             self.init.check_syntax(vars)
             vars.append(self.name.name)
         else:
-            print("Syntax error: Variable already defined")
+            print(f"Syntax error: Variable already defined at line {self.pos}")
 
     def __str__(self) -> json :
         return {"name" : self.name,
@@ -178,4 +181,4 @@ class AstCode:
             statement.check_syntax(vars)
 
     def __str__(self):
-        return [statement for statement in self.statements]
+        return [statement() for statement in self.statements]

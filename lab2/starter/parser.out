@@ -1,0 +1,1570 @@
+Created by PLY (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> astcode
+Rule 1     statements -> <empty>
+Rule 2     statements -> statements statement
+Rule 3     astcode -> DEF MAIN LPAREN RPAREN LBRACE statements RBRACE EOF
+Rule 4     statement -> vardecl
+Rule 5     statement -> assign
+Rule 6     statement -> eval
+Rule 7     vardecl -> VAR IDENT EQUAL expression COLON INT SEMICOLON
+Rule 8     assign -> IDENT EQUAL expression SEMICOLON
+Rule 9     eval -> PRINT LPAREN expression RPAREN SEMICOLON
+Rule 10    expression -> iden
+Rule 11    expression -> numb
+Rule 12    expression -> uniop
+Rule 13    expression -> binop
+Rule 14    iden -> IDENT
+Rule 15    numb -> NUMBER
+Rule 16    uniop -> UMINUS expression
+Rule 17    uniop -> BITWISE_NOT expression
+Rule 18    binop -> expression PLUS expression
+Rule 19    binop -> expression MINUS expression
+Rule 20    binop -> expression TIMES expression
+Rule 21    binop -> expression DIVIDE expression
+Rule 22    binop -> expression MODULUS expression
+Rule 23    binop -> expression BITWISE_AND expression
+Rule 24    binop -> expression BITWISE_OR expression
+Rule 25    binop -> expression BITWISE_XOR expression
+Rule 26    binop -> expression BITWISE_SHL expression
+Rule 27    binop -> expression BITWISE_SHR expression
+Rule 28    expression -> LPAREN expression RPAREN
+
+Terminals, with rules where they appear
+
+BITWISE_AND          : 23
+BITWISE_NOT          : 17
+BITWISE_OR           : 24
+BITWISE_SHL          : 26
+BITWISE_SHR          : 27
+BITWISE_XOR          : 25
+COLON                : 7
+DEF                  : 3
+DIVIDE               : 21
+EOF                  : 3
+EQUAL                : 7 8
+IDENT                : 7 8 14
+INT                  : 7
+LBRACE               : 3
+LPAREN               : 3 9 28
+MAIN                 : 3
+MINUS                : 19
+MODULUS              : 22
+NUMBER               : 15
+PLUS                 : 18
+PRINT                : 9
+RBRACE               : 3
+RPAREN               : 3 9 28
+SEMICOLON            : 7 8 9
+TIMES                : 20
+UMINUS               : 16
+VAR                  : 7
+error                : 
+
+Nonterminals, with rules where they appear
+
+assign               : 5
+astcode              : 0
+binop                : 13
+eval                 : 6
+expression           : 7 8 9 16 17 18 18 19 19 20 20 21 21 22 22 23 23 24 24 25 25 26 26 27 27 28
+iden                 : 10
+numb                 : 11
+statement            : 2
+statements           : 2 3
+uniop                : 12
+vardecl              : 4
+
+
+state 0
+
+    (0) S' -> . astcode
+    (3) astcode -> . DEF MAIN LPAREN RPAREN LBRACE statements RBRACE EOF
+
+    DEF             shift and go to state 2
+
+    astcode                        shift and go to state 1
+
+state 1
+
+    (0) S' -> astcode .
+
+
+
+state 2
+
+    (3) astcode -> DEF . MAIN LPAREN RPAREN LBRACE statements RBRACE EOF
+
+    MAIN            shift and go to state 3
+
+
+state 3
+
+    (3) astcode -> DEF MAIN . LPAREN RPAREN LBRACE statements RBRACE EOF
+
+    LPAREN          shift and go to state 4
+
+
+state 4
+
+    (3) astcode -> DEF MAIN LPAREN . RPAREN LBRACE statements RBRACE EOF
+
+    RPAREN          shift and go to state 5
+
+
+state 5
+
+    (3) astcode -> DEF MAIN LPAREN RPAREN . LBRACE statements RBRACE EOF
+
+    LBRACE          shift and go to state 6
+
+
+state 6
+
+    (3) astcode -> DEF MAIN LPAREN RPAREN LBRACE . statements RBRACE EOF
+    (1) statements -> .
+    (2) statements -> . statements statement
+
+    RBRACE          reduce using rule 1 (statements -> .)
+    VAR             reduce using rule 1 (statements -> .)
+    IDENT           reduce using rule 1 (statements -> .)
+    PRINT           reduce using rule 1 (statements -> .)
+
+    statements                     shift and go to state 7
+
+state 7
+
+    (3) astcode -> DEF MAIN LPAREN RPAREN LBRACE statements . RBRACE EOF
+    (2) statements -> statements . statement
+    (4) statement -> . vardecl
+    (5) statement -> . assign
+    (6) statement -> . eval
+    (7) vardecl -> . VAR IDENT EQUAL expression COLON INT SEMICOLON
+    (8) assign -> . IDENT EQUAL expression SEMICOLON
+    (9) eval -> . PRINT LPAREN expression RPAREN SEMICOLON
+
+    RBRACE          shift and go to state 8
+    VAR             shift and go to state 13
+    IDENT           shift and go to state 14
+    PRINT           shift and go to state 15
+
+    statement                      shift and go to state 9
+    vardecl                        shift and go to state 10
+    assign                         shift and go to state 11
+    eval                           shift and go to state 12
+
+state 8
+
+    (3) astcode -> DEF MAIN LPAREN RPAREN LBRACE statements RBRACE . EOF
+
+    EOF             shift and go to state 16
+
+
+state 9
+
+    (2) statements -> statements statement .
+
+    RBRACE          reduce using rule 2 (statements -> statements statement .)
+    VAR             reduce using rule 2 (statements -> statements statement .)
+    IDENT           reduce using rule 2 (statements -> statements statement .)
+    PRINT           reduce using rule 2 (statements -> statements statement .)
+
+
+state 10
+
+    (4) statement -> vardecl .
+
+    RBRACE          reduce using rule 4 (statement -> vardecl .)
+    VAR             reduce using rule 4 (statement -> vardecl .)
+    IDENT           reduce using rule 4 (statement -> vardecl .)
+    PRINT           reduce using rule 4 (statement -> vardecl .)
+
+
+state 11
+
+    (5) statement -> assign .
+
+    RBRACE          reduce using rule 5 (statement -> assign .)
+    VAR             reduce using rule 5 (statement -> assign .)
+    IDENT           reduce using rule 5 (statement -> assign .)
+    PRINT           reduce using rule 5 (statement -> assign .)
+
+
+state 12
+
+    (6) statement -> eval .
+
+    RBRACE          reduce using rule 6 (statement -> eval .)
+    VAR             reduce using rule 6 (statement -> eval .)
+    IDENT           reduce using rule 6 (statement -> eval .)
+    PRINT           reduce using rule 6 (statement -> eval .)
+
+
+state 13
+
+    (7) vardecl -> VAR . IDENT EQUAL expression COLON INT SEMICOLON
+
+    IDENT           shift and go to state 17
+
+
+state 14
+
+    (8) assign -> IDENT . EQUAL expression SEMICOLON
+
+    EQUAL           shift and go to state 18
+
+
+state 15
+
+    (9) eval -> PRINT . LPAREN expression RPAREN SEMICOLON
+
+    LPAREN          shift and go to state 19
+
+
+state 16
+
+    (3) astcode -> DEF MAIN LPAREN RPAREN LBRACE statements RBRACE EOF .
+
+    $end            reduce using rule 3 (astcode -> DEF MAIN LPAREN RPAREN LBRACE statements RBRACE EOF .)
+
+
+state 17
+
+    (7) vardecl -> VAR IDENT . EQUAL expression COLON INT SEMICOLON
+
+    EQUAL           shift and go to state 20
+
+
+state 18
+
+    (8) assign -> IDENT EQUAL . expression SEMICOLON
+    (10) expression -> . iden
+    (11) expression -> . numb
+    (12) expression -> . uniop
+    (13) expression -> . binop
+    (28) expression -> . LPAREN expression RPAREN
+    (14) iden -> . IDENT
+    (15) numb -> . NUMBER
+    (16) uniop -> . UMINUS expression
+    (17) uniop -> . BITWISE_NOT expression
+    (18) binop -> . expression PLUS expression
+    (19) binop -> . expression MINUS expression
+    (20) binop -> . expression TIMES expression
+    (21) binop -> . expression DIVIDE expression
+    (22) binop -> . expression MODULUS expression
+    (23) binop -> . expression BITWISE_AND expression
+    (24) binop -> . expression BITWISE_OR expression
+    (25) binop -> . expression BITWISE_XOR expression
+    (26) binop -> . expression BITWISE_SHL expression
+    (27) binop -> . expression BITWISE_SHR expression
+
+    LPAREN          shift and go to state 27
+    IDENT           shift and go to state 21
+    NUMBER          shift and go to state 28
+    UMINUS          shift and go to state 29
+    BITWISE_NOT     shift and go to state 30
+
+    expression                     shift and go to state 22
+    iden                           shift and go to state 23
+    numb                           shift and go to state 24
+    uniop                          shift and go to state 25
+    binop                          shift and go to state 26
+
+state 19
+
+    (9) eval -> PRINT LPAREN . expression RPAREN SEMICOLON
+    (10) expression -> . iden
+    (11) expression -> . numb
+    (12) expression -> . uniop
+    (13) expression -> . binop
+    (28) expression -> . LPAREN expression RPAREN
+    (14) iden -> . IDENT
+    (15) numb -> . NUMBER
+    (16) uniop -> . UMINUS expression
+    (17) uniop -> . BITWISE_NOT expression
+    (18) binop -> . expression PLUS expression
+    (19) binop -> . expression MINUS expression
+    (20) binop -> . expression TIMES expression
+    (21) binop -> . expression DIVIDE expression
+    (22) binop -> . expression MODULUS expression
+    (23) binop -> . expression BITWISE_AND expression
+    (24) binop -> . expression BITWISE_OR expression
+    (25) binop -> . expression BITWISE_XOR expression
+    (26) binop -> . expression BITWISE_SHL expression
+    (27) binop -> . expression BITWISE_SHR expression
+
+    LPAREN          shift and go to state 27
+    IDENT           shift and go to state 21
+    NUMBER          shift and go to state 28
+    UMINUS          shift and go to state 29
+    BITWISE_NOT     shift and go to state 30
+
+    expression                     shift and go to state 31
+    iden                           shift and go to state 23
+    numb                           shift and go to state 24
+    uniop                          shift and go to state 25
+    binop                          shift and go to state 26
+
+state 20
+
+    (7) vardecl -> VAR IDENT EQUAL . expression COLON INT SEMICOLON
+    (10) expression -> . iden
+    (11) expression -> . numb
+    (12) expression -> . uniop
+    (13) expression -> . binop
+    (28) expression -> . LPAREN expression RPAREN
+    (14) iden -> . IDENT
+    (15) numb -> . NUMBER
+    (16) uniop -> . UMINUS expression
+    (17) uniop -> . BITWISE_NOT expression
+    (18) binop -> . expression PLUS expression
+    (19) binop -> . expression MINUS expression
+    (20) binop -> . expression TIMES expression
+    (21) binop -> . expression DIVIDE expression
+    (22) binop -> . expression MODULUS expression
+    (23) binop -> . expression BITWISE_AND expression
+    (24) binop -> . expression BITWISE_OR expression
+    (25) binop -> . expression BITWISE_XOR expression
+    (26) binop -> . expression BITWISE_SHL expression
+    (27) binop -> . expression BITWISE_SHR expression
+
+    LPAREN          shift and go to state 27
+    IDENT           shift and go to state 21
+    NUMBER          shift and go to state 28
+    UMINUS          shift and go to state 29
+    BITWISE_NOT     shift and go to state 30
+
+    expression                     shift and go to state 32
+    iden                           shift and go to state 23
+    numb                           shift and go to state 24
+    uniop                          shift and go to state 25
+    binop                          shift and go to state 26
+
+state 21
+
+    (14) iden -> IDENT .
+
+    SEMICOLON       reduce using rule 14 (iden -> IDENT .)
+    PLUS            reduce using rule 14 (iden -> IDENT .)
+    MINUS           reduce using rule 14 (iden -> IDENT .)
+    TIMES           reduce using rule 14 (iden -> IDENT .)
+    DIVIDE          reduce using rule 14 (iden -> IDENT .)
+    MODULUS         reduce using rule 14 (iden -> IDENT .)
+    BITWISE_AND     reduce using rule 14 (iden -> IDENT .)
+    BITWISE_OR      reduce using rule 14 (iden -> IDENT .)
+    BITWISE_XOR     reduce using rule 14 (iden -> IDENT .)
+    BITWISE_SHL     reduce using rule 14 (iden -> IDENT .)
+    BITWISE_SHR     reduce using rule 14 (iden -> IDENT .)
+    RPAREN          reduce using rule 14 (iden -> IDENT .)
+    COLON           reduce using rule 14 (iden -> IDENT .)
+
+
+state 22
+
+    (8) assign -> IDENT EQUAL expression . SEMICOLON
+    (18) binop -> expression . PLUS expression
+    (19) binop -> expression . MINUS expression
+    (20) binop -> expression . TIMES expression
+    (21) binop -> expression . DIVIDE expression
+    (22) binop -> expression . MODULUS expression
+    (23) binop -> expression . BITWISE_AND expression
+    (24) binop -> expression . BITWISE_OR expression
+    (25) binop -> expression . BITWISE_XOR expression
+    (26) binop -> expression . BITWISE_SHL expression
+    (27) binop -> expression . BITWISE_SHR expression
+
+    SEMICOLON       shift and go to state 33
+    PLUS            shift and go to state 34
+    MINUS           shift and go to state 35
+    TIMES           shift and go to state 36
+    DIVIDE          shift and go to state 37
+    MODULUS         shift and go to state 38
+    BITWISE_AND     shift and go to state 39
+    BITWISE_OR      shift and go to state 40
+    BITWISE_XOR     shift and go to state 41
+    BITWISE_SHL     shift and go to state 42
+    BITWISE_SHR     shift and go to state 43
+
+
+state 23
+
+    (10) expression -> iden .
+
+    SEMICOLON       reduce using rule 10 (expression -> iden .)
+    PLUS            reduce using rule 10 (expression -> iden .)
+    MINUS           reduce using rule 10 (expression -> iden .)
+    TIMES           reduce using rule 10 (expression -> iden .)
+    DIVIDE          reduce using rule 10 (expression -> iden .)
+    MODULUS         reduce using rule 10 (expression -> iden .)
+    BITWISE_AND     reduce using rule 10 (expression -> iden .)
+    BITWISE_OR      reduce using rule 10 (expression -> iden .)
+    BITWISE_XOR     reduce using rule 10 (expression -> iden .)
+    BITWISE_SHL     reduce using rule 10 (expression -> iden .)
+    BITWISE_SHR     reduce using rule 10 (expression -> iden .)
+    RPAREN          reduce using rule 10 (expression -> iden .)
+    COLON           reduce using rule 10 (expression -> iden .)
+
+
+state 24
+
+    (11) expression -> numb .
+
+    SEMICOLON       reduce using rule 11 (expression -> numb .)
+    PLUS            reduce using rule 11 (expression -> numb .)
+    MINUS           reduce using rule 11 (expression -> numb .)
+    TIMES           reduce using rule 11 (expression -> numb .)
+    DIVIDE          reduce using rule 11 (expression -> numb .)
+    MODULUS         reduce using rule 11 (expression -> numb .)
+    BITWISE_AND     reduce using rule 11 (expression -> numb .)
+    BITWISE_OR      reduce using rule 11 (expression -> numb .)
+    BITWISE_XOR     reduce using rule 11 (expression -> numb .)
+    BITWISE_SHL     reduce using rule 11 (expression -> numb .)
+    BITWISE_SHR     reduce using rule 11 (expression -> numb .)
+    RPAREN          reduce using rule 11 (expression -> numb .)
+    COLON           reduce using rule 11 (expression -> numb .)
+
+
+state 25
+
+    (12) expression -> uniop .
+
+    SEMICOLON       reduce using rule 12 (expression -> uniop .)
+    PLUS            reduce using rule 12 (expression -> uniop .)
+    MINUS           reduce using rule 12 (expression -> uniop .)
+    TIMES           reduce using rule 12 (expression -> uniop .)
+    DIVIDE          reduce using rule 12 (expression -> uniop .)
+    MODULUS         reduce using rule 12 (expression -> uniop .)
+    BITWISE_AND     reduce using rule 12 (expression -> uniop .)
+    BITWISE_OR      reduce using rule 12 (expression -> uniop .)
+    BITWISE_XOR     reduce using rule 12 (expression -> uniop .)
+    BITWISE_SHL     reduce using rule 12 (expression -> uniop .)
+    BITWISE_SHR     reduce using rule 12 (expression -> uniop .)
+    RPAREN          reduce using rule 12 (expression -> uniop .)
+    COLON           reduce using rule 12 (expression -> uniop .)
+
+
+state 26
+
+    (13) expression -> binop .
+
+    SEMICOLON       reduce using rule 13 (expression -> binop .)
+    PLUS            reduce using rule 13 (expression -> binop .)
+    MINUS           reduce using rule 13 (expression -> binop .)
+    TIMES           reduce using rule 13 (expression -> binop .)
+    DIVIDE          reduce using rule 13 (expression -> binop .)
+    MODULUS         reduce using rule 13 (expression -> binop .)
+    BITWISE_AND     reduce using rule 13 (expression -> binop .)
+    BITWISE_OR      reduce using rule 13 (expression -> binop .)
+    BITWISE_XOR     reduce using rule 13 (expression -> binop .)
+    BITWISE_SHL     reduce using rule 13 (expression -> binop .)
+    BITWISE_SHR     reduce using rule 13 (expression -> binop .)
+    RPAREN          reduce using rule 13 (expression -> binop .)
+    COLON           reduce using rule 13 (expression -> binop .)
+
+
+state 27
+
+    (28) expression -> LPAREN . expression RPAREN
+    (10) expression -> . iden
+    (11) expression -> . numb
+    (12) expression -> . uniop
+    (13) expression -> . binop
+    (28) expression -> . LPAREN expression RPAREN
+    (14) iden -> . IDENT
+    (15) numb -> . NUMBER
+    (16) uniop -> . UMINUS expression
+    (17) uniop -> . BITWISE_NOT expression
+    (18) binop -> . expression PLUS expression
+    (19) binop -> . expression MINUS expression
+    (20) binop -> . expression TIMES expression
+    (21) binop -> . expression DIVIDE expression
+    (22) binop -> . expression MODULUS expression
+    (23) binop -> . expression BITWISE_AND expression
+    (24) binop -> . expression BITWISE_OR expression
+    (25) binop -> . expression BITWISE_XOR expression
+    (26) binop -> . expression BITWISE_SHL expression
+    (27) binop -> . expression BITWISE_SHR expression
+
+    LPAREN          shift and go to state 27
+    IDENT           shift and go to state 21
+    NUMBER          shift and go to state 28
+    UMINUS          shift and go to state 29
+    BITWISE_NOT     shift and go to state 30
+
+    expression                     shift and go to state 44
+    iden                           shift and go to state 23
+    numb                           shift and go to state 24
+    uniop                          shift and go to state 25
+    binop                          shift and go to state 26
+
+state 28
+
+    (15) numb -> NUMBER .
+
+    SEMICOLON       reduce using rule 15 (numb -> NUMBER .)
+    PLUS            reduce using rule 15 (numb -> NUMBER .)
+    MINUS           reduce using rule 15 (numb -> NUMBER .)
+    TIMES           reduce using rule 15 (numb -> NUMBER .)
+    DIVIDE          reduce using rule 15 (numb -> NUMBER .)
+    MODULUS         reduce using rule 15 (numb -> NUMBER .)
+    BITWISE_AND     reduce using rule 15 (numb -> NUMBER .)
+    BITWISE_OR      reduce using rule 15 (numb -> NUMBER .)
+    BITWISE_XOR     reduce using rule 15 (numb -> NUMBER .)
+    BITWISE_SHL     reduce using rule 15 (numb -> NUMBER .)
+    BITWISE_SHR     reduce using rule 15 (numb -> NUMBER .)
+    RPAREN          reduce using rule 15 (numb -> NUMBER .)
+    COLON           reduce using rule 15 (numb -> NUMBER .)
+
+
+state 29
+
+    (16) uniop -> UMINUS . expression
+    (10) expression -> . iden
+    (11) expression -> . numb
+    (12) expression -> . uniop
+    (13) expression -> . binop
+    (28) expression -> . LPAREN expression RPAREN
+    (14) iden -> . IDENT
+    (15) numb -> . NUMBER
+    (16) uniop -> . UMINUS expression
+    (17) uniop -> . BITWISE_NOT expression
+    (18) binop -> . expression PLUS expression
+    (19) binop -> . expression MINUS expression
+    (20) binop -> . expression TIMES expression
+    (21) binop -> . expression DIVIDE expression
+    (22) binop -> . expression MODULUS expression
+    (23) binop -> . expression BITWISE_AND expression
+    (24) binop -> . expression BITWISE_OR expression
+    (25) binop -> . expression BITWISE_XOR expression
+    (26) binop -> . expression BITWISE_SHL expression
+    (27) binop -> . expression BITWISE_SHR expression
+
+    LPAREN          shift and go to state 27
+    IDENT           shift and go to state 21
+    NUMBER          shift and go to state 28
+    UMINUS          shift and go to state 29
+    BITWISE_NOT     shift and go to state 30
+
+    expression                     shift and go to state 45
+    iden                           shift and go to state 23
+    numb                           shift and go to state 24
+    uniop                          shift and go to state 25
+    binop                          shift and go to state 26
+
+state 30
+
+    (17) uniop -> BITWISE_NOT . expression
+    (10) expression -> . iden
+    (11) expression -> . numb
+    (12) expression -> . uniop
+    (13) expression -> . binop
+    (28) expression -> . LPAREN expression RPAREN
+    (14) iden -> . IDENT
+    (15) numb -> . NUMBER
+    (16) uniop -> . UMINUS expression
+    (17) uniop -> . BITWISE_NOT expression
+    (18) binop -> . expression PLUS expression
+    (19) binop -> . expression MINUS expression
+    (20) binop -> . expression TIMES expression
+    (21) binop -> . expression DIVIDE expression
+    (22) binop -> . expression MODULUS expression
+    (23) binop -> . expression BITWISE_AND expression
+    (24) binop -> . expression BITWISE_OR expression
+    (25) binop -> . expression BITWISE_XOR expression
+    (26) binop -> . expression BITWISE_SHL expression
+    (27) binop -> . expression BITWISE_SHR expression
+
+    LPAREN          shift and go to state 27
+    IDENT           shift and go to state 21
+    NUMBER          shift and go to state 28
+    UMINUS          shift and go to state 29
+    BITWISE_NOT     shift and go to state 30
+
+    expression                     shift and go to state 46
+    iden                           shift and go to state 23
+    numb                           shift and go to state 24
+    uniop                          shift and go to state 25
+    binop                          shift and go to state 26
+
+state 31
+
+    (9) eval -> PRINT LPAREN expression . RPAREN SEMICOLON
+    (18) binop -> expression . PLUS expression
+    (19) binop -> expression . MINUS expression
+    (20) binop -> expression . TIMES expression
+    (21) binop -> expression . DIVIDE expression
+    (22) binop -> expression . MODULUS expression
+    (23) binop -> expression . BITWISE_AND expression
+    (24) binop -> expression . BITWISE_OR expression
+    (25) binop -> expression . BITWISE_XOR expression
+    (26) binop -> expression . BITWISE_SHL expression
+    (27) binop -> expression . BITWISE_SHR expression
+
+    RPAREN          shift and go to state 47
+    PLUS            shift and go to state 34
+    MINUS           shift and go to state 35
+    TIMES           shift and go to state 36
+    DIVIDE          shift and go to state 37
+    MODULUS         shift and go to state 38
+    BITWISE_AND     shift and go to state 39
+    BITWISE_OR      shift and go to state 40
+    BITWISE_XOR     shift and go to state 41
+    BITWISE_SHL     shift and go to state 42
+    BITWISE_SHR     shift and go to state 43
+
+
+state 32
+
+    (7) vardecl -> VAR IDENT EQUAL expression . COLON INT SEMICOLON
+    (18) binop -> expression . PLUS expression
+    (19) binop -> expression . MINUS expression
+    (20) binop -> expression . TIMES expression
+    (21) binop -> expression . DIVIDE expression
+    (22) binop -> expression . MODULUS expression
+    (23) binop -> expression . BITWISE_AND expression
+    (24) binop -> expression . BITWISE_OR expression
+    (25) binop -> expression . BITWISE_XOR expression
+    (26) binop -> expression . BITWISE_SHL expression
+    (27) binop -> expression . BITWISE_SHR expression
+
+    COLON           shift and go to state 48
+    PLUS            shift and go to state 34
+    MINUS           shift and go to state 35
+    TIMES           shift and go to state 36
+    DIVIDE          shift and go to state 37
+    MODULUS         shift and go to state 38
+    BITWISE_AND     shift and go to state 39
+    BITWISE_OR      shift and go to state 40
+    BITWISE_XOR     shift and go to state 41
+    BITWISE_SHL     shift and go to state 42
+    BITWISE_SHR     shift and go to state 43
+
+
+state 33
+
+    (8) assign -> IDENT EQUAL expression SEMICOLON .
+
+    RBRACE          reduce using rule 8 (assign -> IDENT EQUAL expression SEMICOLON .)
+    VAR             reduce using rule 8 (assign -> IDENT EQUAL expression SEMICOLON .)
+    IDENT           reduce using rule 8 (assign -> IDENT EQUAL expression SEMICOLON .)
+    PRINT           reduce using rule 8 (assign -> IDENT EQUAL expression SEMICOLON .)
+
+
+state 34
+
+    (18) binop -> expression PLUS . expression
+    (10) expression -> . iden
+    (11) expression -> . numb
+    (12) expression -> . uniop
+    (13) expression -> . binop
+    (28) expression -> . LPAREN expression RPAREN
+    (14) iden -> . IDENT
+    (15) numb -> . NUMBER
+    (16) uniop -> . UMINUS expression
+    (17) uniop -> . BITWISE_NOT expression
+    (18) binop -> . expression PLUS expression
+    (19) binop -> . expression MINUS expression
+    (20) binop -> . expression TIMES expression
+    (21) binop -> . expression DIVIDE expression
+    (22) binop -> . expression MODULUS expression
+    (23) binop -> . expression BITWISE_AND expression
+    (24) binop -> . expression BITWISE_OR expression
+    (25) binop -> . expression BITWISE_XOR expression
+    (26) binop -> . expression BITWISE_SHL expression
+    (27) binop -> . expression BITWISE_SHR expression
+
+    LPAREN          shift and go to state 27
+    IDENT           shift and go to state 21
+    NUMBER          shift and go to state 28
+    UMINUS          shift and go to state 29
+    BITWISE_NOT     shift and go to state 30
+
+    expression                     shift and go to state 49
+    iden                           shift and go to state 23
+    numb                           shift and go to state 24
+    uniop                          shift and go to state 25
+    binop                          shift and go to state 26
+
+state 35
+
+    (19) binop -> expression MINUS . expression
+    (10) expression -> . iden
+    (11) expression -> . numb
+    (12) expression -> . uniop
+    (13) expression -> . binop
+    (28) expression -> . LPAREN expression RPAREN
+    (14) iden -> . IDENT
+    (15) numb -> . NUMBER
+    (16) uniop -> . UMINUS expression
+    (17) uniop -> . BITWISE_NOT expression
+    (18) binop -> . expression PLUS expression
+    (19) binop -> . expression MINUS expression
+    (20) binop -> . expression TIMES expression
+    (21) binop -> . expression DIVIDE expression
+    (22) binop -> . expression MODULUS expression
+    (23) binop -> . expression BITWISE_AND expression
+    (24) binop -> . expression BITWISE_OR expression
+    (25) binop -> . expression BITWISE_XOR expression
+    (26) binop -> . expression BITWISE_SHL expression
+    (27) binop -> . expression BITWISE_SHR expression
+
+    LPAREN          shift and go to state 27
+    IDENT           shift and go to state 21
+    NUMBER          shift and go to state 28
+    UMINUS          shift and go to state 29
+    BITWISE_NOT     shift and go to state 30
+
+    expression                     shift and go to state 50
+    iden                           shift and go to state 23
+    numb                           shift and go to state 24
+    uniop                          shift and go to state 25
+    binop                          shift and go to state 26
+
+state 36
+
+    (20) binop -> expression TIMES . expression
+    (10) expression -> . iden
+    (11) expression -> . numb
+    (12) expression -> . uniop
+    (13) expression -> . binop
+    (28) expression -> . LPAREN expression RPAREN
+    (14) iden -> . IDENT
+    (15) numb -> . NUMBER
+    (16) uniop -> . UMINUS expression
+    (17) uniop -> . BITWISE_NOT expression
+    (18) binop -> . expression PLUS expression
+    (19) binop -> . expression MINUS expression
+    (20) binop -> . expression TIMES expression
+    (21) binop -> . expression DIVIDE expression
+    (22) binop -> . expression MODULUS expression
+    (23) binop -> . expression BITWISE_AND expression
+    (24) binop -> . expression BITWISE_OR expression
+    (25) binop -> . expression BITWISE_XOR expression
+    (26) binop -> . expression BITWISE_SHL expression
+    (27) binop -> . expression BITWISE_SHR expression
+
+    LPAREN          shift and go to state 27
+    IDENT           shift and go to state 21
+    NUMBER          shift and go to state 28
+    UMINUS          shift and go to state 29
+    BITWISE_NOT     shift and go to state 30
+
+    expression                     shift and go to state 51
+    iden                           shift and go to state 23
+    numb                           shift and go to state 24
+    uniop                          shift and go to state 25
+    binop                          shift and go to state 26
+
+state 37
+
+    (21) binop -> expression DIVIDE . expression
+    (10) expression -> . iden
+    (11) expression -> . numb
+    (12) expression -> . uniop
+    (13) expression -> . binop
+    (28) expression -> . LPAREN expression RPAREN
+    (14) iden -> . IDENT
+    (15) numb -> . NUMBER
+    (16) uniop -> . UMINUS expression
+    (17) uniop -> . BITWISE_NOT expression
+    (18) binop -> . expression PLUS expression
+    (19) binop -> . expression MINUS expression
+    (20) binop -> . expression TIMES expression
+    (21) binop -> . expression DIVIDE expression
+    (22) binop -> . expression MODULUS expression
+    (23) binop -> . expression BITWISE_AND expression
+    (24) binop -> . expression BITWISE_OR expression
+    (25) binop -> . expression BITWISE_XOR expression
+    (26) binop -> . expression BITWISE_SHL expression
+    (27) binop -> . expression BITWISE_SHR expression
+
+    LPAREN          shift and go to state 27
+    IDENT           shift and go to state 21
+    NUMBER          shift and go to state 28
+    UMINUS          shift and go to state 29
+    BITWISE_NOT     shift and go to state 30
+
+    expression                     shift and go to state 52
+    iden                           shift and go to state 23
+    numb                           shift and go to state 24
+    uniop                          shift and go to state 25
+    binop                          shift and go to state 26
+
+state 38
+
+    (22) binop -> expression MODULUS . expression
+    (10) expression -> . iden
+    (11) expression -> . numb
+    (12) expression -> . uniop
+    (13) expression -> . binop
+    (28) expression -> . LPAREN expression RPAREN
+    (14) iden -> . IDENT
+    (15) numb -> . NUMBER
+    (16) uniop -> . UMINUS expression
+    (17) uniop -> . BITWISE_NOT expression
+    (18) binop -> . expression PLUS expression
+    (19) binop -> . expression MINUS expression
+    (20) binop -> . expression TIMES expression
+    (21) binop -> . expression DIVIDE expression
+    (22) binop -> . expression MODULUS expression
+    (23) binop -> . expression BITWISE_AND expression
+    (24) binop -> . expression BITWISE_OR expression
+    (25) binop -> . expression BITWISE_XOR expression
+    (26) binop -> . expression BITWISE_SHL expression
+    (27) binop -> . expression BITWISE_SHR expression
+
+    LPAREN          shift and go to state 27
+    IDENT           shift and go to state 21
+    NUMBER          shift and go to state 28
+    UMINUS          shift and go to state 29
+    BITWISE_NOT     shift and go to state 30
+
+    expression                     shift and go to state 53
+    iden                           shift and go to state 23
+    numb                           shift and go to state 24
+    uniop                          shift and go to state 25
+    binop                          shift and go to state 26
+
+state 39
+
+    (23) binop -> expression BITWISE_AND . expression
+    (10) expression -> . iden
+    (11) expression -> . numb
+    (12) expression -> . uniop
+    (13) expression -> . binop
+    (28) expression -> . LPAREN expression RPAREN
+    (14) iden -> . IDENT
+    (15) numb -> . NUMBER
+    (16) uniop -> . UMINUS expression
+    (17) uniop -> . BITWISE_NOT expression
+    (18) binop -> . expression PLUS expression
+    (19) binop -> . expression MINUS expression
+    (20) binop -> . expression TIMES expression
+    (21) binop -> . expression DIVIDE expression
+    (22) binop -> . expression MODULUS expression
+    (23) binop -> . expression BITWISE_AND expression
+    (24) binop -> . expression BITWISE_OR expression
+    (25) binop -> . expression BITWISE_XOR expression
+    (26) binop -> . expression BITWISE_SHL expression
+    (27) binop -> . expression BITWISE_SHR expression
+
+    LPAREN          shift and go to state 27
+    IDENT           shift and go to state 21
+    NUMBER          shift and go to state 28
+    UMINUS          shift and go to state 29
+    BITWISE_NOT     shift and go to state 30
+
+    expression                     shift and go to state 54
+    iden                           shift and go to state 23
+    numb                           shift and go to state 24
+    uniop                          shift and go to state 25
+    binop                          shift and go to state 26
+
+state 40
+
+    (24) binop -> expression BITWISE_OR . expression
+    (10) expression -> . iden
+    (11) expression -> . numb
+    (12) expression -> . uniop
+    (13) expression -> . binop
+    (28) expression -> . LPAREN expression RPAREN
+    (14) iden -> . IDENT
+    (15) numb -> . NUMBER
+    (16) uniop -> . UMINUS expression
+    (17) uniop -> . BITWISE_NOT expression
+    (18) binop -> . expression PLUS expression
+    (19) binop -> . expression MINUS expression
+    (20) binop -> . expression TIMES expression
+    (21) binop -> . expression DIVIDE expression
+    (22) binop -> . expression MODULUS expression
+    (23) binop -> . expression BITWISE_AND expression
+    (24) binop -> . expression BITWISE_OR expression
+    (25) binop -> . expression BITWISE_XOR expression
+    (26) binop -> . expression BITWISE_SHL expression
+    (27) binop -> . expression BITWISE_SHR expression
+
+    LPAREN          shift and go to state 27
+    IDENT           shift and go to state 21
+    NUMBER          shift and go to state 28
+    UMINUS          shift and go to state 29
+    BITWISE_NOT     shift and go to state 30
+
+    expression                     shift and go to state 55
+    iden                           shift and go to state 23
+    numb                           shift and go to state 24
+    uniop                          shift and go to state 25
+    binop                          shift and go to state 26
+
+state 41
+
+    (25) binop -> expression BITWISE_XOR . expression
+    (10) expression -> . iden
+    (11) expression -> . numb
+    (12) expression -> . uniop
+    (13) expression -> . binop
+    (28) expression -> . LPAREN expression RPAREN
+    (14) iden -> . IDENT
+    (15) numb -> . NUMBER
+    (16) uniop -> . UMINUS expression
+    (17) uniop -> . BITWISE_NOT expression
+    (18) binop -> . expression PLUS expression
+    (19) binop -> . expression MINUS expression
+    (20) binop -> . expression TIMES expression
+    (21) binop -> . expression DIVIDE expression
+    (22) binop -> . expression MODULUS expression
+    (23) binop -> . expression BITWISE_AND expression
+    (24) binop -> . expression BITWISE_OR expression
+    (25) binop -> . expression BITWISE_XOR expression
+    (26) binop -> . expression BITWISE_SHL expression
+    (27) binop -> . expression BITWISE_SHR expression
+
+    LPAREN          shift and go to state 27
+    IDENT           shift and go to state 21
+    NUMBER          shift and go to state 28
+    UMINUS          shift and go to state 29
+    BITWISE_NOT     shift and go to state 30
+
+    expression                     shift and go to state 56
+    iden                           shift and go to state 23
+    numb                           shift and go to state 24
+    uniop                          shift and go to state 25
+    binop                          shift and go to state 26
+
+state 42
+
+    (26) binop -> expression BITWISE_SHL . expression
+    (10) expression -> . iden
+    (11) expression -> . numb
+    (12) expression -> . uniop
+    (13) expression -> . binop
+    (28) expression -> . LPAREN expression RPAREN
+    (14) iden -> . IDENT
+    (15) numb -> . NUMBER
+    (16) uniop -> . UMINUS expression
+    (17) uniop -> . BITWISE_NOT expression
+    (18) binop -> . expression PLUS expression
+    (19) binop -> . expression MINUS expression
+    (20) binop -> . expression TIMES expression
+    (21) binop -> . expression DIVIDE expression
+    (22) binop -> . expression MODULUS expression
+    (23) binop -> . expression BITWISE_AND expression
+    (24) binop -> . expression BITWISE_OR expression
+    (25) binop -> . expression BITWISE_XOR expression
+    (26) binop -> . expression BITWISE_SHL expression
+    (27) binop -> . expression BITWISE_SHR expression
+
+    LPAREN          shift and go to state 27
+    IDENT           shift and go to state 21
+    NUMBER          shift and go to state 28
+    UMINUS          shift and go to state 29
+    BITWISE_NOT     shift and go to state 30
+
+    expression                     shift and go to state 57
+    iden                           shift and go to state 23
+    numb                           shift and go to state 24
+    uniop                          shift and go to state 25
+    binop                          shift and go to state 26
+
+state 43
+
+    (27) binop -> expression BITWISE_SHR . expression
+    (10) expression -> . iden
+    (11) expression -> . numb
+    (12) expression -> . uniop
+    (13) expression -> . binop
+    (28) expression -> . LPAREN expression RPAREN
+    (14) iden -> . IDENT
+    (15) numb -> . NUMBER
+    (16) uniop -> . UMINUS expression
+    (17) uniop -> . BITWISE_NOT expression
+    (18) binop -> . expression PLUS expression
+    (19) binop -> . expression MINUS expression
+    (20) binop -> . expression TIMES expression
+    (21) binop -> . expression DIVIDE expression
+    (22) binop -> . expression MODULUS expression
+    (23) binop -> . expression BITWISE_AND expression
+    (24) binop -> . expression BITWISE_OR expression
+    (25) binop -> . expression BITWISE_XOR expression
+    (26) binop -> . expression BITWISE_SHL expression
+    (27) binop -> . expression BITWISE_SHR expression
+
+    LPAREN          shift and go to state 27
+    IDENT           shift and go to state 21
+    NUMBER          shift and go to state 28
+    UMINUS          shift and go to state 29
+    BITWISE_NOT     shift and go to state 30
+
+    expression                     shift and go to state 58
+    iden                           shift and go to state 23
+    numb                           shift and go to state 24
+    uniop                          shift and go to state 25
+    binop                          shift and go to state 26
+
+state 44
+
+    (28) expression -> LPAREN expression . RPAREN
+    (18) binop -> expression . PLUS expression
+    (19) binop -> expression . MINUS expression
+    (20) binop -> expression . TIMES expression
+    (21) binop -> expression . DIVIDE expression
+    (22) binop -> expression . MODULUS expression
+    (23) binop -> expression . BITWISE_AND expression
+    (24) binop -> expression . BITWISE_OR expression
+    (25) binop -> expression . BITWISE_XOR expression
+    (26) binop -> expression . BITWISE_SHL expression
+    (27) binop -> expression . BITWISE_SHR expression
+
+    RPAREN          shift and go to state 59
+    PLUS            shift and go to state 34
+    MINUS           shift and go to state 35
+    TIMES           shift and go to state 36
+    DIVIDE          shift and go to state 37
+    MODULUS         shift and go to state 38
+    BITWISE_AND     shift and go to state 39
+    BITWISE_OR      shift and go to state 40
+    BITWISE_XOR     shift and go to state 41
+    BITWISE_SHL     shift and go to state 42
+    BITWISE_SHR     shift and go to state 43
+
+
+state 45
+
+    (16) uniop -> UMINUS expression .
+    (18) binop -> expression . PLUS expression
+    (19) binop -> expression . MINUS expression
+    (20) binop -> expression . TIMES expression
+    (21) binop -> expression . DIVIDE expression
+    (22) binop -> expression . MODULUS expression
+    (23) binop -> expression . BITWISE_AND expression
+    (24) binop -> expression . BITWISE_OR expression
+    (25) binop -> expression . BITWISE_XOR expression
+    (26) binop -> expression . BITWISE_SHL expression
+    (27) binop -> expression . BITWISE_SHR expression
+
+    SEMICOLON       reduce using rule 16 (uniop -> UMINUS expression .)
+    PLUS            reduce using rule 16 (uniop -> UMINUS expression .)
+    MINUS           reduce using rule 16 (uniop -> UMINUS expression .)
+    TIMES           reduce using rule 16 (uniop -> UMINUS expression .)
+    DIVIDE          reduce using rule 16 (uniop -> UMINUS expression .)
+    MODULUS         reduce using rule 16 (uniop -> UMINUS expression .)
+    BITWISE_AND     reduce using rule 16 (uniop -> UMINUS expression .)
+    BITWISE_OR      reduce using rule 16 (uniop -> UMINUS expression .)
+    BITWISE_XOR     reduce using rule 16 (uniop -> UMINUS expression .)
+    BITWISE_SHL     reduce using rule 16 (uniop -> UMINUS expression .)
+    BITWISE_SHR     reduce using rule 16 (uniop -> UMINUS expression .)
+    RPAREN          reduce using rule 16 (uniop -> UMINUS expression .)
+    COLON           reduce using rule 16 (uniop -> UMINUS expression .)
+
+  ! PLUS            [ shift and go to state 34 ]
+  ! MINUS           [ shift and go to state 35 ]
+  ! TIMES           [ shift and go to state 36 ]
+  ! DIVIDE          [ shift and go to state 37 ]
+  ! MODULUS         [ shift and go to state 38 ]
+  ! BITWISE_AND     [ shift and go to state 39 ]
+  ! BITWISE_OR      [ shift and go to state 40 ]
+  ! BITWISE_XOR     [ shift and go to state 41 ]
+  ! BITWISE_SHL     [ shift and go to state 42 ]
+  ! BITWISE_SHR     [ shift and go to state 43 ]
+
+
+state 46
+
+    (17) uniop -> BITWISE_NOT expression .
+    (18) binop -> expression . PLUS expression
+    (19) binop -> expression . MINUS expression
+    (20) binop -> expression . TIMES expression
+    (21) binop -> expression . DIVIDE expression
+    (22) binop -> expression . MODULUS expression
+    (23) binop -> expression . BITWISE_AND expression
+    (24) binop -> expression . BITWISE_OR expression
+    (25) binop -> expression . BITWISE_XOR expression
+    (26) binop -> expression . BITWISE_SHL expression
+    (27) binop -> expression . BITWISE_SHR expression
+
+    SEMICOLON       reduce using rule 17 (uniop -> BITWISE_NOT expression .)
+    PLUS            reduce using rule 17 (uniop -> BITWISE_NOT expression .)
+    MINUS           reduce using rule 17 (uniop -> BITWISE_NOT expression .)
+    TIMES           reduce using rule 17 (uniop -> BITWISE_NOT expression .)
+    DIVIDE          reduce using rule 17 (uniop -> BITWISE_NOT expression .)
+    MODULUS         reduce using rule 17 (uniop -> BITWISE_NOT expression .)
+    BITWISE_AND     reduce using rule 17 (uniop -> BITWISE_NOT expression .)
+    BITWISE_OR      reduce using rule 17 (uniop -> BITWISE_NOT expression .)
+    BITWISE_XOR     reduce using rule 17 (uniop -> BITWISE_NOT expression .)
+    BITWISE_SHL     reduce using rule 17 (uniop -> BITWISE_NOT expression .)
+    BITWISE_SHR     reduce using rule 17 (uniop -> BITWISE_NOT expression .)
+    RPAREN          reduce using rule 17 (uniop -> BITWISE_NOT expression .)
+    COLON           reduce using rule 17 (uniop -> BITWISE_NOT expression .)
+
+  ! PLUS            [ shift and go to state 34 ]
+  ! MINUS           [ shift and go to state 35 ]
+  ! TIMES           [ shift and go to state 36 ]
+  ! DIVIDE          [ shift and go to state 37 ]
+  ! MODULUS         [ shift and go to state 38 ]
+  ! BITWISE_AND     [ shift and go to state 39 ]
+  ! BITWISE_OR      [ shift and go to state 40 ]
+  ! BITWISE_XOR     [ shift and go to state 41 ]
+  ! BITWISE_SHL     [ shift and go to state 42 ]
+  ! BITWISE_SHR     [ shift and go to state 43 ]
+
+
+state 47
+
+    (9) eval -> PRINT LPAREN expression RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 60
+
+
+state 48
+
+    (7) vardecl -> VAR IDENT EQUAL expression COLON . INT SEMICOLON
+
+    INT             shift and go to state 61
+
+
+state 49
+
+    (18) binop -> expression PLUS expression .
+    (18) binop -> expression . PLUS expression
+    (19) binop -> expression . MINUS expression
+    (20) binop -> expression . TIMES expression
+    (21) binop -> expression . DIVIDE expression
+    (22) binop -> expression . MODULUS expression
+    (23) binop -> expression . BITWISE_AND expression
+    (24) binop -> expression . BITWISE_OR expression
+    (25) binop -> expression . BITWISE_XOR expression
+    (26) binop -> expression . BITWISE_SHL expression
+    (27) binop -> expression . BITWISE_SHR expression
+
+    SEMICOLON       reduce using rule 18 (binop -> expression PLUS expression .)
+    PLUS            reduce using rule 18 (binop -> expression PLUS expression .)
+    MINUS           reduce using rule 18 (binop -> expression PLUS expression .)
+    BITWISE_AND     reduce using rule 18 (binop -> expression PLUS expression .)
+    BITWISE_OR      reduce using rule 18 (binop -> expression PLUS expression .)
+    BITWISE_XOR     reduce using rule 18 (binop -> expression PLUS expression .)
+    BITWISE_SHL     reduce using rule 18 (binop -> expression PLUS expression .)
+    BITWISE_SHR     reduce using rule 18 (binop -> expression PLUS expression .)
+    RPAREN          reduce using rule 18 (binop -> expression PLUS expression .)
+    COLON           reduce using rule 18 (binop -> expression PLUS expression .)
+    TIMES           shift and go to state 36
+    DIVIDE          shift and go to state 37
+    MODULUS         shift and go to state 38
+
+  ! TIMES           [ reduce using rule 18 (binop -> expression PLUS expression .) ]
+  ! DIVIDE          [ reduce using rule 18 (binop -> expression PLUS expression .) ]
+  ! MODULUS         [ reduce using rule 18 (binop -> expression PLUS expression .) ]
+  ! PLUS            [ shift and go to state 34 ]
+  ! MINUS           [ shift and go to state 35 ]
+  ! BITWISE_AND     [ shift and go to state 39 ]
+  ! BITWISE_OR      [ shift and go to state 40 ]
+  ! BITWISE_XOR     [ shift and go to state 41 ]
+  ! BITWISE_SHL     [ shift and go to state 42 ]
+  ! BITWISE_SHR     [ shift and go to state 43 ]
+
+
+state 50
+
+    (19) binop -> expression MINUS expression .
+    (18) binop -> expression . PLUS expression
+    (19) binop -> expression . MINUS expression
+    (20) binop -> expression . TIMES expression
+    (21) binop -> expression . DIVIDE expression
+    (22) binop -> expression . MODULUS expression
+    (23) binop -> expression . BITWISE_AND expression
+    (24) binop -> expression . BITWISE_OR expression
+    (25) binop -> expression . BITWISE_XOR expression
+    (26) binop -> expression . BITWISE_SHL expression
+    (27) binop -> expression . BITWISE_SHR expression
+
+    SEMICOLON       reduce using rule 19 (binop -> expression MINUS expression .)
+    PLUS            reduce using rule 19 (binop -> expression MINUS expression .)
+    MINUS           reduce using rule 19 (binop -> expression MINUS expression .)
+    BITWISE_AND     reduce using rule 19 (binop -> expression MINUS expression .)
+    BITWISE_OR      reduce using rule 19 (binop -> expression MINUS expression .)
+    BITWISE_XOR     reduce using rule 19 (binop -> expression MINUS expression .)
+    BITWISE_SHL     reduce using rule 19 (binop -> expression MINUS expression .)
+    BITWISE_SHR     reduce using rule 19 (binop -> expression MINUS expression .)
+    RPAREN          reduce using rule 19 (binop -> expression MINUS expression .)
+    COLON           reduce using rule 19 (binop -> expression MINUS expression .)
+    TIMES           shift and go to state 36
+    DIVIDE          shift and go to state 37
+    MODULUS         shift and go to state 38
+
+  ! TIMES           [ reduce using rule 19 (binop -> expression MINUS expression .) ]
+  ! DIVIDE          [ reduce using rule 19 (binop -> expression MINUS expression .) ]
+  ! MODULUS         [ reduce using rule 19 (binop -> expression MINUS expression .) ]
+  ! PLUS            [ shift and go to state 34 ]
+  ! MINUS           [ shift and go to state 35 ]
+  ! BITWISE_AND     [ shift and go to state 39 ]
+  ! BITWISE_OR      [ shift and go to state 40 ]
+  ! BITWISE_XOR     [ shift and go to state 41 ]
+  ! BITWISE_SHL     [ shift and go to state 42 ]
+  ! BITWISE_SHR     [ shift and go to state 43 ]
+
+
+state 51
+
+    (20) binop -> expression TIMES expression .
+    (18) binop -> expression . PLUS expression
+    (19) binop -> expression . MINUS expression
+    (20) binop -> expression . TIMES expression
+    (21) binop -> expression . DIVIDE expression
+    (22) binop -> expression . MODULUS expression
+    (23) binop -> expression . BITWISE_AND expression
+    (24) binop -> expression . BITWISE_OR expression
+    (25) binop -> expression . BITWISE_XOR expression
+    (26) binop -> expression . BITWISE_SHL expression
+    (27) binop -> expression . BITWISE_SHR expression
+
+    SEMICOLON       reduce using rule 20 (binop -> expression TIMES expression .)
+    PLUS            reduce using rule 20 (binop -> expression TIMES expression .)
+    MINUS           reduce using rule 20 (binop -> expression TIMES expression .)
+    TIMES           reduce using rule 20 (binop -> expression TIMES expression .)
+    DIVIDE          reduce using rule 20 (binop -> expression TIMES expression .)
+    MODULUS         reduce using rule 20 (binop -> expression TIMES expression .)
+    BITWISE_AND     reduce using rule 20 (binop -> expression TIMES expression .)
+    BITWISE_OR      reduce using rule 20 (binop -> expression TIMES expression .)
+    BITWISE_XOR     reduce using rule 20 (binop -> expression TIMES expression .)
+    BITWISE_SHL     reduce using rule 20 (binop -> expression TIMES expression .)
+    BITWISE_SHR     reduce using rule 20 (binop -> expression TIMES expression .)
+    RPAREN          reduce using rule 20 (binop -> expression TIMES expression .)
+    COLON           reduce using rule 20 (binop -> expression TIMES expression .)
+
+  ! PLUS            [ shift and go to state 34 ]
+  ! MINUS           [ shift and go to state 35 ]
+  ! TIMES           [ shift and go to state 36 ]
+  ! DIVIDE          [ shift and go to state 37 ]
+  ! MODULUS         [ shift and go to state 38 ]
+  ! BITWISE_AND     [ shift and go to state 39 ]
+  ! BITWISE_OR      [ shift and go to state 40 ]
+  ! BITWISE_XOR     [ shift and go to state 41 ]
+  ! BITWISE_SHL     [ shift and go to state 42 ]
+  ! BITWISE_SHR     [ shift and go to state 43 ]
+
+
+state 52
+
+    (21) binop -> expression DIVIDE expression .
+    (18) binop -> expression . PLUS expression
+    (19) binop -> expression . MINUS expression
+    (20) binop -> expression . TIMES expression
+    (21) binop -> expression . DIVIDE expression
+    (22) binop -> expression . MODULUS expression
+    (23) binop -> expression . BITWISE_AND expression
+    (24) binop -> expression . BITWISE_OR expression
+    (25) binop -> expression . BITWISE_XOR expression
+    (26) binop -> expression . BITWISE_SHL expression
+    (27) binop -> expression . BITWISE_SHR expression
+
+    SEMICOLON       reduce using rule 21 (binop -> expression DIVIDE expression .)
+    PLUS            reduce using rule 21 (binop -> expression DIVIDE expression .)
+    MINUS           reduce using rule 21 (binop -> expression DIVIDE expression .)
+    TIMES           reduce using rule 21 (binop -> expression DIVIDE expression .)
+    DIVIDE          reduce using rule 21 (binop -> expression DIVIDE expression .)
+    MODULUS         reduce using rule 21 (binop -> expression DIVIDE expression .)
+    BITWISE_AND     reduce using rule 21 (binop -> expression DIVIDE expression .)
+    BITWISE_OR      reduce using rule 21 (binop -> expression DIVIDE expression .)
+    BITWISE_XOR     reduce using rule 21 (binop -> expression DIVIDE expression .)
+    BITWISE_SHL     reduce using rule 21 (binop -> expression DIVIDE expression .)
+    BITWISE_SHR     reduce using rule 21 (binop -> expression DIVIDE expression .)
+    RPAREN          reduce using rule 21 (binop -> expression DIVIDE expression .)
+    COLON           reduce using rule 21 (binop -> expression DIVIDE expression .)
+
+  ! PLUS            [ shift and go to state 34 ]
+  ! MINUS           [ shift and go to state 35 ]
+  ! TIMES           [ shift and go to state 36 ]
+  ! DIVIDE          [ shift and go to state 37 ]
+  ! MODULUS         [ shift and go to state 38 ]
+  ! BITWISE_AND     [ shift and go to state 39 ]
+  ! BITWISE_OR      [ shift and go to state 40 ]
+  ! BITWISE_XOR     [ shift and go to state 41 ]
+  ! BITWISE_SHL     [ shift and go to state 42 ]
+  ! BITWISE_SHR     [ shift and go to state 43 ]
+
+
+state 53
+
+    (22) binop -> expression MODULUS expression .
+    (18) binop -> expression . PLUS expression
+    (19) binop -> expression . MINUS expression
+    (20) binop -> expression . TIMES expression
+    (21) binop -> expression . DIVIDE expression
+    (22) binop -> expression . MODULUS expression
+    (23) binop -> expression . BITWISE_AND expression
+    (24) binop -> expression . BITWISE_OR expression
+    (25) binop -> expression . BITWISE_XOR expression
+    (26) binop -> expression . BITWISE_SHL expression
+    (27) binop -> expression . BITWISE_SHR expression
+
+    SEMICOLON       reduce using rule 22 (binop -> expression MODULUS expression .)
+    PLUS            reduce using rule 22 (binop -> expression MODULUS expression .)
+    MINUS           reduce using rule 22 (binop -> expression MODULUS expression .)
+    TIMES           reduce using rule 22 (binop -> expression MODULUS expression .)
+    DIVIDE          reduce using rule 22 (binop -> expression MODULUS expression .)
+    MODULUS         reduce using rule 22 (binop -> expression MODULUS expression .)
+    BITWISE_AND     reduce using rule 22 (binop -> expression MODULUS expression .)
+    BITWISE_OR      reduce using rule 22 (binop -> expression MODULUS expression .)
+    BITWISE_XOR     reduce using rule 22 (binop -> expression MODULUS expression .)
+    BITWISE_SHL     reduce using rule 22 (binop -> expression MODULUS expression .)
+    BITWISE_SHR     reduce using rule 22 (binop -> expression MODULUS expression .)
+    RPAREN          reduce using rule 22 (binop -> expression MODULUS expression .)
+    COLON           reduce using rule 22 (binop -> expression MODULUS expression .)
+
+  ! PLUS            [ shift and go to state 34 ]
+  ! MINUS           [ shift and go to state 35 ]
+  ! TIMES           [ shift and go to state 36 ]
+  ! DIVIDE          [ shift and go to state 37 ]
+  ! MODULUS         [ shift and go to state 38 ]
+  ! BITWISE_AND     [ shift and go to state 39 ]
+  ! BITWISE_OR      [ shift and go to state 40 ]
+  ! BITWISE_XOR     [ shift and go to state 41 ]
+  ! BITWISE_SHL     [ shift and go to state 42 ]
+  ! BITWISE_SHR     [ shift and go to state 43 ]
+
+
+state 54
+
+    (23) binop -> expression BITWISE_AND expression .
+    (18) binop -> expression . PLUS expression
+    (19) binop -> expression . MINUS expression
+    (20) binop -> expression . TIMES expression
+    (21) binop -> expression . DIVIDE expression
+    (22) binop -> expression . MODULUS expression
+    (23) binop -> expression . BITWISE_AND expression
+    (24) binop -> expression . BITWISE_OR expression
+    (25) binop -> expression . BITWISE_XOR expression
+    (26) binop -> expression . BITWISE_SHL expression
+    (27) binop -> expression . BITWISE_SHR expression
+
+    SEMICOLON       reduce using rule 23 (binop -> expression BITWISE_AND expression .)
+    BITWISE_AND     reduce using rule 23 (binop -> expression BITWISE_AND expression .)
+    BITWISE_OR      reduce using rule 23 (binop -> expression BITWISE_AND expression .)
+    BITWISE_XOR     reduce using rule 23 (binop -> expression BITWISE_AND expression .)
+    RPAREN          reduce using rule 23 (binop -> expression BITWISE_AND expression .)
+    COLON           reduce using rule 23 (binop -> expression BITWISE_AND expression .)
+    PLUS            shift and go to state 34
+    MINUS           shift and go to state 35
+    TIMES           shift and go to state 36
+    DIVIDE          shift and go to state 37
+    MODULUS         shift and go to state 38
+    BITWISE_SHL     shift and go to state 42
+    BITWISE_SHR     shift and go to state 43
+
+  ! PLUS            [ reduce using rule 23 (binop -> expression BITWISE_AND expression .) ]
+  ! MINUS           [ reduce using rule 23 (binop -> expression BITWISE_AND expression .) ]
+  ! TIMES           [ reduce using rule 23 (binop -> expression BITWISE_AND expression .) ]
+  ! DIVIDE          [ reduce using rule 23 (binop -> expression BITWISE_AND expression .) ]
+  ! MODULUS         [ reduce using rule 23 (binop -> expression BITWISE_AND expression .) ]
+  ! BITWISE_SHL     [ reduce using rule 23 (binop -> expression BITWISE_AND expression .) ]
+  ! BITWISE_SHR     [ reduce using rule 23 (binop -> expression BITWISE_AND expression .) ]
+  ! BITWISE_AND     [ shift and go to state 39 ]
+  ! BITWISE_OR      [ shift and go to state 40 ]
+  ! BITWISE_XOR     [ shift and go to state 41 ]
+
+
+state 55
+
+    (24) binop -> expression BITWISE_OR expression .
+    (18) binop -> expression . PLUS expression
+    (19) binop -> expression . MINUS expression
+    (20) binop -> expression . TIMES expression
+    (21) binop -> expression . DIVIDE expression
+    (22) binop -> expression . MODULUS expression
+    (23) binop -> expression . BITWISE_AND expression
+    (24) binop -> expression . BITWISE_OR expression
+    (25) binop -> expression . BITWISE_XOR expression
+    (26) binop -> expression . BITWISE_SHL expression
+    (27) binop -> expression . BITWISE_SHR expression
+
+    SEMICOLON       reduce using rule 24 (binop -> expression BITWISE_OR expression .)
+    BITWISE_OR      reduce using rule 24 (binop -> expression BITWISE_OR expression .)
+    RPAREN          reduce using rule 24 (binop -> expression BITWISE_OR expression .)
+    COLON           reduce using rule 24 (binop -> expression BITWISE_OR expression .)
+    PLUS            shift and go to state 34
+    MINUS           shift and go to state 35
+    TIMES           shift and go to state 36
+    DIVIDE          shift and go to state 37
+    MODULUS         shift and go to state 38
+    BITWISE_AND     shift and go to state 39
+    BITWISE_XOR     shift and go to state 41
+    BITWISE_SHL     shift and go to state 42
+    BITWISE_SHR     shift and go to state 43
+
+  ! PLUS            [ reduce using rule 24 (binop -> expression BITWISE_OR expression .) ]
+  ! MINUS           [ reduce using rule 24 (binop -> expression BITWISE_OR expression .) ]
+  ! TIMES           [ reduce using rule 24 (binop -> expression BITWISE_OR expression .) ]
+  ! DIVIDE          [ reduce using rule 24 (binop -> expression BITWISE_OR expression .) ]
+  ! MODULUS         [ reduce using rule 24 (binop -> expression BITWISE_OR expression .) ]
+  ! BITWISE_AND     [ reduce using rule 24 (binop -> expression BITWISE_OR expression .) ]
+  ! BITWISE_XOR     [ reduce using rule 24 (binop -> expression BITWISE_OR expression .) ]
+  ! BITWISE_SHL     [ reduce using rule 24 (binop -> expression BITWISE_OR expression .) ]
+  ! BITWISE_SHR     [ reduce using rule 24 (binop -> expression BITWISE_OR expression .) ]
+  ! BITWISE_OR      [ shift and go to state 40 ]
+
+
+state 56
+
+    (25) binop -> expression BITWISE_XOR expression .
+    (18) binop -> expression . PLUS expression
+    (19) binop -> expression . MINUS expression
+    (20) binop -> expression . TIMES expression
+    (21) binop -> expression . DIVIDE expression
+    (22) binop -> expression . MODULUS expression
+    (23) binop -> expression . BITWISE_AND expression
+    (24) binop -> expression . BITWISE_OR expression
+    (25) binop -> expression . BITWISE_XOR expression
+    (26) binop -> expression . BITWISE_SHL expression
+    (27) binop -> expression . BITWISE_SHR expression
+
+    SEMICOLON       reduce using rule 25 (binop -> expression BITWISE_XOR expression .)
+    BITWISE_OR      reduce using rule 25 (binop -> expression BITWISE_XOR expression .)
+    BITWISE_XOR     reduce using rule 25 (binop -> expression BITWISE_XOR expression .)
+    RPAREN          reduce using rule 25 (binop -> expression BITWISE_XOR expression .)
+    COLON           reduce using rule 25 (binop -> expression BITWISE_XOR expression .)
+    PLUS            shift and go to state 34
+    MINUS           shift and go to state 35
+    TIMES           shift and go to state 36
+    DIVIDE          shift and go to state 37
+    MODULUS         shift and go to state 38
+    BITWISE_AND     shift and go to state 39
+    BITWISE_SHL     shift and go to state 42
+    BITWISE_SHR     shift and go to state 43
+
+  ! PLUS            [ reduce using rule 25 (binop -> expression BITWISE_XOR expression .) ]
+  ! MINUS           [ reduce using rule 25 (binop -> expression BITWISE_XOR expression .) ]
+  ! TIMES           [ reduce using rule 25 (binop -> expression BITWISE_XOR expression .) ]
+  ! DIVIDE          [ reduce using rule 25 (binop -> expression BITWISE_XOR expression .) ]
+  ! MODULUS         [ reduce using rule 25 (binop -> expression BITWISE_XOR expression .) ]
+  ! BITWISE_AND     [ reduce using rule 25 (binop -> expression BITWISE_XOR expression .) ]
+  ! BITWISE_SHL     [ reduce using rule 25 (binop -> expression BITWISE_XOR expression .) ]
+  ! BITWISE_SHR     [ reduce using rule 25 (binop -> expression BITWISE_XOR expression .) ]
+  ! BITWISE_OR      [ shift and go to state 40 ]
+  ! BITWISE_XOR     [ shift and go to state 41 ]
+
+
+state 57
+
+    (26) binop -> expression BITWISE_SHL expression .
+    (18) binop -> expression . PLUS expression
+    (19) binop -> expression . MINUS expression
+    (20) binop -> expression . TIMES expression
+    (21) binop -> expression . DIVIDE expression
+    (22) binop -> expression . MODULUS expression
+    (23) binop -> expression . BITWISE_AND expression
+    (24) binop -> expression . BITWISE_OR expression
+    (25) binop -> expression . BITWISE_XOR expression
+    (26) binop -> expression . BITWISE_SHL expression
+    (27) binop -> expression . BITWISE_SHR expression
+
+    SEMICOLON       reduce using rule 26 (binop -> expression BITWISE_SHL expression .)
+    BITWISE_AND     reduce using rule 26 (binop -> expression BITWISE_SHL expression .)
+    BITWISE_OR      reduce using rule 26 (binop -> expression BITWISE_SHL expression .)
+    BITWISE_XOR     reduce using rule 26 (binop -> expression BITWISE_SHL expression .)
+    BITWISE_SHL     reduce using rule 26 (binop -> expression BITWISE_SHL expression .)
+    BITWISE_SHR     reduce using rule 26 (binop -> expression BITWISE_SHL expression .)
+    RPAREN          reduce using rule 26 (binop -> expression BITWISE_SHL expression .)
+    COLON           reduce using rule 26 (binop -> expression BITWISE_SHL expression .)
+    PLUS            shift and go to state 34
+    MINUS           shift and go to state 35
+    TIMES           shift and go to state 36
+    DIVIDE          shift and go to state 37
+    MODULUS         shift and go to state 38
+
+  ! PLUS            [ reduce using rule 26 (binop -> expression BITWISE_SHL expression .) ]
+  ! MINUS           [ reduce using rule 26 (binop -> expression BITWISE_SHL expression .) ]
+  ! TIMES           [ reduce using rule 26 (binop -> expression BITWISE_SHL expression .) ]
+  ! DIVIDE          [ reduce using rule 26 (binop -> expression BITWISE_SHL expression .) ]
+  ! MODULUS         [ reduce using rule 26 (binop -> expression BITWISE_SHL expression .) ]
+  ! BITWISE_AND     [ shift and go to state 39 ]
+  ! BITWISE_OR      [ shift and go to state 40 ]
+  ! BITWISE_XOR     [ shift and go to state 41 ]
+  ! BITWISE_SHL     [ shift and go to state 42 ]
+  ! BITWISE_SHR     [ shift and go to state 43 ]
+
+
+state 58
+
+    (27) binop -> expression BITWISE_SHR expression .
+    (18) binop -> expression . PLUS expression
+    (19) binop -> expression . MINUS expression
+    (20) binop -> expression . TIMES expression
+    (21) binop -> expression . DIVIDE expression
+    (22) binop -> expression . MODULUS expression
+    (23) binop -> expression . BITWISE_AND expression
+    (24) binop -> expression . BITWISE_OR expression
+    (25) binop -> expression . BITWISE_XOR expression
+    (26) binop -> expression . BITWISE_SHL expression
+    (27) binop -> expression . BITWISE_SHR expression
+
+    SEMICOLON       reduce using rule 27 (binop -> expression BITWISE_SHR expression .)
+    BITWISE_AND     reduce using rule 27 (binop -> expression BITWISE_SHR expression .)
+    BITWISE_OR      reduce using rule 27 (binop -> expression BITWISE_SHR expression .)
+    BITWISE_XOR     reduce using rule 27 (binop -> expression BITWISE_SHR expression .)
+    BITWISE_SHL     reduce using rule 27 (binop -> expression BITWISE_SHR expression .)
+    BITWISE_SHR     reduce using rule 27 (binop -> expression BITWISE_SHR expression .)
+    RPAREN          reduce using rule 27 (binop -> expression BITWISE_SHR expression .)
+    COLON           reduce using rule 27 (binop -> expression BITWISE_SHR expression .)
+    PLUS            shift and go to state 34
+    MINUS           shift and go to state 35
+    TIMES           shift and go to state 36
+    DIVIDE          shift and go to state 37
+    MODULUS         shift and go to state 38
+
+  ! PLUS            [ reduce using rule 27 (binop -> expression BITWISE_SHR expression .) ]
+  ! MINUS           [ reduce using rule 27 (binop -> expression BITWISE_SHR expression .) ]
+  ! TIMES           [ reduce using rule 27 (binop -> expression BITWISE_SHR expression .) ]
+  ! DIVIDE          [ reduce using rule 27 (binop -> expression BITWISE_SHR expression .) ]
+  ! MODULUS         [ reduce using rule 27 (binop -> expression BITWISE_SHR expression .) ]
+  ! BITWISE_AND     [ shift and go to state 39 ]
+  ! BITWISE_OR      [ shift and go to state 40 ]
+  ! BITWISE_XOR     [ shift and go to state 41 ]
+  ! BITWISE_SHL     [ shift and go to state 42 ]
+  ! BITWISE_SHR     [ shift and go to state 43 ]
+
+
+state 59
+
+    (28) expression -> LPAREN expression RPAREN .
+
+    SEMICOLON       reduce using rule 28 (expression -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 28 (expression -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 28 (expression -> LPAREN expression RPAREN .)
+    TIMES           reduce using rule 28 (expression -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 28 (expression -> LPAREN expression RPAREN .)
+    MODULUS         reduce using rule 28 (expression -> LPAREN expression RPAREN .)
+    BITWISE_AND     reduce using rule 28 (expression -> LPAREN expression RPAREN .)
+    BITWISE_OR      reduce using rule 28 (expression -> LPAREN expression RPAREN .)
+    BITWISE_XOR     reduce using rule 28 (expression -> LPAREN expression RPAREN .)
+    BITWISE_SHL     reduce using rule 28 (expression -> LPAREN expression RPAREN .)
+    BITWISE_SHR     reduce using rule 28 (expression -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 28 (expression -> LPAREN expression RPAREN .)
+    COLON           reduce using rule 28 (expression -> LPAREN expression RPAREN .)
+
+
+state 60
+
+    (9) eval -> PRINT LPAREN expression RPAREN SEMICOLON .
+
+    RBRACE          reduce using rule 9 (eval -> PRINT LPAREN expression RPAREN SEMICOLON .)
+    VAR             reduce using rule 9 (eval -> PRINT LPAREN expression RPAREN SEMICOLON .)
+    IDENT           reduce using rule 9 (eval -> PRINT LPAREN expression RPAREN SEMICOLON .)
+    PRINT           reduce using rule 9 (eval -> PRINT LPAREN expression RPAREN SEMICOLON .)
+
+
+state 61
+
+    (7) vardecl -> VAR IDENT EQUAL expression COLON INT . SEMICOLON
+
+    SEMICOLON       shift and go to state 62
+
+
+state 62
+
+    (7) vardecl -> VAR IDENT EQUAL expression COLON INT SEMICOLON .
+
+    RBRACE          reduce using rule 7 (vardecl -> VAR IDENT EQUAL expression COLON INT SEMICOLON .)
+    VAR             reduce using rule 7 (vardecl -> VAR IDENT EQUAL expression COLON INT SEMICOLON .)
+    IDENT           reduce using rule 7 (vardecl -> VAR IDENT EQUAL expression COLON INT SEMICOLON .)
+    PRINT           reduce using rule 7 (vardecl -> VAR IDENT EQUAL expression COLON INT SEMICOLON .)
+
