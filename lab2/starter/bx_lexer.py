@@ -15,10 +15,9 @@ class MyLexer:
         'def':      "DEF",
         'main':     "MAIN",
         'int':      "INT",
-        'var':      "Var",
+        'var':      "VAR",
     }
 
-    # List of token names.   This is always required
     tokens = (
         'IDENT', 'NUMBER',
         'SEMICOLON', 'EQUAL', 'COLON', 'LPAREN', 'RPAREN', 'RBRACE', 'LBRACE', 'EOF',
@@ -77,7 +76,7 @@ class MyLexer:
 
     def t_eof(self, t) -> None:
         """ EOF handler """
-        return None
+        pass
 
     def t_error(self, t) -> None:
         """ Prints an error message on unsuccessful line parsing """
@@ -99,7 +98,9 @@ class MyLexer:
             tok = self.lexer.token()
             if tok:
                 self.token_list.append(tok)
-                print(tok)
+                # print(tok)
+            else:
+                break
 
 
 if __name__=="__main__":

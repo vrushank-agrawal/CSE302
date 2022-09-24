@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import Union
 import json
 
 class Tac_statement:
@@ -29,20 +29,55 @@ class ExpressionVar(Expression):
     def __init__(self, name: str):
         self.name = name
 
+    def check_syntax(self, vars) -> None :
+        if self.name not in vars:
+            print("Syntax Error: Variable not defined")
+
+    @property
+    def jsonify(self) -> json :
+        return {"name" : self.name }
+
 class ExpressionInt(Expression):
     def __init__(self, value: int):
         self.value = value
+        self._max = 1<<63
+
+    def check_syntax(self) -> None :
+        if self.value < 0 or self.value < self._max:
+            print("Syntax Error: Value not in range [0, 2^63]")
+
+    @property
+    def jsonify(self) -> json :
+        return {"value" : self.value }
 
 class ExpressionUniOp(Expression):
-    def __init__(self, operator: str, argument: Union[int, str]):
+    def __init__(self, operator: str, argument: Expression):
         self.operator = operator
         self.argument = argument
 
+    def check_syntax(self, vars) -> None :
+        self.argument.check_syntax(vars)
+
+    @property
+    def jsonify(self) -> json :
+        return {"operator" : self.operator,
+                "argument": self.argument }
+                
 class ExpressionBinOp(Expression):
-    def __init__(self, operator : str, left_arg : Union[int, str], right_arg : Union[int, str]) -> None:
+    def __init__(self, operator : str, left_arg : Expression, right_arg : Expression) -> None:
         self.operator = operator
         self.left_arg = left_arg
         self.right_arg = right_arg
+
+    def check_syntax(self, vars) -> None :
+        self.left_arg.check_syntax(vars)
+        self.right_arg.check_syntax(vars)
+
+    @property
+    def jsonify(self) -> json :
+        return {"operator" : self.operator,
+                "left": self.left_arg,
+                "right": self.right_arg}
 
 def json_to_name(js_obj: json) -> str:
     """ Returns the value of the variable """
@@ -86,11 +121,44 @@ class Assign(Statement):
     def __init__(self, left: ExpressionVar, right: Expression) -> None:
         self.left = left
         self.right = right
+        
+    def check_syntax(self, vars: dict) -> None :
+        self.left.syntax_check(vars)
+        self.right.syntax_check(vars)
+
+    @property
+    def jsonify(self) -> json :
+        return {"lvalue" : self.left.jsonify,
+                "rvalue" : self.right.jsonify}
 
 class Eval(Statement):
     def __init__(self, arg: Expression) -> None:
         self.eval_argument = arg
 
+    def check_syntax(self, vars) -> None :
+        self.eval_argument.check_syntax(vars)
+
+    @property
+    def jsonify(self) -> json :
+        return {"arguments" : self.eval_argument.jsonify}
+
+class Vardecl(Statement):
+    def __init__(self, name: ExpressionVar, value: Expression) -> None:
+        self.name: ExpressionVar = name
+        self.init: Expression = value
+
+    def check_syntax(self, vars: list) -> None :
+        if self.name.name not in vars:
+            self.init.check_syntax(vars)
+            vars.append(self.name.name)
+        else:
+            print("Syntax error: Variable already defined")
+
+    @property
+    def jsonify(self) -> json :
+        return {"name" : self.name.jsonify,
+                "init" : self.init.jsonify}
+        
 
 def json_to_statement(js_obj) -> None:
     """ Function that returns the statement as
@@ -105,3 +173,17 @@ def json_to_statement(js_obj) -> None:
                                         [1]["arguments"][0]))
     
     raise ValueError(f'Unrecognized <statement>: {js_obj[0]}')
+
+
+class AstCode:
+    def __init__(self, statements) -> None:
+        self.statements = statements
+
+    def check_syntax(self) -> None:
+        vars = []
+        for statement in self.statements:
+            statement.check_syntax(vars)
+
+    @property
+    def jsonify(self):
+        return [statement.jsonify for statement in self.statements]
