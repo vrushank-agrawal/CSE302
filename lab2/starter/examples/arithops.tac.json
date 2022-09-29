@@ -1,116 +1,160 @@
-{
-    "proc": "@main",
-    "body": [
-        {
-            "opcode": "const",
-            "args": [
-                42
-            ],
-            "result": "%1"
-        },
-        {
-            "opcode": "copy",
-            "args": [
-                "%1"
-            ],
-            "result": "%0"
-        },
-        {
-            "opcode": "const",
-            "args": [
-                1
-            ],
-            "result": "%4"
-        },
-        {
-            "opcode": "shr",
-            "args": [
-                "%3",
-                "%4"
-            ],
-            "result": "%5"
-        },
-        {
-            "opcode": "copy",
-            "args": [
-                "%5"
-            ],
-            "result": "%2"
-        },
-        {
-            "opcode": "add",
-            "args": [
-                "%3",
-                "%6"
-            ],
-            "result": "%7"
-        },
-        {
-            "opcode": "print",
-            "args": [
-                "%7"
-            ],
-            "result": null
-        },
-        {
-            "opcode": "sub",
-            "args": [
-                "%3",
-                "%6"
-            ],
-            "result": "%8"
-        },
-        {
-            "opcode": "print",
-            "args": [
-                "%8"
-            ],
-            "result": null
-        },
-        {
-            "opcode": "const",
-            "args": [
-                3
-            ],
-            "result": "%10"
-        },
-        {
-            "opcode": "mul",
-            "args": [
-                "%3",
-                "%10"
-            ],
-            "result": "%11"
-        },
-        {
-            "opcode": "add",
-            "args": [
-                "%11",
-                "%6"
-            ],
-            "result": "%12"
-        },
-        {
-            "opcode": "copy",
-            "args": [
-                "%12"
-            ],
-            "result": "%9"
-        },
-        {
-            "opcode": "mod",
-            "args": [
-                "%13",
-                "%3"
-            ],
-            "result": "%14"
-        },
-        {
-            "opcode": "print",
-            "args": [
-                "%14"
-            ],
-            "result": null
-        }
-    ]
-}
+[
+    {
+        "proc": "@main",
+        "body": [
+            {
+                "opcode": "const",
+                "args": [
+                    42
+                ],
+                "result": "%0"
+            },
+            {
+                "opcode": "copy",
+                "args": [
+                    "%4"
+                ],
+                "result": "%2"
+            },
+            {
+                "opcode": "const",
+                "args": [
+                    1
+                ],
+                "result": "%3"
+            },
+            {
+                "opcode": "shr",
+                "args": [
+                    "%2",
+                    "%3"
+                ],
+                "result": "%1"
+            },
+            {
+                "opcode": "copy",
+                "args": [
+                    "%4"
+                ],
+                "result": "%6"
+            },
+            {
+                "opcode": "copy",
+                "args": [
+                    "%8"
+                ],
+                "result": "%7"
+            },
+            {
+                "opcode": "add",
+                "args": [
+                    "%6",
+                    "%7"
+                ],
+                "result": "%5"
+            },
+            {
+                "opcode": "print",
+                "args": [
+                    "%5"
+                ],
+                "result": null
+            },
+            {
+                "opcode": "copy",
+                "args": [
+                    "%4"
+                ],
+                "result": "%10"
+            },
+            {
+                "opcode": "copy",
+                "args": [
+                    "%8"
+                ],
+                "result": "%11"
+            },
+            {
+                "opcode": "sub",
+                "args": [
+                    "%10",
+                    "%11"
+                ],
+                "result": "%9"
+            },
+            {
+                "opcode": "print",
+                "args": [
+                    "%9"
+                ],
+                "result": null
+            },
+            {
+                "opcode": "copy",
+                "args": [
+                    "%4"
+                ],
+                "result": "%15"
+            },
+            {
+                "opcode": "const",
+                "args": [
+                    3
+                ],
+                "result": "%16"
+            },
+            {
+                "opcode": "mul",
+                "args": [
+                    "%15",
+                    "%16"
+                ],
+                "result": "%13"
+            },
+            {
+                "opcode": "copy",
+                "args": [
+                    "%8"
+                ],
+                "result": "%14"
+            },
+            {
+                "opcode": "add",
+                "args": [
+                    "%13",
+                    "%14"
+                ],
+                "result": "%12"
+            },
+            {
+                "opcode": "copy",
+                "args": [
+                    "%20"
+                ],
+                "result": "%18"
+            },
+            {
+                "opcode": "copy",
+                "args": [
+                    "%4"
+                ],
+                "result": "%19"
+            },
+            {
+                "opcode": "mod",
+                "args": [
+                    "%18",
+                    "%19"
+                ],
+                "result": "%17"
+            },
+            {
+                "opcode": "print",
+                "args": [
+                    "%17"
+                ],
+                "result": null
+            }
+        ]
+    }
+]

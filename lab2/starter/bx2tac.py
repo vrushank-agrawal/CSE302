@@ -1,6 +1,7 @@
 import argparse, sys, json
 import bx_parser as lexer_parser
 import bx_ast_classes as ast
+from py.tac2asm import compile_tac
 from typing import List
 
 # ------------------------------------------------------------------------------#
@@ -15,9 +16,9 @@ class Code_as_tac_json:
         self.ast_code = Code(ast_classes.statements, method)
         self.method = method
     
-    def json_tac(self) -> json:
-        return {"proc": "@main",
-                "body": [statement.json_field for statement in self.ast_code.instructions] }
+    def json_tac(self) -> List:
+        return [{"proc": "@main",
+                "body": [statement.json_field for statement in self.ast_code.instructions] }]
 
 # ------------------------------------------------------------------------------#
 # ast to tac code conversion Munch Methods
@@ -170,7 +171,7 @@ class Code:
                                                     [self.bmm_expression(statement.init)], 
                                                     result_temp))
         elif isinstance(statement, ast.Assign):
-            result_temp = self.return_temp(statement.left.name)
+            result_temp = self.return_temp(statement.left)
             self.instructions.append(ast.Tac_statement("copy", 
                                                     [self.bmm_expression(statement.right)], 
                                                     result_temp))
@@ -211,3 +212,4 @@ if __name__=="__main__":
     with open(tac_filename, 'w') as fp:         # save the file
         json.dump(tac_code.json_tac(), fp, indent=4)
 
+    compile_tac(tac_filename)

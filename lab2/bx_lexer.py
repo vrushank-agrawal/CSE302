@@ -1,3 +1,5 @@
+# import ply.lex as lex
+
 import py.ply.lex as lex
 # Class implementation not working for some reason
 # switching to simple straightforward function defs

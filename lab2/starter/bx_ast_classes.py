@@ -1,5 +1,3 @@
-# from typing import Union
-from glob import glob
 import json, sys
 from typing import List
 
@@ -30,6 +28,7 @@ class ExpressionInt(Expression):
         self.value = value
         self._max = 1<<63
         self.pos = pos
+        print(f"arg: {self.value}")
 
     def check_syntax(self) -> None :
         if self.value < 0 or self.value > self._max:
@@ -63,12 +62,15 @@ class Statement:
         pass
 
 class Assign(Statement):
-    def __init__(self, left: ExpressionVar, right: Expression) -> None:
+    def __init__(self, left: str, right: Expression) -> None:
         self.left = left
         self.right = right
         
     def check_syntax(self) -> None :
-        self.left.check_syntax()
+        global vars
+        if self.left not in vars:
+            print(f"Syntax Error: Undefined variable at line {self.pos}")
+            sys.exit(1)
         self.right.check_syntax()
 
 class Eval(Statement):
