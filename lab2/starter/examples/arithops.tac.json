@@ -1,0 +1,71 @@
+{
+    "proc": "@main",
+    "body": [
+        {
+            "opcode": "const",
+            "args": [
+                0
+            ],
+            "result": "%0"
+        },
+        {
+            "opcode": "const",
+            "args": [
+                0
+            ],
+            "result": "%1"
+        },
+        {
+            "opcode": "add",
+            "args": [
+                "%2",
+                "%3"
+            ],
+            "result": "%4"
+        },
+        {
+            "opcode": "print",
+            "args": [
+                "%4"
+            ],
+            "result": null
+        },
+        {
+            "opcode": "sub",
+            "args": [
+                "%2",
+                "%3"
+            ],
+            "result": "%5"
+        },
+        {
+            "opcode": "print",
+            "args": [
+                "%5"
+            ],
+            "result": null
+        },
+        {
+            "opcode": "const",
+            "args": [
+                0
+            ],
+            "result": "%6"
+        },
+        {
+            "opcode": "mod",
+            "args": [
+                "%7",
+                "%2"
+            ],
+            "result": "%8"
+        },
+        {
+            "opcode": "print",
+            "args": [
+                "%8"
+            ],
+            "result": null
+        }
+    ]
+}

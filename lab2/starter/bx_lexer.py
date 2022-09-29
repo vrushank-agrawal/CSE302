@@ -23,7 +23,7 @@ reserved = {
 
 tokens = (
     'IDENT', 'NUMBER',
-    'SEMICOLON', 'EQUAL', 'COLON', 'LPAREN', 'RPAREN', 'RBRACE', 'LBRACE', 'EOF',
+    'SEMICOLON', 'EQUAL', 'COLON', 'LPAREN', 'RPAREN', 'RBRACE', 'LBRACE',
     'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'MODULUS',
     'BITWISE_AND', 'BITWISE_OR', 'BITWISE_XOR', 'BITWISE_SHL', 'BITWISE_SHR', 'BITWISE_NOT',
 ) + tuple(reserved.values())
@@ -76,10 +76,6 @@ def t_COMMENT(t) -> None:
 def t_newline(t) -> None:
     """ Ignores the newline character and augments the line number """
     t.lexer.lineno += len(t.value)
-
-def t_eof(t) -> None:
-    """ EOF handler """
-    pass
 
 def t_error(t) -> None:
     """ Prints an error message on unsuccessful line parsing """

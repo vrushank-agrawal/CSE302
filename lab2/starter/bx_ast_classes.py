@@ -1,4 +1,4 @@
-from typing import Union
+# from typing import Union
 import json
 
 class Tac_statement:
@@ -77,35 +77,35 @@ class ExpressionBinOp(Expression):
                 "left": self.left_arg.jsonize(),
                 "right": self.right_arg.jsonize()}
 
-def json_to_name(js_obj: json) -> str:
-    """ Returns the value of the variable """
-    return js_obj[1]['value']
+# def json_to_name(js_obj: json) -> str:
+#     """ Returns the value of the variable """
+#     return js_obj[1]['value']
 
-def json_to_expr(js_obj: json) -> Expression:
-    """ Function that returns the expression as a class 
-        hierarchy from a json object recursively """
+# def json_to_expr(js_obj: json) -> Expression:
+#     """ Function that returns the expression as a class 
+#         hierarchy from a json object recursively """
 
-    if js_obj[0] == '<expression:var>':
-        return ExpressionVar(json_to_name(js_obj[1]['name']))
+#     if js_obj[0] == '<expression:var>':
+#         return ExpressionVar(json_to_name(js_obj[1]['name']))
     
-    if js_obj[0] == '<lvalue:var>':
-        return ExpressionVar(json_to_name(js_obj[1]['name']))
+#     if js_obj[0] == '<lvalue:var>':
+#         return ExpressionVar(json_to_name(js_obj[1]['name']))
     
-    if js_obj[0] == '<expression:int>':
-        return ExpressionInt(js_obj[1]['value'])
+#     if js_obj[0] == '<expression:int>':
+#         return ExpressionInt(js_obj[1]['value'])
     
-    if js_obj[0] == '<expression:uniop>':
-        operator = json_to_name(js_obj[1]['operator'])
-        argument = json_to_expr(js_obj[1]['argument']) # recursive call
-        return ExpressionUniOp(operator, argument)
+#     if js_obj[0] == '<expression:uniop>':
+#         operator = json_to_name(js_obj[1]['operator'])
+#         argument = json_to_expr(js_obj[1]['argument']) # recursive call
+#         return ExpressionUniOp(operator, argument)
     
-    if js_obj[0] == '<expression:binop>':
-        operator = json_to_name(js_obj[1]['operator'])
-        left_arg = json_to_expr(js_obj[1]['left'])   # recursive call
-        right_arg = json_to_expr(js_obj[1]['right']) # recursive call
-        return ExpressionBinOp(operator, left_arg, right_arg)
+#     if js_obj[0] == '<expression:binop>':
+#         operator = json_to_name(js_obj[1]['operator'])
+#         left_arg = json_to_expr(js_obj[1]['left'])   # recursive call
+#         right_arg = json_to_expr(js_obj[1]['right']) # recursive call
+#         return ExpressionBinOp(operator, left_arg, right_arg)
     
-    raise ValueError(f'Unrecognized <expression>: {js_obj[0]}')
+#     raise ValueError(f'Unrecognized <expression>: {js_obj[0]}')
 
 # ------------------------------------------------------------------------------#
 # Statement Classes
@@ -156,19 +156,19 @@ class Vardecl(Statement):
                 "init" : self.init}
         
 
-def json_to_statement(js_obj) -> None:
-    """ Function that returns the statement as
-        a class hierarchy from a json object """
+# def json_to_statement(js_obj) -> None:
+#     """ Function that returns the statement as
+#         a class hierarchy from a json object """
 
-    if js_obj[0] == '<statement:assign>':
-        return Assign(json_to_expr(js_obj[1]["lvalue"]),
-                      json_to_expr(js_obj[1]["rvalue"]))
+#     if js_obj[0] == '<statement:assign>':
+#         return Assign(json_to_expr(js_obj[1]["lvalue"]),
+#                       json_to_expr(js_obj[1]["rvalue"]))
     
-    if js_obj[0] == '<statement:eval>':
-        return Eval(json_to_expr(js_obj[1]["expression"]\
-                                        [1]["arguments"][0]))
+#     if js_obj[0] == '<statement:eval>':
+#         return Eval(json_to_expr(js_obj[1]["expression"]\
+#                                         [1]["arguments"][0]))
     
-    raise ValueError(f'Unrecognized <statement>: {js_obj[0]}')
+#     raise ValueError(f'Unrecognized <statement>: {js_obj[0]}')
 
 
 class AstCode:
@@ -180,5 +180,5 @@ class AstCode:
         for statement in self.statements:
             statement.check_syntax(vars)
 
-    def jsonize(self):
-        return {"ast": [statement.jsonize() for statement in self.statements]}
+    # def jsonize(self) -> json:
+    #     return {"ast": [statement.jsonize() for statement in self.statements]}

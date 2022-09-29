@@ -1,3 +1,4 @@
+import ast
 from py.ply import yacc as yacc
 import bx_lexer
 import bx_ast_classes as ast_classes
@@ -150,13 +151,14 @@ def p_error(p):
 # main function drivers
 # ------------------------------------------------------------------------------#
 
-def run_parser(code):
+def run_parser(code) -> ast_classes.AstCode:
     """ Runs the lexer and the parser to return a json ast"""
     lexer = bx_lexer.lex.lex(module=bx_lexer)
     parser = yacc.yacc()
     par = parser.parse(code, lexer=lexer, tracking=True)
     # print("start code parsing")
-    print(par.jsonize)
+    # jsn = par.jsonize()
+    # print(jsn["ast"])
     return par
 
 

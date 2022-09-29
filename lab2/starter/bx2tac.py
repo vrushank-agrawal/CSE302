@@ -11,8 +11,8 @@ class Code_as_tac_json:
     """ This class creates the tac file in json format
         that implements the given method bmm or tmm """
     
-    def __init__(self, js_obj: json, method: str) -> None:
-        self.ast_code = Code(js_obj, method)
+    def __init__(self, ast_classes: ast.AstCode, method: str) -> None:
+        self.ast_code = Code(ast_classes.statements, method)
         self.method = method
     
     def json_tac(self) -> json:
@@ -24,7 +24,7 @@ class Code_as_tac_json:
 # ------------------------------------------------------------------------------#
 
 binopcode_dict = { 
-    "addition": "add", "substraction": "sub", 
+    "addition": "add", "subtraction": "sub", 
     "multiplication": "mul", "division": "div", 
     "modulus": "mod", "bitwise-and": "and", 
     "logical-shift-right": "shr", "bitwise-or": "or", 
@@ -36,9 +36,9 @@ uniopcode_dict = {
 }
 
 class Code:
-    def __init__(self, js_obj: json, method: str) -> None:
+    def __init__(self, statements: List, method: str) -> None:
         self.method: str = method
-        self.js_obj: json = js_obj
+        self.statements: List = statements
         self.temp_var_map: dict = {}
         self.global_reg_counter: int = 0
         self.instructions: List = []
@@ -64,18 +64,18 @@ class Code:
         """ Converts all statements to singluar json objects 
             and stores them in the instructions variable """
         
-        js_obj = self.js_obj[0][1]           # get the proc entry from the ast
-        body = js_obj["body"][:]        # get all json elements in the body of proc
+        # js_obj = self.js_obj[0][1]           # get the proc entry from the ast
+        # body = js_obj["body"][:]        # get all json elements in the body of proc
 
-        for elem in body:   # loop through all statements in the body
-            if elem[0] == "<statement:vardecl>":    # append a variable declaration
-                variable_value = elem[1]["name"][1]["value"]
+        for elem in self.statements:   # loop through all statements in the body
+            if isinstance(elem, ast.Vardecl):    # append a variable declaration
+                variable_value = elem.name
                 temp_reg = self.return_temp(variable_value)
                 self.instructions.append(ast.Tac_statement("const", [0], temp_reg))
             elif self.method == "bmm":   # Otherwise treat the statement as bmm
-                self.bmm_statement(ast.json_to_statement(elem))
+                self.bmm_statement(elem)
             elif self.method == "tmm":   # Otherwise treat the statement as tmm
-                self.tmm_statement(ast.json_to_statement(elem))
+                self.tmm_statement(elem)
             else:
                 print("This is not supposed to happen. Apocalypse!")
                 sys.exit(1)
@@ -198,9 +198,9 @@ if __name__=="__main__":
     with open(filename, 'r') as fp:
         code = fp.read()
 
-    js_obj = lexer_parser.run_parser(code)
-
-    tac_code = Code_as_tac_json(js_obj['ast'], method)
+    ast_ = lexer_parser.run_parser(code)
+    # ast_.check_syntax()
+    tac_code = Code_as_tac_json(ast_, method)
     tac_filename = filename[:-2] + 'tac.json'
     with open(tac_filename, 'w') as fp:
         json.dump(tac_code.json_tac(), fp, indent=4)
