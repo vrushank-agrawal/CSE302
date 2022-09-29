@@ -68,11 +68,11 @@ class Code:
         # body = js_obj["body"][:]        # get all json elements in the body of proc
 
         for elem in self.statements:   # loop through all statements in the body
-            if isinstance(elem, ast.Vardecl):    # append a variable declaration
-                variable_value = elem.name
-                temp_reg = self.return_temp(variable_value)
-                self.instructions.append(ast.Tac_statement("const", [0], temp_reg))
-            elif self.method == "bmm":   # Otherwise treat the statement as bmm
+            # if isinstance(elem, ast.Vardecl):    # append a variable declaration
+            #     variable_value = elem.name
+            #     temp_reg = self.return_temp(variable_value)
+            #     self.instructions.append(ast.Tac_statement("const", [0], temp_reg))
+            if self.method == "bmm":   # Otherwise treat the statement as bmm
                 self.bmm_statement(elem)
             elif self.method == "tmm":   # Otherwise treat the statement as tmm
                 self.tmm_statement(elem)
@@ -115,8 +115,12 @@ class Code:
 
     def tmm_statement(self, statement: ast.Statement) -> None :
         """ Appends instructions as singluar json objects using the tmm method """
-
-        if isinstance(statement, ast.Assign):
+        
+        if isinstance(statement, ast.Vardecl):
+            temp_reg = self.fresh_temp(statement.name)
+            self.tmm_expression(statement.init, 
+                                temp_reg)
+        elif isinstance(statement, ast.Assign):
             result_temp = self.return_temp(statement.left.name)
             self.tmm_expression(statement.right, 
                                 result_temp)
@@ -164,8 +168,13 @@ class Code:
 
     def bmm_statement(self, statement: ast.Statement) -> None:
         """ Appends instructions as singluar json objects using the bmm method """
-
-        if isinstance(statement, ast.Assign):
+        
+        if isinstance(statement, ast.Vardecl):
+            result_temp = self.fresh_temp(statement.name)
+            self.instructions.append(ast.Tac_statement("copy", 
+                                                    [self.bmm_expression(statement.init)], 
+                                                    result_temp))
+        elif isinstance(statement, ast.Assign):
             result_temp = self.return_temp(statement.left.name)
             self.instructions.append(ast.Tac_statement("copy", 
                                                     [self.bmm_expression(statement.right)], 
