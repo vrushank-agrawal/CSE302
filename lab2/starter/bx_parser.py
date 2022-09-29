@@ -156,9 +156,6 @@ def run_parser(code) -> ast_classes.AstCode:
     lexer = bx_lexer.lex.lex(module=bx_lexer)
     parser = yacc.yacc()
     par = parser.parse(code, lexer=lexer, tracking=True)
-    # print("start code parsing")
-    # jsn = par.jsonize()
-    # print(jsn["ast"])
     return par
 
 

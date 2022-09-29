@@ -63,15 +63,8 @@ class Code:
     def init_parse(self) -> None:
         """ Converts all statements to singluar json objects 
             and stores them in the instructions variable """
-        
-        # js_obj = self.js_obj[0][1]           # get the proc entry from the ast
-        # body = js_obj["body"][:]        # get all json elements in the body of proc
 
         for elem in self.statements:   # loop through all statements in the body
-            # if isinstance(elem, ast.Vardecl):    # append a variable declaration
-            #     variable_value = elem.name
-            #     temp_reg = self.return_temp(variable_value)
-            #     self.instructions.append(ast.Tac_statement("const", [0], temp_reg))
             if self.method == "bmm":   # Otherwise treat the statement as bmm
                 self.bmm_statement(elem)
             elif self.method == "tmm":   # Otherwise treat the statement as tmm
@@ -208,7 +201,7 @@ if __name__=="__main__":
         code = fp.read()
 
     ast_ = lexer_parser.run_parser(code)
-    # ast_.check_syntax()
+    ast_.check_syntax()
     tac_code = Code_as_tac_json(ast_, method)
     tac_filename = filename[:-2] + 'tac.json'
     with open(tac_filename, 'w') as fp:
