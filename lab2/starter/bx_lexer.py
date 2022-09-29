@@ -1,4 +1,3 @@
-from typing import List
 from py.ply import lex as lex
 
 # Class implementation not working for some reason
@@ -97,7 +96,8 @@ def test(data) -> None:
     while True:
         tok = lex.token()
         if tok:
-            print(tok)
+            pass
+            # print(tok)    # DEBUG
         else:
             break
 

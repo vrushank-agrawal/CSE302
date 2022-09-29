@@ -23,6 +23,7 @@ class Code_as_tac_json:
 # ast to tac code conversion Munch Methods
 # ------------------------------------------------------------------------------#
 
+# maps for converting operations
 binopcode_dict = { 
     "addition": "add", "subtraction": "sub", 
     "multiplication": "mul", "division": "div", 
@@ -48,12 +49,13 @@ class Code:
         """ Creates and returns a fresh temporary """
         fresh_temp = f"%{self.global_reg_counter}"
         self.global_reg_counter += 1
+        # if the temp has a variable name then append it to temp_map
         if name != '':
             self.temp_var_map[name] = fresh_temp
         return fresh_temp
 
     def return_temp(self, name: str) -> str:
-        """ Returns the temp reg allocator """
+        """ Returns the temp allocator """
         if name in self.temp_var_map:
             temp = self.temp_var_map[name]
         else:
@@ -191,19 +193,21 @@ if __name__=="__main__":
     parser.add_argument('--tmm', dest='tmm', action="store_true", default=False)
     parser.add_argument('--bmm', dest='bmm', action='store_true', default=False)
     parser.add_argument('filename', metavar="FILE", type=str, nargs=1)
-
     args = parser.parse_args(sys.argv[1:])
-    method = "bmm"      # select default method for conversion as bmm
-    if args.tmm: method = "tmm"
-    filename = args.filename[0]
+    
+    method = "bmm"                  # select default method for conversion as bmm
+    if args.tmm:                    # change method to tmm
+        method = "tmm"
+    filename = args.filename[0]     # get the filename
 
-    with open(filename, 'r') as fp:
+    with open(filename, 'r') as fp:             # read the bx code as text
         code = fp.read()
 
-    ast_ = lexer_parser.run_parser(code)
-    ast_.check_syntax()
-    tac_code = Code_as_tac_json(ast_, method)
-    tac_filename = filename[:-2] + 'tac.json'
-    with open(tac_filename, 'w') as fp:
+    ast_ = lexer_parser.run_parser(code)        # run lexer and parser
+    ast_.check_syntax()                         # check syntax
+    tac_code = Code_as_tac_json(ast_, method)   # convert ast code to json
+    
+    tac_filename = filename[:-2] + 'tac.json'   # get new file name
+    with open(tac_filename, 'w') as fp:         # save the file
         json.dump(tac_code.json_tac(), fp, indent=4)
 

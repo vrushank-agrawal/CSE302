@@ -1,4 +1,3 @@
-import ast
 from py.ply import yacc as yacc
 import bx_lexer
 import bx_ast_classes as ast_classes
