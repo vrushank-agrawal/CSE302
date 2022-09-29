@@ -1,6 +1,10 @@
 # from typing import Union
-import json
+from glob import glob
+import json, sys
 from typing import List
+
+# global macro for check_syntax
+vars = []
 
 # ------------------------------------------------------------------------------#
 # Expression Classes
@@ -15,9 +19,11 @@ class ExpressionVar(Expression):
         self.name = name
         self.pos = pos
 
-    def check_syntax(self, vars) -> None :
+    def check_syntax(self) -> None :
+        global vars
         if self.name not in vars:
-            print(f"Syntax Error: Variable not defined at line {self.pos}")
+            print(f"Syntax Error: Undefined variable at line {self.pos}")
+            sys.exit(1)
 
 class ExpressionInt(Expression):
     def __init__(self, value: int, pos: int = None):
@@ -26,16 +32,17 @@ class ExpressionInt(Expression):
         self.pos = pos
 
     def check_syntax(self) -> None :
-        if self.value < 0 or self.value < self._max:
+        if self.value < 0 or self.value > self._max:
             print(f"Syntax Error: Value not in range [0, 2^63] at line {self.pos}")
+            sys.exit(1)
 
 class ExpressionUniOp(Expression):
     def __init__(self, operator: str, argument: Expression):
         self.operator = operator
         self.argument = argument
 
-    def check_syntax(self, vars) -> None :
-        self.argument.check_syntax(vars)
+    def check_syntax(self) -> None :
+        self.argument.check_syntax()
 
 class ExpressionBinOp(Expression):
     def __init__(self, operator : str, left_arg : Expression, right_arg : Expression) -> None:
@@ -43,9 +50,9 @@ class ExpressionBinOp(Expression):
         self.left_arg = left_arg
         self.right_arg = right_arg
 
-    def check_syntax(self, vars) -> None :
-        self.left_arg.check_syntax(vars)
-        self.right_arg.check_syntax(vars)
+    def check_syntax(self) -> None :
+        self.left_arg.check_syntax()
+        self.right_arg.check_syntax()
 
 # ------------------------------------------------------------------------------#
 # Statement Classes
@@ -60,16 +67,16 @@ class Assign(Statement):
         self.left = left
         self.right = right
         
-    def check_syntax(self, vars: dict) -> None :
-        self.left.syntax_check(vars)
-        self.right.syntax_check(vars)
+    def check_syntax(self) -> None :
+        self.left.check_syntax()
+        self.right.check_syntax()
 
 class Eval(Statement):
     def __init__(self, arg: Expression) -> None:
         self.eval_argument = arg
 
-    def check_syntax(self, vars) -> None :
-        self.eval_argument.check_syntax(vars)
+    def check_syntax(self) -> None :
+        self.eval_argument.check_syntax()
 
 class Vardecl(Statement):
     def __init__(self, name: ExpressionVar, value: Expression, pos: int = None) -> None:
@@ -77,25 +84,31 @@ class Vardecl(Statement):
         self.init: Expression = value
         self.pos = pos
 
-    def check_syntax(self, vars: list) -> None :
+    def check_syntax(self) -> None :
+        global vars
         if self.name.name not in vars:
-            self.init.check_syntax(vars)
+            self.init.check_syntax()
             vars.append(self.name.name)
         else:
-            print(f"Syntax error: Variable already defined at line {self.pos}")
-        
+            print(f"Syntax error: Redefinition of variable at line {self.pos}")
+            sys.exit(1)
+
 # ------------------------------------------------------------------------------#
 # Code to json Classes
 # ------------------------------------------------------------------------------#
 
 class AstCode:
-    def __init__(self, statements: List) -> None:
+    def __init__(self, statements: List, pos: int, main: int = 1 ) -> None:
         self.statements: List = statements
+        if main != 1:
+            print(f"Syntax error: Main function defined twice at line {pos}")
+            sys.exit(1)
 
     def check_syntax(self) -> None:
+        global vars
         vars = []
         for statement in self.statements:
-            statement.check_syntax(vars)
+            statement.check_syntax()
 
 class Tac_statement:
     """ This class is for returning TAC statements in json format """

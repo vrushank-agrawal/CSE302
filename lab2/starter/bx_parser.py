@@ -2,6 +2,16 @@ from py.ply import yacc as yacc
 import bx_lexer
 import bx_ast_classes as ast_classes
 
+# class not working for some reason hence
+# switching to somple function defs
+
+# class MyParser:
+#     """ Class for parsing the lexer code """
+    
+# ---------------------------------------------------------------------#
+# MACROS
+# ---------------------------------------------------------------------#
+
 bin_operator_name = {        
     '+': 'addition', 
     '-': "subtraction", 
@@ -20,15 +30,7 @@ uni_operator_name = {
     '-': "opposite", 
 }
 
-# class not working for some reason hence
-# switching to somple function defs
-
-# class MyParser:
-#     """ Class for parsing the lexer code """
-    
-# ---------------------------------------------------------------------#
-# MACROS
-# ---------------------------------------------------------------------#
+num_main = 0        # numb of main functions declared
 
 tokens = bx_lexer.tokens + ('UMINUS',)
 
@@ -43,15 +45,15 @@ precedence = (
     ('left', 'BITWISE_NOT'),
 )
 
-
 # ---------------------------------------------------------------------#
 # code parsers
 # ---------------------------------------------------------------------#
 
 def p_astcode(p):
     """astcode : DEF MAIN LPAREN RPAREN LBRACE statements RBRACE """
-    print("entered main")
-    p[0] = ast_classes.AstCode(p[6])  
+    global num_main
+    num_main += 1
+    p[0] = ast_classes.AstCode(p[6], p.lineno, num_main)
 
 def p_statements(p):
     """statements : 
@@ -152,6 +154,8 @@ def p_error(p):
 
 def run_parser(code) -> ast_classes.AstCode:
     """ Runs the lexer and the parser to return a json ast"""
+    global num_main
+    num_main = 0
     lexer = bx_lexer.lex.lex(module=bx_lexer)
     parser = yacc.yacc()
     par = parser.parse(code, lexer=lexer, tracking=True)
