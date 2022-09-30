@@ -219,8 +219,9 @@ if __name__=="__main__":
     # print(ast_)
     # print('lexed and parsed')
     if ast_ is None: 
-        # print(f"Syntax error occured")
-        sys.exit(1)                # exit if error occured while parsing 
+        raise SyntaxError("at line 1")          # exit if error occured while parsing 
+    # if ast_.statements is None:
+    #     raise SyntaxError(f"The file is empty") # exit if file is empty 
     ast_.check_syntax()                         # check syntax
     print('reached tac json')
     tac_code = Code_as_tac_json(ast_, method)   # convert ast code to json

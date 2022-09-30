@@ -42,7 +42,7 @@ class ExpressionInt(Expression):
     def check_syntax(self) -> None :
         # print(f"entered ExprInt value: {self.value}")
         if self.value < 0 or self.value >= self._max:
-            self.syntax_error(f"Value not in range [0, 2^63] at line {self.pos}")
+            self.syntax_error(f"Value not in range [0, 2^63) at line {self.pos}")
 
 class ExpressionUniOp(Expression):
     def __init__(self, operator: str, argument: Expression):

@@ -50,7 +50,8 @@ precedence = (
 # ---------------------------------------------------------------------#
 
 def p_astcode(p):
-    """astcode : DEF MAIN LPAREN RPAREN LBRACE statements RBRACE """
+    """astcode : DEF MAIN LPAREN RPAREN LBRACE statements RBRACE 
+               | empty """
     global num_main
     num_main += 1
     p[0] = ast_classes.AstCode(p[6], p.lineno, num_main)
@@ -145,9 +146,11 @@ def p_expression_parens(p):    # Remove parentheses
 def p_error(p):
     if not p:   #EOF
         return
-    print(f"Syntax error while processing {p.type} at line {p.lineno}")
-    from sys import exit
-    exit(1)
+    raise SyntaxError(f" while processing {p.type} at line {p.lineno}")
+
+def p_empty(p):
+    'empty :'
+    raise SyntaxError(f"Empty file")
 
 # ------------------------------------------------------------------------------#
 # main function drivers
