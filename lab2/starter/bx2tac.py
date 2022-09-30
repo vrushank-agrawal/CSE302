@@ -53,13 +53,17 @@ class Code:
         # if the temp has a variable name then append it to temp_map
         if name != '':
             self.temp_var_map[name] = fresh_temp
+        print(f"name: {name} -- fresh temp: {self.temp_var_map}")
         return fresh_temp
 
     def return_temp(self, name: str) -> str:
         """ Returns the temp allocator """
+        print(f"name: {name} -- return temp: {self.temp_var_map}")
         if name in self.temp_var_map:
             temp = self.temp_var_map[name]
+            print("entered if stmt")
         else:
+            print("entered else stmt")
             temp = self.fresh_temp(name)
         return temp
 
@@ -89,8 +93,9 @@ class Code:
                                                     [stored_temp], 
                                                     final_result))
         elif isinstance(expression, ast.ExpressionInt):
+            val = expression.value
             self.instructions.append(ast.Tac_statement('const',
-                                                    [expression.value],
+                                                    [val],
                                                     final_result))
         elif isinstance(expression, ast.ExpressionUniOp):
             result_temp = self.fresh_temp()
@@ -113,16 +118,19 @@ class Code:
         """ Appends instructions as singluar json objects using the tmm method """
         
         if isinstance(statement, ast.Vardecl):
-            temp_reg = self.fresh_temp(statement.name)
-            self.tmm_expression(statement.init, 
+            temp_reg = self.fresh_temp(statement.name.name)
+            init = statement.init
+            self.tmm_expression(init, 
                                 temp_reg)
         elif isinstance(statement, ast.Assign):
-            result_temp = self.return_temp(statement.left.name)
-            self.tmm_expression(statement.right, 
+            result_temp = self.return_temp(statement.left)
+            right = statement.right
+            self.tmm_expression(right,
                                 result_temp)
         elif isinstance(statement, ast.Eval):
             result_temp = self.fresh_temp()
-            self.tmm_expression(statement.eval_argument, result_temp)
+            eval_arg = statement.eval_argument
+            self.tmm_expression(eval_arg, result_temp)
             self.instructions.append(ast.Tac_statement("print", 
                                                     [result_temp], 
                                                     None))
@@ -147,13 +155,16 @@ class Code:
             return result_temp
         elif isinstance(expression, ast.ExpressionUniOp):
             result_temp = self.fresh_temp()
+            val_temp  = self.bmm_expression(expression.argument)
             self.instructions.append(ast.Tac_statement(uniopcode_dict[expression.operator], 
-                                                   [self.bmm_expression(expression.argument)],
+                                                   [val_temp],
                                                    result_temp))
             return result_temp
         elif isinstance(expression, ast.ExpressionBinOp):
-            arguments = [self.bmm_expression(expression.left_arg), 
-                         self.bmm_expression(expression.right_arg)]
+            left_arg = expression.left_arg
+            right_arg = expression.right_arg
+            arguments = [self.bmm_expression(left_arg), 
+                         self.bmm_expression(right_arg)]
             result_temp = self.fresh_temp()
             self.instructions.append(ast.Tac_statement(binopcode_dict[expression.operator], 
                                                    arguments, 
@@ -166,14 +177,16 @@ class Code:
         """ Appends instructions as singluar json objects using the bmm method """
         
         if isinstance(statement, ast.Vardecl):
-            result_temp = self.fresh_temp(statement.name)
+            result_temp = self.fresh_temp(statement.name.name)
+            val_temp = self.bmm_expression(statement.init)
             self.instructions.append(ast.Tac_statement("copy", 
-                                                    [self.bmm_expression(statement.init)], 
+                                                    [val_temp],
                                                     result_temp))
         elif isinstance(statement, ast.Assign):
             result_temp = self.return_temp(statement.left)
+            val_temp = self.bmm_expression(statement.right)
             self.instructions.append(ast.Tac_statement("copy", 
-                                                    [self.bmm_expression(statement.right)], 
+                                                    [val_temp], 
                                                     result_temp))
         elif isinstance(statement, ast.Eval):
             result_temp = self.bmm_expression(statement.eval_argument)
@@ -200,14 +213,17 @@ if __name__=="__main__":
     if args.tmm:                    # change method to tmm
         method = "tmm"
     filename = args.filename[0]     # get the filename
-
+    # print('hi')
     with open(filename, 'r') as fp:             # read the bx code as text
         code = fp.read()
 
     ast_ = lexer_parser.run_parser(code)        # run lexer and parser
-    ast_.check_syntax()                         # check syntax
+    # print('lexed and parsed')
+    if ast_ is None: sys.exit(1)                # exit if error occured while parsing 
+    # ast_.check_syntax()                         # check syntax
+    # print('reached tac json')
     tac_code = Code_as_tac_json(ast_, method)   # convert ast code to json
-    
+    print("tac json created")
     tac_filename = filename[:-2] + 'tac.json'   # get new file name
     with open(tac_filename, 'w') as fp:         # save the file
         json.dump(tac_code.json_tac(), fp, indent=4)
