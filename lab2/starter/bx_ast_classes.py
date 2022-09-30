@@ -1,4 +1,5 @@
 import json
+from traceback import print_tb
 from typing import List
 
 # global macro for check_syntax
@@ -26,7 +27,7 @@ class ExpressionVar(Expression):
         self.pos = pos
 
     def check_syntax(self) -> None :
-        print(f"entered ExprVar check_syntax {self.pos}")
+        # print(f"entered ExprVar check_syntax {self.pos}")
         global vars
         if self.name not in vars:
             self.syntax_error(f"Undefined variable at line {self.pos}")
@@ -39,8 +40,8 @@ class ExpressionInt(Expression):
         self.pos = pos
 
     def check_syntax(self) -> None :
-        print(f"entered ExprInt check_syntax {self.pos}")
-        if self.value < 0 or self.value > self._max:
+        # print(f"entered ExprInt value: {self.value}")
+        if self.value < 0 or self.value >= self._max:
             self.syntax_error(f"Value not in range [0, 2^63] at line {self.pos}")
 
 class ExpressionUniOp(Expression):
@@ -79,11 +80,11 @@ class Assign(Statement):
         self.pos = pos
         
     def check_syntax(self) -> None :
-        print(f"entered Assign check_syntax {self.pos}")
+        # print(f"entered Assign check_syntax {self.pos}")
         global vars
         if self.left not in vars:
             print("compared in assign")
-            self.syntax_error(f"Undefined variable at line {self.pos}")
+            self.syntax_error(f"Undeclared variable at line {self.pos}")
         self.right.check_syntax()
 
 class Eval(Statement):
@@ -102,7 +103,7 @@ class Vardecl(Statement):
         self.pos = pos
 
     def check_syntax(self) -> None :
-        print(f"entered Vardecl check_syntax {self.pos}")
+        # print(f"entered Vardecl check_syntax {self.pos}")
         global vars
         if self.name.name not in vars:
             self.init.check_syntax()
