@@ -81,8 +81,7 @@ def p_vardecl(p):
 
 def p_assign(p):
     """assign : IDENT EQUAL expression SEMICOLON"""
-    p[0] = ast_classes.Assign(p[1], p[3])
-    print(p[0])
+    p[0] = ast_classes.Assign(p[1], p[3], p.lineno)
 
 def p_eval(p):
     """eval : PRINT LPAREN expression RPAREN SEMICOLON"""
@@ -147,6 +146,8 @@ def p_error(p):
     if not p:   #EOF
         return
     print(f"Syntax error while processing {p.type} at line {p.lineno}")
+    from sys import exit
+    exit(1)
 
 # ------------------------------------------------------------------------------#
 # main function drivers

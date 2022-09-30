@@ -79,7 +79,6 @@ def t_error(t) -> None:
     """ Prints an error message on unsuccessful line parsing """
     print("Illegal character '%s' at line '%s'" % (t.value[0], t.lexer.lineno))
     t.lexer.skip(1)
-    sys.exit(1)
 
 def find_column(input, token):
     """ Finds the column number of the pointer """

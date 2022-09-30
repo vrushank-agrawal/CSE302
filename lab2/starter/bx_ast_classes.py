@@ -1,4 +1,4 @@
-import json, sys
+import json
 from typing import List
 
 # global macro for check_syntax
@@ -10,7 +10,6 @@ class Node:
 
     def syntax_error(self, msg: str):
         raise SyntaxError(msg)
-        # sys.exit(1)
     
 # ------------------------------------------------------------------------------#
 # Expression Classes
@@ -27,11 +26,10 @@ class ExpressionVar(Expression):
         self.pos = pos
 
     def check_syntax(self) -> None :
+        print(f"entered ExprVar check_syntax {self.pos}")
         global vars
-        print("entered expressionVar check_syntax")
         if self.name not in vars:
-            self.syntax_error(f"Syntax Error: Undefined variable at line {self.pos}")
-            sys.exit(1)
+            self.syntax_error(f"Undefined variable at line {self.pos}")
 
 class ExpressionInt(Expression):
     def __init__(self, value: int, pos: int = None):
@@ -39,12 +37,11 @@ class ExpressionInt(Expression):
         self.value = value
         self._max = 1<<63
         self.pos = pos
-        # print(f"arg: {self.value}")
 
     def check_syntax(self) -> None :
+        print(f"entered ExprInt check_syntax {self.pos}")
         if self.value < 0 or self.value > self._max:
-            self.syntax_error(f"Syntax Error: Value not in range [0, 2^63] at line {self.pos}")
-            sys.exit(1)
+            self.syntax_error(f"Value not in range [0, 2^63] at line {self.pos}")
 
 class ExpressionUniOp(Expression):
     def __init__(self, operator: str, argument: Expression):
@@ -75,18 +72,18 @@ class Statement(Node):
         super().__init__()
 
 class Assign(Statement):
-    def __init__(self, left: str, right: Expression) -> None:
+    def __init__(self, left: str, right: Expression, pos: int) -> None:
         super().__init__()
         self.left = left
         self.right = right
+        self.pos = pos
         
     def check_syntax(self) -> None :
-        print("entered Assign check_syntax")
+        print(f"entered Assign check_syntax {self.pos}")
         global vars
         if self.left not in vars:
             print("compared in assign")
-            print(f"Syntax Error: Undefined variable at line {self.pos}")
-            sys.exit(1)
+            self.syntax_error(f"Undefined variable at line {self.pos}")
         self.right.check_syntax()
 
 class Eval(Statement):
@@ -105,25 +102,25 @@ class Vardecl(Statement):
         self.pos = pos
 
     def check_syntax(self) -> None :
+        print(f"entered Vardecl check_syntax {self.pos}")
         global vars
         if self.name.name not in vars:
             self.init.check_syntax()
             vars.append(self.name.name)
         else:
-            print(f"Syntax error: Redefinition of variable at line {self.pos}")
-            sys.exit(1)
+            self.syntax_error(f"Redefinition of variable at line {self.pos}")
 
 # ------------------------------------------------------------------------------#
 # Code to json Classes
 # ------------------------------------------------------------------------------#
 
-class AstCode:
+class AstCode(Node):
     def __init__(self, statements: List, pos: int, main: int = 1 ) -> None:
         super().__init__()
         self.statements: List = statements
+        self.pos: int = pos
         if main != 1:
-            print(f"Syntax error: Main function defined twice at line {pos}")
-            sys.exit(1)
+            self.syntax_error(f"Main function defined twice at line {self.pos}")
 
     def check_syntax(self) -> None:
         global vars

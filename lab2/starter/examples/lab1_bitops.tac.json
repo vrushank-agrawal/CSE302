@@ -7,6 +7,13 @@
                 "args": [
                     0
                 ],
+                "result": "%1"
+            },
+            {
+                "opcode": "copy",
+                "args": [
+                    "%1"
+                ],
                 "result": "%0"
             },
             {
@@ -14,19 +21,40 @@
                 "args": [
                     0
                 ],
-                "result": "%1"
+                "result": "%3"
             },
             {
-                "opcode": "const",
+                "opcode": "copy",
                 "args": [
-                    0
+                    "%3"
                 ],
                 "result": "%2"
             },
             {
                 "opcode": "const",
                 "args": [
+                    0
+                ],
+                "result": "%5"
+            },
+            {
+                "opcode": "copy",
+                "args": [
+                    "%5"
+                ],
+                "result": "%4"
+            },
+            {
+                "opcode": "const",
+                "args": [
                     10
+                ],
+                "result": "%6"
+            },
+            {
+                "opcode": "copy",
+                "args": [
+                    "%6"
                 ],
                 "result": "%0"
             },
@@ -35,99 +63,41 @@
                 "args": [
                     42
                 ],
-                "result": "%1"
+                "result": "%7"
+            },
+            {
+                "opcode": "copy",
+                "args": [
+                    "%7"
+                ],
+                "result": "%2"
             },
             {
                 "opcode": "const",
                 "args": [
                     100
                 ],
-                "result": "%3"
+                "result": "%9"
             },
             {
                 "opcode": "neg",
                 "args": [
-                    "%3"
-                ],
-                "result": "%2"
-            },
-            {
-                "opcode": "copy",
-                "args": [
-                    "%0"
-                ],
-                "result": "%5"
-            },
-            {
-                "opcode": "copy",
-                "args": [
-                    "%1"
-                ],
-                "result": "%6"
-            },
-            {
-                "opcode": "and",
-                "args": [
-                    "%5",
-                    "%6"
-                ],
-                "result": "%4"
-            },
-            {
-                "opcode": "print",
-                "args": [
-                    "%4"
-                ],
-                "result": null
-            },
-            {
-                "opcode": "copy",
-                "args": [
-                    "%0"
+                    "%9"
                 ],
                 "result": "%8"
             },
             {
                 "opcode": "copy",
                 "args": [
-                    "%2"
+                    "%8"
                 ],
-                "result": "%9"
+                "result": "%4"
             },
             {
                 "opcode": "and",
                 "args": [
-                    "%8",
-                    "%9"
-                ],
-                "result": "%7"
-            },
-            {
-                "opcode": "print",
-                "args": [
-                    "%7"
-                ],
-                "result": null
-            },
-            {
-                "opcode": "copy",
-                "args": [
-                    "%0"
-                ],
-                "result": "%11"
-            },
-            {
-                "opcode": "copy",
-                "args": [
-                    "%1"
-                ],
-                "result": "%12"
-            },
-            {
-                "opcode": "or",
-                "args": [
-                    "%11",
-                    "%12"
+                    "%0",
+                    "%2"
                 ],
                 "result": "%10"
             },
@@ -139,24 +109,40 @@
                 "result": null
             },
             {
-                "opcode": "copy",
+                "opcode": "and",
                 "args": [
-                    "%0"
+                    "%0",
+                    "%4"
                 ],
-                "result": "%14"
+                "result": "%11"
             },
             {
-                "opcode": "copy",
+                "opcode": "print",
                 "args": [
-                    "%2"
+                    "%11"
                 ],
-                "result": "%15"
+                "result": null
             },
             {
                 "opcode": "or",
                 "args": [
-                    "%14",
-                    "%15"
+                    "%0",
+                    "%2"
+                ],
+                "result": "%12"
+            },
+            {
+                "opcode": "print",
+                "args": [
+                    "%12"
+                ],
+                "result": null
+            },
+            {
+                "opcode": "or",
+                "args": [
+                    "%0",
+                    "%4"
                 ],
                 "result": "%13"
             },
@@ -168,24 +154,39 @@
                 "result": null
             },
             {
-                "opcode": "copy",
+                "opcode": "xor",
                 "args": [
-                    "%0"
+                    "%0",
+                    "%2"
                 ],
-                "result": "%17"
+                "result": "%14"
             },
             {
-                "opcode": "copy",
+                "opcode": "print",
                 "args": [
-                    "%1"
+                    "%14"
                 ],
-                "result": "%18"
+                "result": null
             },
             {
                 "opcode": "xor",
                 "args": [
-                    "%17",
-                    "%18"
+                    "%0",
+                    "%4"
+                ],
+                "result": "%15"
+            },
+            {
+                "opcode": "print",
+                "args": [
+                    "%15"
+                ],
+                "result": null
+            },
+            {
+                "opcode": "not",
+                "args": [
+                    "%0"
                 ],
                 "result": "%16"
             },
@@ -197,73 +198,16 @@
                 "result": null
             },
             {
-                "opcode": "copy",
-                "args": [
-                    "%0"
-                ],
-                "result": "%20"
-            },
-            {
-                "opcode": "copy",
-                "args": [
-                    "%2"
-                ],
-                "result": "%21"
-            },
-            {
-                "opcode": "xor",
-                "args": [
-                    "%20",
-                    "%21"
-                ],
-                "result": "%19"
-            },
-            {
-                "opcode": "print",
-                "args": [
-                    "%19"
-                ],
-                "result": null
-            },
-            {
-                "opcode": "copy",
-                "args": [
-                    "%0"
-                ],
-                "result": "%23"
-            },
-            {
                 "opcode": "not",
                 "args": [
-                    "%23"
+                    "%4"
                 ],
-                "result": "%22"
+                "result": "%17"
             },
             {
                 "opcode": "print",
                 "args": [
-                    "%22"
-                ],
-                "result": null
-            },
-            {
-                "opcode": "copy",
-                "args": [
-                    "%2"
-                ],
-                "result": "%25"
-            },
-            {
-                "opcode": "not",
-                "args": [
-                    "%25"
-                ],
-                "result": "%24"
-            },
-            {
-                "opcode": "print",
-                "args": [
-                    "%24"
+                    "%17"
                 ],
                 "result": null
             }
