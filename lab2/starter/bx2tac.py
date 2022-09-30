@@ -53,12 +53,10 @@ class Code:
         # if the temp has a variable name then append it to temp_map
         if name != '':
             self.temp_var_map[name] = fresh_temp
-        # print(f"name: {name} -- fresh temp: {self.temp_var_map}")
         return fresh_temp
 
     def return_temp(self, name: str) -> str:
         """ Returns the temp allocator """
-        # print(f"name: {name} -- return temp: {self.temp_var_map}")
         if name in self.temp_var_map:
             temp = self.temp_var_map[name]
         else:
@@ -216,12 +214,8 @@ if __name__=="__main__":
         code = fp.read()
 
     ast_ = lexer_parser.run_parser(code)        # run lexer and parser
-    # print(ast_)
-    # print('lexed and parsed')
     if ast_ is None: 
         raise SyntaxError("at line 1")          # exit if error occured while parsing 
-    # if ast_.statements is None:
-    #     raise SyntaxError(f"The file is empty") # exit if file is empty 
     ast_.check_syntax()                         # check syntax
     print('reached tac json')
     tac_code = Code_as_tac_json(ast_, method)   # convert ast code to json

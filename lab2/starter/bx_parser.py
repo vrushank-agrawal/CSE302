@@ -54,7 +54,7 @@ def p_astcode(p):
                | empty """
     global num_main
     num_main += 1
-    p[0] = ast_classes.AstCode(p[6], p.lineno, num_main)
+    p[0] = ast_classes.AstCode(p[6], p.lineno(2), num_main)
 
 def p_statements(p):
     """statements : 
@@ -78,11 +78,11 @@ def p_statement(p):
 
 def p_vardecl(p):
     """vardecl : VAR IDENT EQUAL expression COLON INT SEMICOLON"""
-    p[0] = ast_classes.Vardecl(ast_classes.ExpressionVar(p[2]), p[4], p.lineno)
+    p[0] = ast_classes.Vardecl(ast_classes.ExpressionVar(p[2]), p[4], p.lineno(2))
 
 def p_assign(p):
     """assign : IDENT EQUAL expression SEMICOLON"""
-    p[0] = ast_classes.Assign(p[1], p[3], p.lineno)
+    p[0] = ast_classes.Assign(p[1], p[3], p.lineno(1))
 
 def p_eval(p):
     """eval : PRINT LPAREN expression RPAREN SEMICOLON"""
@@ -101,11 +101,11 @@ def p_expression(p):
 
 def p_iden(p):
     """iden : IDENT"""
-    p[0] = ast_classes.ExpressionVar(p[1], p.lineno)
+    p[0] = ast_classes.ExpressionVar(p[1], p.lineno(1))
 
 def p_numb(p):
     """numb : NUMBER"""
-    p[0] = ast_classes.ExpressionInt(p[1], p.lineno)
+    p[0] = ast_classes.ExpressionInt(p[1], p.lineno(1))
 
 def p_uniop(p):
     """uniop : MINUS expression %prec UMINUS
@@ -146,7 +146,7 @@ def p_expression_parens(p):    # Remove parentheses
 def p_error(p):
     if not p:   #EOF
         return
-    raise SyntaxError(f" while processing {p.type} at line {p.lineno}")
+    raise SyntaxError(f" while processing {p.type} at line {p.lineno()}")
 
 def p_empty(p):
     'empty :'
