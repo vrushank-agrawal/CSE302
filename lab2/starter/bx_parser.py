@@ -32,7 +32,7 @@ uni_operator_name = {
 
 num_main = 0        # numb of main functions declared
 
-tokens = bx_lexer.tokens + ('UMINUS',)
+tokens = bx_lexer.tokens
 
 precedence = (
     ('left', 'BITWISE_OR'),
@@ -41,8 +41,8 @@ precedence = (
     ('left', 'BITWISE_SHL', 'BITWISE_SHR'),
     ('left', 'PLUS', 'MINUS'),
     ('left', 'TIMES', 'DIVIDE', 'MODULUS'),
-    ('left', 'UMINUS'),
-    ('left', 'BITWISE_NOT'),
+    ('right', 'UMINUS'),
+    ('right', 'BITWISE_NOT'),
 )
 
 # ---------------------------------------------------------------------#
@@ -108,7 +108,7 @@ def p_numb(p):
     p[0] = ast_classes.ExpressionInt(p[1], p.lineno)
 
 def p_uniop(p):
-    """uniop : UMINUS expression
+    """uniop : MINUS expression %prec UMINUS
              | BITWISE_NOT expression"""
     p[0] = ast_classes.ExpressionUniOp(uni_operator_name[p[1]], p[2])
 

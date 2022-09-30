@@ -53,17 +53,15 @@ class Code:
         # if the temp has a variable name then append it to temp_map
         if name != '':
             self.temp_var_map[name] = fresh_temp
-        print(f"name: {name} -- fresh temp: {self.temp_var_map}")
+        # print(f"name: {name} -- fresh temp: {self.temp_var_map}")
         return fresh_temp
 
     def return_temp(self, name: str) -> str:
         """ Returns the temp allocator """
-        print(f"name: {name} -- return temp: {self.temp_var_map}")
+        # print(f"name: {name} -- return temp: {self.temp_var_map}")
         if name in self.temp_var_map:
             temp = self.temp_var_map[name]
-            print("entered if stmt")
         else:
-            print("entered else stmt")
             temp = self.fresh_temp(name)
         return temp
 
