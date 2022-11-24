@@ -308,8 +308,6 @@ class ExpressionInt(Expression):
         return "ExpressionInt({})".format(self.value)
 
     def type_check(self, scope: Scope) -> None:
-        if self.value < 0:
-            self.syntax_error(" negative number")
         if self.value >= self.__max:
             self.syntax_error(" number too large")
 
