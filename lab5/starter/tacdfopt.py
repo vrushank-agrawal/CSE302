@@ -3,6 +3,7 @@ import json
 import ssagen
 import cfg
 from tac import *
+from copy import deepcopy
 
 # ------------------------------------------------------------------------------#
 # Class to handle Dataflow Optimization using SSA form
@@ -14,19 +15,24 @@ class DataflowOpt:
         self.__original_tac: List[Gvar or Proc] = tac
         self.__optimized_tac: List[Gvar or Proc] = None
         self.__temp_proc_cfg: cfg.CFG = None
-        self.optimize_tac()
+        self.__optimize_tac()
 
     # ------------------------------------------------------------------------------#
     # Helper functions
+
+    def get_optimized_tac(self) -> List:
+        """ Returns the dataflow optimized tac """
+        return self.__optimized_tac
 
     def __optimize_proc(self, proc: Proc) -> Proc:
         """ Optimize the proc by performing DSE and GCP """
         self.__temp_proc_cfg = cfg.infer(proc)
         self.__run_DSE()
+        ssagen.crude_ssagen(proc, self.__temp_proc_cfg)
         self.__GCP()
         cfg.linearize(proc, self.__temp_proc_cfg)
 
-    def optimize_tac(self) -> None:
+    def __optimize_tac(self) -> None:
         """ Create optimized tac instructions """
         cfg = list()
         for decl in self.__original_tac:
@@ -34,10 +40,6 @@ class DataflowOpt:
                 self.__optimize_proc(decl)
             cfg.append(decl)
         self.__optimized_tac = cfg
-
-    def get_optimized_tac(self) -> List:
-        """ Returns the dataflow optimized tac """
-        return self.__optimized_tac
 
     # ------------------------------------------------------------------------------#
     # Dataflow Optimizations
@@ -50,7 +52,7 @@ class DataflowOpt:
             re_run = self.__DSE()
 
     def __DSE(self) -> bool:
-        """ Perform DSE on the current temp_proc_cfg 
+        """ Perform DSE on the current temp_proc_cfg using liveness
             and return true if the instructions updated """
         is_cfg_modified = False
         live_in = dict()
@@ -78,7 +80,41 @@ class DataflowOpt:
         return is_cfg_modified
 
     def __GCP(self) -> None:
-        """ Perform Global Copy Propogation on the current temp_proc_cfg """
+        """ Perform GCP on the current temp_proc_cfg using SSA """
+        cfg_instr = self.__temp_proc_cfg.instrs()
+        
+        # iterate through all CFG instructions
+        for instr in cfg_instr:
+            # target every copy instr
+            if instr.opcode == "copy":
+                original_instr_dest = instr.dest
+                original_instr_arg = instr.arg1
+                updated_blocks = list()
+
+                # iterate through all blocks
+                for block in cfg._blockmap.values():
+                    updated_instr = list()                    
+                    # iterate through all block instr
+                    for block_instr in block.body():
+                        # rename all phi temporaries
+                        if instr.opcode == "phi":
+                            new_temp = dict()
+                            for lab, temp in block_instr.arg1.items():
+                                new_temp[lab] = temp if temp != original_instr_dest else original_instr_dest
+                            dest = original_instr_dest if block_instr.dest == original_instr_dest else block_instr.dest
+                            updated_instr.append(Instr(dest, instr.opcode, [new_temp]))
+                        # change temp name in instructions not modifying stuff and remove copy instr
+                        elif instr.opcode != "copy" or block_instr.arg1 != original_instr_arg or block_instr.dest != original_instr_dest:
+                            dest = original_instr_dest if block_instr.dest == original_instr_dest else block_instr.dest
+                            args = [original_instr_arg if block_instr.arg1 == original_instr_arg else block_instr.arg1]
+                            args.append(original_instr_arg if block_instr.arg2 == original_instr_arg else block_instr.arg2)
+                            updated_instr.append(Instr(dest, block_instr.opcode, args))                
+                updated_blocks.append(cfg.Block(block.label, updated_instr, block.jumps))
+
+            # update the CFG after every copy instr evaluated
+            self.__temp_proc_cfg = cfg.CFG(self.__temp_proc_cfg.proc_name,
+                                           self.__temp_proc_cfg.lab_entry,
+                                           updated_blocks)
 
 
 # ------------------------------------------------------------------------------#
