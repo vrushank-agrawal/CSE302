@@ -1,28 +1,99 @@
 from typing import List
 import json
-from ssagen import *
-from cfg import *
+import ssagen
+import cfg
 from tac import *
 
-def execute_tac(tac: json) -> None:
-    """ Executes the tac program """
+# ------------------------------------------------------------------------------#
+# Class to handle Dataflow Optimization using SSA form
+# ------------------------------------------------------------------------------#
+
+class DataflowOpt:
+
+    def __init__(self, tac: List[Gvar or Proc]) -> None:
+        self.__original_tac: List[Gvar or Proc] = tac
+        self.__optimized_tac: List[Gvar or Proc] = None
+        self.__temp_proc_cfg: cfg.CFG = None
+        self.optimize_tac()
+
+    # ------------------------------------------------------------------------------#
+    # Helper functions
+
+    def __optimize_proc(self, proc: Proc) -> Proc:
+        """ Optimize the proc by performing DSE and GCP """
+        self.__temp_proc_cfg = cfg.infer(proc)
+        self.__run_DSE()
+        self.__GCP()
+        cfg.linearize(proc, self.__temp_proc_cfg)
+
+    def optimize_tac(self) -> None:
+        """ Create optimized tac instructions """
+        cfg = list()
+        for decl in self.__original_tac:
+            if isinstance(decl, Proc):
+                self.__optimize_proc(decl)
+            cfg.append(decl)
+        self.__optimized_tac = cfg
+
+    def get_optimized_tac(self) -> List:
+        """ Returns the dataflow optimized tac """
+        return self.__optimized_tac
+
+    # ------------------------------------------------------------------------------#
+    # Dataflow Optimizations
+
+    def __run_DSE(self) -> None:
+        """ Runs DSE multiple times until CFG is unchanged """
+        # run the code first time
+        re_run = self.__DSE()
+        while re_run:   # run the code until static form
+            re_run = self.__DSE()
+
+    def __DSE(self) -> bool:
+        """ Perform DSE on the current temp_proc_cfg 
+            and return true if the instructions updated """
+        is_cfg_modified = False
+        live_in = dict()
+        live_out = dict()
+        cfg.recompute_liveness(self.__temp_proc_cfg, live_in, live_out)
+
+        updated_blocks = list()
+        for block_lab, block in self.__temp_proc_cfg._blockmap.items():
+            updated_instr = list()
+            for instr in block.body:
+                if instr.opcode not in ["div", "mod", "call"]:
+                    if instr.dest and instr.dest.startswith('%'):
+                        if instr.dest not in live_out[instr]:
+                            is_cfg_modified = True
+                            continue
+                updated_instr.append(instr)
+            updated_blocks.append(cfg.Block(block_lab, updated_instr, block.jumps))
+
+        # only update the CFG if it is modified        
+        if is_cfg_modified:
+            self.__temp_proc_cfg = cfg.CFG(self.__temp_proc_cfg.proc_name, 
+                                           self.__temp_proc_cfg.lab_entry,
+                                           updated_blocks)                            
+
+        return is_cfg_modified
+
+    def __GCP(self) -> None:
+        """ Perform Global Copy Propogation on the current temp_proc_cfg """
+
+
+# ------------------------------------------------------------------------------#
+# Main function handlers
+# ------------------------------------------------------------------------------#
+
+def execute_tac(tac: list) -> None:
+    """ Executes the tac instructions """
     gvars, procs = dict(), dict()
-    for decl in tac.load_tac('example.tac.json'):
-        if isinstance(decl, Gvar): gvars[decl.name] = decl
-        else: procs[decl.name] = decl
+    for decl in tac.load_tac(tac):
+        if isinstance(decl, Gvar):
+            gvars[decl.name] = decl
+        else:
+            procs[decl.name] = decl
     tac.execute(gvars, procs, '@main', [])
-
-
-def create_cfg(tac: json) -> List(json):
-    """ Creates and return a cfg from the tac """
-    cfg_proc = list()
-    for proc in tac:
-        if "proc" in proc:
-            cfg_proc.append(cfg.infer(tac))
-
-    return cfg_proc
-
-
 
 import sys, argparse
 
@@ -30,7 +101,18 @@ if __name__ == "__main__":
 
     parse = argparse.ArgumentParser(description='Dataflow Optimizations')
     parse.add_argument('filename', metavar="FILE", type=str, nargs=1)
-
+    parse.add_argument('-o', dest='output', action='store_true', default=False,
+                        help='Write output to this file')
     args = parse.parse_args(sys.argv[1:])
     filename = args[0]
-    
+
+    tac = load_tac(filename)
+    d_opt = DataflowOpt(tac)
+
+    opt_tac = d_opt.get_optimized_tac()
+
+    if args.output:
+        with open(args.output, 'w') as fp:
+            json.dump([gdecl.js_obj for gdecl in opt_tac], fp)
+    else:
+        execute_tac(opt_tac)
