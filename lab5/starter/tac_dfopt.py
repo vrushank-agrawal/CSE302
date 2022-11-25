@@ -92,10 +92,10 @@ class DataflowOpt:
                 updated_blocks = list()
 
                 # iterate through all blocks
-                for block in cfg._blockmap.values():
+                for block in self.__temp_proc_cfg._blockmap.values():
                     updated_instr = list()                    
                     # iterate through all block instr
-                    for block_instr in block.body():
+                    for block_instr in block.body:
                         # rename all phi temporaries
                         if instr.opcode == "phi":
                             new_temp = dict()
@@ -111,10 +111,10 @@ class DataflowOpt:
                             updated_instr.append(Instr(dest, block_instr.opcode, args))                
                 updated_blocks.append(cfg.Block(block.label, updated_instr, block.jumps))
 
-            # update the CFG after every copy instr evaluated
-            self.__temp_proc_cfg = cfg.CFG(self.__temp_proc_cfg.proc_name,
-                                           self.__temp_proc_cfg.lab_entry,
-                                           updated_blocks)
+                # update the CFG after every copy instr evaluated
+                self.__temp_proc_cfg = cfg.CFG(self.__temp_proc_cfg.proc_name,
+                                            self.__temp_proc_cfg.lab_entry,
+                                            updated_blocks)
 
 
 # ------------------------------------------------------------------------------#
@@ -137,10 +137,11 @@ if __name__ == "__main__":
 
     parse = argparse.ArgumentParser(description='Dataflow Optimizations')
     parse.add_argument('filename', metavar="FILE", type=str, nargs=1)
-    parse.add_argument('-o', dest='output', action='store_true', default=False,
+    parse.add_argument('-o', dest='output', type=str,
                         help='Write output to this file')
     args = parse.parse_args(sys.argv[1:])
-    filename = args[0]
+    print(args)
+    filename = args.filename[0]
 
     tac = load_tac(filename)
     d_opt = DataflowOpt(tac)
