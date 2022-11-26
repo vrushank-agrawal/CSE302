@@ -7,9 +7,6 @@ y:  .quad 42
 	.globl b
 	.data
 b:  .quad 1
-	.globl z
-	.data
-z:  .quad -42
 
 
 	.globl main
@@ -17,7 +14,7 @@ z:  .quad -42
 main:
 	pushq %rbp
 	movq %rsp, %rbp
-	subq $128, %rsp
+	subq $112, %rsp
 	/*  %.Lentry: [TAC] */
 .main.Lentry:
 	/*   %1 = const 10 [TAC] */
@@ -90,12 +87,6 @@ main:
 	movq -112(%rbp), %rdi
 	/*   call @__bx_print_bool [TAC] */
 	callq __bx_print_bool
-	/*   %21 = copy @z [TAC] */
-	movq z(%rip), %r11
-	movq %r11, -120(%rbp)
-	movq -120(%rbp), %rdi
-	/*   call @__bx_print_int [TAC] */
-	callq __bx_print_int
 	xorq %rax, %rax
 	jmp .main.Lexit
 .main.Lexit:

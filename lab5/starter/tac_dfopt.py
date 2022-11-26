@@ -155,6 +155,6 @@ if __name__ == "__main__":
 
     if args.output:
         with open(args.output, 'w') as fp:
-            json.dump([gdecl.js_obj for gdecl in opt_tac], fp)
+            json.dump([gdecl.js_obj for gdecl in opt_tac], fp, indent=3)
     else:
         execute_tac(opt_tac)

@@ -12,10 +12,6 @@
       "init": 1
    },
    {
-      "var": "@z",
-      "init": -42
-   },
-   {
       "proc": "@main",
       "args": [],
       "body": [
@@ -252,29 +248,6 @@
             "result": null
          },
          {
-            "opcode": "copy",
-            "args": [
-               "@z"
-            ],
-            "result": "%21"
-         },
-         {
-            "opcode": "param",
-            "args": [
-               1,
-               "%21"
-            ],
-            "result": null
-         },
-         {
-            "opcode": "call",
-            "args": [
-               "@__bx_print_int",
-               1
-            ],
-            "result": null
-         },
-         {
             "opcode": "ret",
             "args": [],
             "result": null
@@ -294,8 +267,6 @@
          "%18",
          "%19",
          "%2",
-         "%20",
-         "%21",
          "%3",
          "%4",
          "%5",

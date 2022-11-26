@@ -110,8 +110,8 @@ class Procx64():
         self.__args: list = proc_instrs["args"]
         self.__param_temps_for_call: list = list()
         self.__tac_instr: list = proc_instrs["body"]
-        self.__temps: list = proc_instrs["temps"]
-        self.__labels: list = proc_instrs["labels"]
+        # self.__temps: list = proc_instrs["temps"]
+        # self.__labels: list = proc_instrs["labels"]
         self.__asm_instr_proc: List = list()
         self.__stack: Stack = Stack(self.__args)
         self.__create_asm_instr()
