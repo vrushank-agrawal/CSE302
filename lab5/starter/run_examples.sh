@@ -3,9 +3,8 @@
 # # test on all files
 for file in $(find examples -name "*.tac.json"); do
     echo $file 
-    python3 tac_dfopt.py $file -o $file."updated"
+    python3 tac_dfopt.py $file
     echo -e '\n'
-    exit
 done
 
 # run all executables

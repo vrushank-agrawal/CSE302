@@ -1,8 +1,8 @@
 from typing import List
 import json
-import ssagen
-import cfg
-from tac import *
+from cfg import *
+from tac_cfopt import *
+from bxast import *
 from copy import deepcopy
 
 # ------------------------------------------------------------------------------#
@@ -11,10 +11,10 @@ from copy import deepcopy
 
 class DataflowOpt:
 
-    def __init__(self, tac: List[Gvar or Proc]) -> None:
+    def __init__(self, tac: List[DeclProc or Proc]) -> None:
         self.__original_tac: List[Gvar or Proc] = tac
         self.__optimized_tac: List[Gvar or Proc] = None
-        self.__temp_proc_cfg: cfg.CFG = None
+        self.__temp_proc_cfg: CFG = None
         self.__optimize_tac()
 
     # ------------------------------------------------------------------------------#
@@ -26,11 +26,11 @@ class DataflowOpt:
 
     def __optimize_proc(self, proc: Proc) -> Proc:
         """ Optimize the proc by performing DSE and GCP """
-        self.__temp_proc_cfg = cfg.infer(proc)
+        self.__temp_proc_cfg = CFG_creator(proc)
         self.__run_DSE()
-        ssagen.crude_ssagen(proc, self.__temp_proc_cfg)
+        # ssagen.crude_ssagen(proc, self.__temp_proc_cfg)
         # self.__GCP()
-        cfg.linearize(proc, self.__temp_proc_cfg)
+        proc = cfg.linearize(proc, self.__temp_proc_cfg)
 
     def __optimize_tac(self) -> None:
         """ Create optimized tac instructions """
