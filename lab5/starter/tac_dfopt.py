@@ -29,7 +29,7 @@ class DataflowOpt:
         self.__temp_proc_cfg = cfg.infer(proc)
         self.__run_DSE()
         ssagen.crude_ssagen(proc, self.__temp_proc_cfg)
-        # self.__GCP()
+        self.__GCP()
         cfg.linearize(proc, self.__temp_proc_cfg)
 
     def __optimize_tac(self) -> None:
@@ -81,41 +81,46 @@ class DataflowOpt:
 
     def __GCP(self) -> None:
         """ Perform GCP on the current temp_proc_cfg using SSA """
-        cfg_instr = self.__temp_proc_cfg.instrs()
+        cfg_copy = deepcopy(self.__temp_proc_cfg)
+        cfg_instr = cfg_copy.instrs()
         
         # iterate through all CFG instructions
         for instr in cfg_instr:
             # target every copy instr
             if instr.opcode == "copy":
-                original_instr_dest = instr.dest
-                original_instr_arg = instr.arg1
+                old_temp = instr.dest
+                new_temp = instr.arg1
                 updated_blocks = list()
 
                 # iterate through all blocks
                 for block in self.__temp_proc_cfg._blockmap.values():
                     updated_instr = list()                    
+
                     # iterate through all block instr
                     for block_instr in block.body:
+
                         # rename all phi temporaries
                         if instr.opcode == "phi":
-                            new_temp = dict()
+                            new_temp_map = dict()
                             for lab, temp in block_instr.arg1.items():
-                                new_temp[lab] = temp if temp != original_instr_dest else original_instr_dest
-                            dest = original_instr_dest if block_instr.dest == original_instr_dest else block_instr.dest
-                            updated_instr.append(Instr(dest, instr.opcode, [new_temp]))
-                        # change temp name in instructions not modifying stuff and remove copy instr
-                        elif instr.opcode != "copy" or block_instr.arg1 != original_instr_arg or block_instr.dest != original_instr_dest:
-                            dest = original_instr_dest if block_instr.dest == original_instr_dest else block_instr.dest
-                            args = [original_instr_arg if block_instr.arg1 == original_instr_arg else block_instr.arg1]
-                            args.append(original_instr_arg if block_instr.arg2 == original_instr_arg else block_instr.arg2)
+                                new_temp_map[lab] = temp if temp != old_temp else new_temp
+                            # replace all old dests to new ones
+                            dest = new_temp if block_instr.dest == old_temp else block_instr.dest
+                            updated_instr.append(Instr(dest, instr.opcode, [new_temp_map]))
+
+                        # skip copy instr and change temp name in instructions not modifying stuff
+                        elif instr.opcode != "copy" or block_instr.arg1 != new_temp or block_instr.dest != old_temp:
+                            dest = new_temp if block_instr.dest == old_temp else block_instr.dest
+                            args = [new_temp if block_instr.arg1 == old_temp else block_instr.arg1]
+                            args.append(new_temp if block_instr.arg2 == old_temp else block_instr.arg2)
                             updated_instr.append(Instr(dest, block_instr.opcode, args))                
-                updated_blocks.append(cfg.Block(block.label, updated_instr, block.jumps))
+
+                    updated_blocks.append(cfg.Block(block.label, updated_instr, block.jumps))
 
                 # update the CFG after every copy instr evaluated
                 self.__temp_proc_cfg = cfg.CFG(self.__temp_proc_cfg.proc_name,
-                                            self.__temp_proc_cfg.lab_entry,
-                                            updated_blocks)
-
+                                        self.__temp_proc_cfg.lab_entry,
+                                        updated_blocks)
 
 # ------------------------------------------------------------------------------#
 # Main function handlers
