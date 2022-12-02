@@ -6,7 +6,9 @@ buffer:
 	.globl main
 main:
 	pushq %rbp
+	pushq %rax
 	movq %rsp, %rbp
+	lea buffer(%rip), %rax
 	addq $1, %rax
 	addq $1, (%rax)
 	addq $1, (%rax)
@@ -244,4 +246,5 @@ main:
 	xorq %rax, %rax
 	movq %rbp, %rsp
 	popq %rbp
+	popq %rax
 	retq

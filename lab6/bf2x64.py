@@ -18,9 +18,7 @@ class Stack:
 
     def start_proc(self) -> list:
         """ Adds initial commands when proc is entered """
-        # set the stack size to the number of temporaries we need
-        stack_size = len(self.__temp_map)
-        stack_size += 1 if (stack_size % 2 != 0) else 0
+        # We use rax as the temporary to
         return [f'\t.bss',
                 f'buffer:',
                 f'\t.zero 30000',
@@ -29,7 +27,9 @@ class Stack:
                 f'\t.globl main',
                 f'main:',
                 f'\tpushq %rbp',
+                f'\tpushq %rax',
                 f'\tmovq %rsp, %rbp',
+                f'\tlea buffer(%rip), %rax',
                 ]
 
     def end_proc(self) -> list:
@@ -39,6 +39,7 @@ class Stack:
                 f'\txorq %rax, %rax',   # nullify any output
                 f'\tmovq %rbp, %rsp',   # restore rsp
                 f'\tpopq %rbp',         # restore rbp
+                f'\tpopq %rax',         # restore rax
                 f'\tretq\n']
 
 # ---------------------------------------------------------------------#
