@@ -109,7 +109,6 @@ class BFDecrement(BFInstruction):
         """Return number of decrements"""
         return self._value
 
-
 # --------------------------------------------------------------------
 class BFForward(BFInstruction):
     def execute(self, memory : BFMemory):
@@ -166,6 +165,7 @@ class BFInput(BFInstruction):
 
     def __str__(self) -> str:
         return "Input"
+
 # --------------------------------------------------------------------
 class BFBlock(BFInstruction):
     def __init__(self, block : List[BFInstruction]):
@@ -182,6 +182,7 @@ class BFBlock(BFInstruction):
 
     def get_block(self):
         return self._block
+
 # --------------------------------------------------------------------
 def parse_program(fname) -> BFBlock:
     """" Parse the program and return the list of all instr """
