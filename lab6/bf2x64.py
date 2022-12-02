@@ -1,4 +1,4 @@
-from brainfuck import *
+from parser import *
 from typing import Dict
 
 # ---------------------------------------------------------------------#
