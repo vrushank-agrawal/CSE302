@@ -57,7 +57,7 @@ class BFInstruction(abc.ABC):
         stack = [[]]
 
         for c in program:
-            print(f"c: {c}")
+            # print(f"c: {c}")
             if c == '+':
                 stack[-1].append(BFIncrement())
             elif c == '-':
@@ -165,8 +165,25 @@ class BFBackward(BFInstruction):
         return self._value
 
 # --------------------------------------------------------------------
+class BFBlock(BFInstruction):
+    def __init__(self, block : List[BFInstruction]):
+        self._block = block
+
+    block = property(lambda self : self._block)
+
+    def __str__(self) -> str:
+        return "BFBlock(["+ ",".join([str(instruction) for instruction in self._block]) + "]"
+
+    def execute(self, memory : BFMemory):
+        for instruction in self.block:
+            instruction.execute(memory)
+
+    def get_block(self):
+        return self._block
+
+# --------------------------------------------------------------------
 class BFLoop(BFInstruction):
-    def __init__(self, body : BFInstruction):
+    def __init__(self, body : BFBlock):
         self._body = body
 
     body = property(lambda self : self._body)
@@ -197,23 +214,6 @@ class BFInput(BFInstruction):
 
     def __str__(self) -> str:
         return "Input"
-
-# --------------------------------------------------------------------
-class BFBlock(BFInstruction):
-    def __init__(self, block : List[BFInstruction]):
-        self._block = block
-
-    block = property(lambda self : self._block)
-
-    def __str__(self) -> str:
-        return "BFBlock(["+ ",".join([str(instruction) for instruction in self._block]) + "]"
-
-    def execute(self, memory : BFMemory):
-        for instruction in self.block:
-            instruction.execute(memory)
-
-    def get_block(self):
-        return self._block
 
 # --------------------------------------------------------------------
 def parse_program(fname) -> BFBlock:

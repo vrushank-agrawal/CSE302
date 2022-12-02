@@ -7,52 +7,29 @@ from typing import Dict
 
 class Stack:
     def __init__(self) -> None:
-        self.__temp_map: Dict[str, str] = dict()
-        self.__loop_num: int = 0
+        self._loop_num: int = 0
 
-    def get_item(self, temp: str) -> str:
-        """ Return the stack address of the temp """
-        # if globl var then ret rip relative position
-        # print(temp)
-        return self.__lookup_temp(temp)
+    get_loop : int = property(lambda self : self._loop_num)
 
-    get_loop : int = property(lambda self : self.__loop_num)
-    # def get_loop(self) -> int:
-    #     """ Returns the curr nb of loops """
-    #     return self.__loop_num
-
-    # incr_loop : None = property(lambda self : self.__loop_num+=1)
+    # incr_loop : None = property(lambda self : self._loop_num+=1)
     def incr_loop(self) -> None:
         """ Adds a new loop """
-        self.__loop_num += 1
-
-    def __lookup_temp(self, temp: str) -> str:
-        """ Returns the value of the temp from the stack 
-            while simultaneously creating a hash table """
-        # if temporary already exists return its value
-        if temp in self.__temp_map:
-            return self.__temp_map[temp]
-        # add a new destination for it considering there is one address for rsp
-        else:
-            self.__temp_map[temp] = f'{-8 * (len(self.__temp_map)+1)}(%rbp)'
-        return self.__temp_map[temp]
+        self._loop_num += 1
 
     def start_proc(self) -> list:
         """ Adds initial commands when proc is entered """
         # set the stack size to the number of temporaries we need
         stack_size = len(self.__temp_map)
         stack_size += 1 if (stack_size % 2 != 0) else 0
-        return [
-                f'\t.bss',
+        return [f'\t.bss',
                 f'buffer:',
                 f'\t.zero 30000',
-                '\n',
+                '',
                 f'\t.text',
                 f'\t.globl main',
                 f'main:',
                 f'\tpushq %rbp',
                 f'\tmovq %rsp, %rbp',
-                # f'\tsubq ${8*stack_size}, %rsp',
                 ]
 
     def end_proc(self) -> list:
@@ -71,67 +48,87 @@ class Stack:
 class x64ASM:
     def __init__(self, instr: BFBlock) -> None:
         self.__instrs: BFBlock = instr
-        self.__asm: List[str]
+        self.__asm: List[str] = list()
         self.__stack: Stack = Stack()
-        self.__create_asm(self.__instrs.block)    # create asm with main instr
+        self.__loop_counter = 0
+        self.create_proc()    # create asm with main instr
 
-    # get asm instr from the x64ASM class
-    asm : List[str] = property(lambda self : self.__asm)
+    asm : List[str] = property(lambda self: self.__asm)
+
+    def create_proc(self) -> None:
+        """ Adds start and end proc asm code """
+        # convert brainfuck to asm
+        self.__create_asm(self.__instrs.block)    # create asm with main instr
+        # add initial instr when entering prog
+        self.__asm[:0] = self.__stack.start_proc()
+        # add final instr when exiting proc
+        self.__asm.extend(self.__stack.end_proc())
+
+    # --------------------------------------------------------------------
+    # converts the brainfuck instr classes to asm
 
     def __create_asm(self, instr_set) -> None:
         """ Translates parsed code into ASM """
-
+        # print(self.__loop_counter)
+        # self.__loop_counter += 1
+        # print(instr_set[0])
+        # print(type(instr_set[0]))
+        # print(type(instr_set))
         for instr in instr_set:
             if isinstance(instr, BFIncrement):
                 increment = instr.get_value()
-                self.__asm.extend([#f'\tmovq {arg1}, %r11',
-                                    f'\taddq {increment}, (%r11)',
-                                    #f'\tmovq %r11, {result}'
+                self.__asm.extend([#f'\tmovq {arg1}, %rax',
+                                    f'\taddq ${increment}, (%rax)',
+                                    #f'\tmovq %rax, {result}'
                                     ])
 
             if isinstance(instr, BFDecrement):
                 decrement = instr.get_value()
-                self.__asm.extend([ #f'\tmovq {arg1}, %r11',
-                                    f'\tsubq {decrement}, %(r11)',
-                                    #f'\tmovq %r11, {result}'
+                self.__asm.extend([ #f'\tmovq {arg1}, %rax',
+                                    f'\tsubq ${decrement}, (%rax)',
+                                    #f'\tmovq %rax, {result}'
                                     ])
 
             if isinstance(instr, BFForward):
                 forward = instr.get_value()
-                self.__asm.extend([#f'\tmovq {arg1}, %r11',
-                                    f'\taddq {forward}, %r11',
-                                    #f'\tmovq %r11, {result}'
+                self.__asm.extend([#f'\tmovq {arg1}, %rax',
+                                    f'\taddq ${forward}, %rax',
+                                    #f'\tmovq %rax, {result}'
                                     ])
 
             if isinstance(instr, BFBackward):
                 back = instr.get_value()
-                self.__asm.extend([#f'\tmovq {arg1}, %r11',
-                                    f'\taddq {back}, %r11',
-                                    #f'\tmovq %r11, {result}'
+                self.__asm.extend([#f'\tmovq {arg1}, %rax',
+                                    f'\tsubq ${back}, %rax',
+                                    #f'\tmovq %rax, {result}'
                                     ])
 
             if isinstance(instr, BFPrint):
                 # move first and only arg to 1st arg reg rdi
-                self.__asm.extend([f'\tmovb (%r11b), %dil',
-                                    f'\tpushq %r11',
+                self.__asm.extend([f'\tmovb (%rax), %dil',
+                                    f'\tpushq %rax',
                                     f'\tcallq __bf_print',
-                                    f'\tpopq %r11',
+                                    f'\tpopq %rax',
                                     ])
 
             if isinstance(instr, BFInput):
-                self.__asm.extend([f'\tcallq __bf_get'])
-                self.__asm.extend([f'\tmovq %rax, %r11'])
+                self.__asm.extend([f'\tpushq %rax',
+                                    f'\tcallq __bf_get',
+                                    f'\tmovq %rax, %r11',
+                                    f'\tpopq %rax',
+                                    f'\tmovb %r11b, (%rax)',
+                                    ])
 
             if isinstance(instr, BFLoop):
                 loop_count = self.__stack.get_loop
                 self.__stack.incr_loop()
-                self.__asm.extend([f'.main.Loop{loop_count}',                                    f'\tpushq %r11',
-                                    f'\tcmpb $0, (%r11b)',
+                self.__asm.extend([f'\n.main.Loop{loop_count}:',                                    f'\tpushq %rax',
+                                    f'\tcmpb $0, (%rax)',
                                     f'\tjz .main.Loop{loop_count}.exit',
                                     ])
-                self.__create_asm(instr.body)   # create loop instr before exiting
+                self.__create_asm(instr.body.block)   # create loop instr before exiting
                 self.__asm.extend([f'\tjmp .main.Loop{loop_count}',
-                                    f'.main.Loop{loop_count}.exit',
+                                    f'.main.Loop{loop_count}.exit:\n',
                                     ])
 
 # --------------------------------------------------------------------
@@ -146,7 +143,8 @@ def main():
     assert(fname.endswith(".bf")), "Illegal file format passed"
     program = parse_program(fname)
 
-    asm = x64ASM(program).asm   # store asm instr
+    # asm = x64ASM(program).get_asm()     # store asm instr
+    asm = x64ASM(program).asm     # store asm instr
 
     # Save assembly code and create executable
     fname = fname[:-3]
@@ -157,8 +155,8 @@ def main():
         afp.write(instr)
 
     import os
-    os.system(f'gcc -o {exe_name} {asm_name} bx_runtime.c')
-    print(f"Compilation succesful for {fname}")
+    os.system(f'gcc -o {exe_name} {asm_name} helper_func.c')
+    print(f"Assembly created for {fname}")
 
 # --------------------------------------------------------------------
 if __name__ == '__main__':
