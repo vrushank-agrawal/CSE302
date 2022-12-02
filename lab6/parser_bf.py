@@ -91,18 +91,18 @@ class BFIncrement(BFInstruction):
 
     def __init__(self) -> None:
         super().__init__()
-        self._value : int = 1
+        self.__value : int = 1
  
     def __str__(self) -> str:
-        return f"Incr({self.value})"
+        return f"Incr({self.__value})"
 
     def change_val(self, new_val : int) -> None:
         """ Changes value for incrementing """
-        self._value = new_val
+        self.__value = new_val
 
     def get_value(self) -> int:
         """Return number of increments"""
-        return self._value
+        return self.__value
 
 # --------------------------------------------------------------------
 class BFDecrement(BFInstruction):
@@ -111,18 +111,18 @@ class BFDecrement(BFInstruction):
 
     def __init__(self) -> None:
         super().__init__()
-        self._value : int = 1
+        self.__value : int = 1
 
     def __str__(self) -> str:
-        return f"Decr({self.value})"
+        return f"Decr({self.__value})"
 
     def change_val(self, new_val : int) -> None:
         """ Changes value for incrementing """
-        self._value = new_val
+        self.__value = new_val
 
     def get_value(self) -> int:
         """Return number of decrements"""
-        return self._value
+        return self.__value
 
 # --------------------------------------------------------------------
 class BFForward(BFInstruction):
@@ -131,18 +131,18 @@ class BFForward(BFInstruction):
 
     def __init__(self) -> None:
         super().__init__()
-        self._value : int = 1
+        self.__value : int = 1
 
     def __str__(self) -> str:
         return "Fwd"
 
     def change_val(self, new_val : int) -> None:
         """ Changes value for incrementing """
-        self._value = new_val
+        self.__value = new_val
 
     def get_value(self) -> int:
         """Return number of Forwards"""
-        return self._value
+        return self.__value
 
 # --------------------------------------------------------------------
 class BFBackward(BFInstruction):
@@ -151,18 +151,18 @@ class BFBackward(BFInstruction):
     
     def __init__(self) -> None:
         super().__init__()
-        self._value : int = 1
+        self.__value : int = 1
 
     def __str__(self) -> str:
         return "Bwd"
 
     def change_val(self, new_val : int) -> None:
         """ Changes value for incrementing """
-        self._value = new_val
+        self.__value = new_val
 
     def get_value(self) -> int:
         """Return number of Backwards"""
-        return self._value
+        return self.__value
 
 # --------------------------------------------------------------------
 class BFBlock(BFInstruction):
@@ -222,6 +222,8 @@ def parse_program(fname) -> BFBlock:
         program = stream.read()
     return BFInstruction.parse(program)
 
+from optimize import Optimizer
+
 def _main():
     if len(sys.argv)-1 != 1:
         print(f'Usage: {sys.argv[0]} [FILE.bf]', file = sys.stderr)
@@ -229,7 +231,8 @@ def _main():
 
     program = parse_program(sys.argv[1])
     print(f"program before opt: {program}")
-    program = optimize4(program)
+    optimizer = Optimizer(program)
+    program = optimizer.block
     print(f"optimized program: {program}")
     try:
         program.execute(BFMemory())
@@ -238,67 +241,6 @@ def _main():
     BFExit
 
 # --------------------------------------------------------------------
-
-
-
-# OPTIMIZATIONS :D
-# --------------------------------------------------------------------
-def optimize4(BFB: BFBlock) -> BFBlock:
-    BFB = contract_value(BFB)
-    BFB = contract_pointer(BFB)
-    return BFB
-    
-def contract_value(BFB: BFBlock) -> BFBlock:
-    counter = 0
-    new_stack = [[]]
-    for instr in BFB.get_block():
-        if isinstance(instr, BFIncrement):
-            counter +=1
-        elif isinstance(instr, BFDecrement):
-            counter -=1
-        else:
-            contracted = create_contracted_instruction(counter , "pointer")
-            if contracted is not None:
-                new_stack[-1].append(contracted)
-            counter = 0
-            new_stack[-1].append(instr)
-
-def contract_pointer(BFB: BFBlock) -> BFBlock:
-    counter = 0
-    new_stack = [[]]
-    for instr in BFB.get_block():
-        if isinstance(instr, BFForward):
-            counter +=1
-        elif isinstance(instr, BFBackward):
-            counter -=1
-        else:
-            contracted = create_contracted_instruction(counter , "pointer")
-            if contracted is not None:
-                new_stack[-1].append(contracted)
-            counter = 0
-            new_stack[-1].append(instr)
-    return BFBlock(new_stack.pop())
-
-def create_contracted_instruction(counter, counter_type):
-    """Return if no instruction needs to be added else return instruction with value"""
-    if counter_type == "pointer":
-        if counter == 0:
-            return 
-        elif counter < 0:
-            return BFForward(value = counter)
-        else: 
-            return BFBackward(value = counter)
-    elif counter_type == "value":
-        if counter == 0:
-            return 
-        elif counter < 0:
-            return BFIncrement(value = counter)
-        else: 
-            return BFDecrement(value = counter)
-    else:
-        raise RuntimeError("optimization bug in contraction")
-
-
 
 if __name__ == '__main__':
     _main()
