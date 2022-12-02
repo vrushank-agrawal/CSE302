@@ -8,8 +8,8 @@ from typing import List
 
 # --------------------------------------------------------------------
 class BFError(Exception):    
-    def __init__(self) -> None:
-        raise RuntimeError("something")
+    def __str__(self) -> None:
+        print("something")
     
 # --------------------------------------------------------------------
 class BFExit(Exception):
@@ -88,9 +88,17 @@ class BFInstruction(abc.ABC):
 class BFIncrement(BFInstruction):
     def execute(self, memory : BFMemory):
         memory.increment()
-        
+
+    def __init__(self) -> None:
+        super().__init__()
+        self._value : int = 1
+ 
     def __str__(self) -> str:
         return f"Incr({self.value})"
+
+    def change_val(self, new_val : int) -> None:
+        """ Changes value for incrementing """
+        self._value = new_val
 
     def get_value(self) -> int:
         """Return number of increments"""
@@ -100,11 +108,18 @@ class BFIncrement(BFInstruction):
 class BFDecrement(BFInstruction):
     def execute(self, memory : BFMemory):
         memory.decrement()
-        
+
+    def __init__(self) -> None:
+        super().__init__()
+        self._value : int = 1
 
     def __str__(self) -> str:
         return f"Decr({self.value})"
-    
+
+    def change_val(self, new_val : int) -> None:
+        """ Changes value for incrementing """
+        self._value = new_val
+
     def get_value(self) -> int:
         """Return number of decrements"""
         return self._value
@@ -114,8 +129,16 @@ class BFForward(BFInstruction):
     def execute(self, memory : BFMemory):
         memory.forward()
 
+    def __init__(self) -> None:
+        super().__init__()
+        self._value : int = 1
+
     def __str__(self) -> str:
         return "Fwd"
+
+    def change_val(self, new_val : int) -> None:
+        """ Changes value for incrementing """
+        self._value = new_val
 
     def get_value(self) -> int:
         """Return number of Forwards"""
@@ -125,13 +148,22 @@ class BFForward(BFInstruction):
 class BFBackward(BFInstruction):
     def execute(self, memory : BFMemory):
         memory.backward()
+    
+    def __init__(self) -> None:
+        super().__init__()
+        self._value : int = 1
 
     def __str__(self) -> str:
         return "Bwd"
 
+    def change_val(self, new_val : int) -> None:
+        """ Changes value for incrementing """
+        self._value = new_val
+
     def get_value(self) -> int:
         """Return number of Backwards"""
         return self._value
+
 # --------------------------------------------------------------------
 class BFLoop(BFInstruction):
     def __init__(self, body : BFInstruction):

@@ -75,6 +75,9 @@ class x64ASM:
         self.__stack: Stack = Stack()
         self.__create_asm(self.__instrs.block)    # create asm with main instr
 
+    # get asm instr from the x64ASM class
+    asm : List[str] = property(lambda self : self.__asm)
+
     def __create_asm(self, instr_set) -> None:
         """ Translates parsed code into ASM """
 
@@ -139,9 +142,23 @@ def main():
         print(f'Usage: {sys.argv[0]} [FILE.bf]', file = sys.stderr)
         exit(1)
 
-    program = parse_program(sys.argv[1])
+    fname : str = sys.argv[1]
+    assert(fname.endswith(".bf")), "Illegal file format passed"
+    program = parse_program(fname)
 
-    asm = x64ASM(program)
+    asm = x64ASM(program).asm   # store asm instr
+
+    # Save assembly code and create executable
+    fname = fname[:-3]
+    exe_name = fname + '.exe'
+    asm_name = fname + '.s'
+    with open(asm_name, 'w') as afp:
+        instr = "\n".join(asm)
+        afp.write(instr)
+
+    import os
+    os.system(f'gcc -o {exe_name} {asm_name} bx_runtime.c')
+    print(f"Compilation succesful for {fname}")
 
 # --------------------------------------------------------------------
 if __name__ == '__main__':
