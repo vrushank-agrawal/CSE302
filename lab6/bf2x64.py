@@ -1,4 +1,4 @@
-from parser import *
+from parser_bf import *
 from typing import Dict
 
 # ---------------------------------------------------------------------#
