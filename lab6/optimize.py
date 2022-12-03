@@ -50,7 +50,7 @@ class Optimizer:
 
             elif isinstance(instr, BFLoop):   # iterate through BFLoop instructions
                 if len(instr.body.block) > 0:
-                    new_instr.append(BFLoop(self.__clean(instr.body.block)))
+                    new_instr.append(BFLoop(self.__clean(instr.body.block), instr.id))
 
             else:   # append all other instructions
                 new_instr.append(instr)
@@ -236,8 +236,12 @@ class Optimizer:
 
         for instr in instr_set:
             if isinstance(instr, BFLoop):
-                instr.set_simplifiable(self.__opt_loop(instr.body.block))
-                simplifiable = False
+                simplifiable = self.__opt_loop(instr.body.block)
+                # if simplifiable:
+                #     print(instr.body)
+                    # print(simplifiable)
+                instr.set_simplifiable(simplifiable)
+                simplifiable = False    # current loop is not simplifiable
 
             # In a simplifiable loop, ptr instr would have been removed before
             elif not isinstance(instr, BFIncrement):

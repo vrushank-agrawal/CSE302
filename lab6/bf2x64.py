@@ -8,6 +8,7 @@ from optimize import Optimizer
 class Stack:
     def __init__(self) -> None:
         self._loop_num: int = 0
+        self.__buff_size : int = 30000
 
     get_loop : int = property(lambda self : self._loop_num)
 
@@ -33,7 +34,7 @@ class Stack:
                             f'\tcallq memrchr',      # this would update the next free ptr in rax
                             ])
         else:       # calc dist until end of buffer
-            instr.extend([  f'\tmovq 30000(%r8), %rcx',   # calc last buff addr
+            instr.extend([  f'\tmovq {self.__buff_size}(%r8), %rcx',   # calc last buff addr
                             f'\tsubq %rax, %rcx',   # calc remaining dist to end
                             f'\tmovq %rcx, %rdx',   # pass that as 3rd arg
                             f'\tcallq memchr',      # this would update the next free ptr in rax
@@ -43,23 +44,25 @@ class Stack:
                       # f'\tpopq %rax',
                         ])
 
+        return instr
+
     def simplify_loop(self, instr_set : List[BFInstruction]) -> list:
         """ Replace simplifiable loop with straight assignment """
-        new_instr = [f'\tmovb (%rax), %r11',]   # n -> r11
+        new_instr = [f'\tmovb (%rax), %r11b',]   # n -> r11
         for instr in instr_set:
             # In this architecture, simplifiable loop cannot have non-incr instr
             if not isinstance(instr, BFIncrement):
                 raise RuntimeError(f"Simplifiable loop cannot have non-incr instr {instr} in {self._loop_num}")
             increment = instr.value
             ptr = instr.ptr
-            new_instr.extend([f'\tmovb {increment}, %r8',   # x_i -> r8 
+            new_instr.extend([f'\tmovb {increment}, %r8b',  # x_i -> r8 
                               f'\tpushq %rax',              # save rax
-                              f'\tmovb %r11, %rax',         # n -> rax
-                              f'\timulb %r8',               # x_i*n -> rax
-                              f'\tmovb %rax, %r8',          # store res in r8
+                              f'\tmovb %r11b, %al',         # n -> rax
+                              f'\timulq %r8',               # x_i*n -> rax
+                              f'\tmovb %al, %r8b',          # store byte res in r8
                               f'\tpopq %rax',
                               f'\taddq {ptr}(%rax), %r8',   # x_i*n + c_i -> r8
-                              f'\tmovq %r8, {ptr}(%rax)',   # store final val at ptr
+                              f'\tmovb %r8b, {ptr}(%rax)',  # store final byte val at data ptr
                               ])
         return new_instr
 
@@ -71,7 +74,7 @@ class Stack:
         # We use rax as the temporary to
         return [f'\t.bss',
                 f'buffer:',
-                f'\t.zero 30000',
+                f'\t.zero {self.__buff_size}',
                 '',
                 f'\t.text',
                 f'\t.globl main',
@@ -149,10 +152,16 @@ class x64ASM:
                 loop_count = self.__stack.get_loop
                 self.__stack.add_new_loop()
                 if instr.inf:
+                    simplified_loop = self.__stack.scan_loop(instr.body.block)
+                    self.__asm.extend(simplified_loop)
                     print("Inf loop found")
+                    continue
                 if instr.simplifiable:
-                    print(instr.body)
-                    self.__stack.simplify_loop(instr.body.block)
+                    print("simplifiable loop found")
+                    # print(str(instr.simplifiable))
+                    simplified_loop = self.__stack.simplify_loop(instr.body.block)
+                    self.__asm.extend(simplified_loop)
+                    # print(simplified_loop)
                     continue
                     pass
                 self.__asm.extend([f'\n.main.Loop{loop_count}:',                                    f'\tpushq %rax',

@@ -55,7 +55,7 @@ class BFInstruction(abc.ABC):
     @staticmethod
     def parse(program : str, leniant : bool = True):
         stack = [[]]
-
+        loop_id = 0
         for c in program:
             # print(f"c: {c}")
             if c == '+':
@@ -75,7 +75,8 @@ class BFInstruction(abc.ABC):
             elif c == ']':
                 if len(stack) < 2:
                     raise BFError
-                stack[-2].append(BFLoop(BFBlock(stack.pop())))
+                stack[-2].append(BFLoop(BFBlock(stack.pop()), loop_id))
+                loop_id += 1
             elif not (c.isspace() or leniant):
                     raise BFError
 
@@ -147,12 +148,14 @@ class BFBlock(BFInstruction):
 
 # --------------------------------------------------------------------
 class BFLoop(BFInstruction):
-    def __init__(self, body : BFBlock):
+    def __init__(self, body : BFBlock, id : int):
         self._body : BFBlock = body
+        self.__id : int = id
         self.__inf : bool = False
-        self.__simplifiable = False
+        self.__simplifiable: bool = False
 
     body = property(lambda self : self._body)
+    id = property(lambda self: self.__id)
     inf = property(lambda self : self.__inf)
     simplifiable = property(lambda self: self.__simplifiable)
 
@@ -166,7 +169,7 @@ class BFLoop(BFInstruction):
 
     def set_simplifiable(self, val : bool) -> None:
         """ Sets inf loop flag """
-        self.__simplifiable = bool
+        self.__simplifiable = val
 
     def __str__(self) -> str:
         return "Loop"
