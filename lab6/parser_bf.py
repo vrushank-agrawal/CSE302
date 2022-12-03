@@ -55,17 +55,17 @@ class BFInstruction(abc.ABC):
     @staticmethod
     def parse(program : str, leniant : bool = True):
         stack = [[]]
-
+        loop_id = 0
         for c in program:
             # print(f"c: {c}")
             if c == '+':
-                stack[-1].append(BFIncrement())
+                stack[-1].append(BFIncrement(1))
             elif c == '-':
-                stack[-1].append(BFDecrement())
+                stack[-1].append(BFIncrement(-1))
             elif c == '>':
-                stack[-1].append(BFForward())
+                stack[-1].append(BFPointer(1))
             elif c == '<':
-                stack[-1].append(BFBackward())
+                stack[-1].append(BFPointer(-1))
             elif c == '.':
                 stack[-1].append(BFPrint())
             elif c == ',':
@@ -75,13 +75,14 @@ class BFInstruction(abc.ABC):
             elif c == ']':
                 if len(stack) < 2:
                     raise BFError
-                stack[-2].append(BFLoop(BFBlock(stack.pop())))
+                stack[-2].append(BFLoop(BFBlock(stack.pop()), loop_id))
+                loop_id += 1
             elif not (c.isspace() or leniant):
                     raise BFError
 
         if len(stack) != 1:
             raise BFError
-        print(f"iterated through all of the characters")
+        # print(f"iterated through all of the characters")
         return BFBlock(stack.pop())
 
 # --------------------------------------------------------------------
@@ -89,80 +90,44 @@ class BFIncrement(BFInstruction):
     def execute(self, memory : BFMemory):
         memory.increment()
 
-    def __init__(self) -> None:
+    def __init__(self, val: int) -> None:
         super().__init__()
-        self.__value : int = 1
+        self.__value : int = val
+        self.__ptr : int = 0
  
     def __str__(self) -> str:
-        return f"Incr({self.__value})"
+        return f"Incr({self.__value, self.__ptr})"
 
     def change_val(self, new_val : int) -> None:
         """ Changes value for incrementing """
         self.__value = new_val
 
-    def get_value(self) -> int:
-        """Return number of increments"""
-        return self.__value
-
-# --------------------------------------------------------------------
-class BFDecrement(BFInstruction):
-    def execute(self, memory : BFMemory):
-        memory.decrement()
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.__value : int = 1
-
-    def __str__(self) -> str:
-        return f"Decr({self.__value})"
-
-    def change_val(self, new_val : int) -> None:
+    def change_ptr(self, new_val : int) -> None:
         """ Changes value for incrementing """
-        self.__value = new_val
+        self.__ptr = new_val
 
-    def get_value(self) -> int:
-        """Return number of decrements"""
-        return self.__value
+    # get the value of the insruction
+    value : int = property(lambda self: self.__value)
+    ptr : int = property(lambda self: self.__ptr)
 
 # --------------------------------------------------------------------
-class BFForward(BFInstruction):
+class BFPointer(BFInstruction):
     def execute(self, memory : BFMemory):
         memory.forward()
 
-    def __init__(self) -> None:
+    def __init__(self, val: int) -> None:
         super().__init__()
-        self.__value : int = 1
+        self.__value : int = val
 
     def __str__(self) -> str:
-        return "Fwd"
+        return f"Ptr({self.__value})"
 
     def change_val(self, new_val : int) -> None:
         """ Changes value for incrementing """
         self.__value = new_val
 
-    def get_value(self) -> int:
-        """Return number of Forwards"""
-        return self.__value
-
-# --------------------------------------------------------------------
-class BFBackward(BFInstruction):
-    def execute(self, memory : BFMemory):
-        memory.backward()
-    
-    def __init__(self) -> None:
-        super().__init__()
-        self.__value : int = 1
-
-    def __str__(self) -> str:
-        return "Bwd"
-
-    def change_val(self, new_val : int) -> None:
-        """ Changes value for incrementing """
-        self.__value = new_val
-
-    def get_value(self) -> int:
-        """Return number of Backwards"""
-        return self.__value
+    # get the value of the insruction
+    value : int = property(lambda self: self.__value)
 
 # --------------------------------------------------------------------
 class BFBlock(BFInstruction):
@@ -183,14 +148,28 @@ class BFBlock(BFInstruction):
 
 # --------------------------------------------------------------------
 class BFLoop(BFInstruction):
-    def __init__(self, body : BFBlock):
-        self._body = body
+    def __init__(self, body : BFBlock, id : int):
+        self._body : BFBlock = body
+        self.__id : int = id
+        self.__inf : bool = False
+        self.__simplifiable: bool = False
 
     body = property(lambda self : self._body)
+    id = property(lambda self: self.__id)
+    inf = property(lambda self : self.__inf)
+    simplifiable = property(lambda self: self.__simplifiable)
 
     def execute(self, memory : BFMemory):
         while memory.get():
             self.body.execute(memory)
+
+    def set_inf(self) -> None:
+        """ Sets inf loop flag """
+        self.__inf = True
+
+    def set_simplifiable(self, val : bool) -> None:
+        """ Sets inf loop flag """
+        self.__simplifiable = val
 
     def __str__(self) -> str:
         return "Loop"
@@ -222,18 +201,12 @@ def parse_program(fname) -> BFBlock:
         program = stream.read()
     return BFInstruction.parse(program)
 
-from optimize import Optimizer
-
 def _main():
     if len(sys.argv)-1 != 1:
         print(f'Usage: {sys.argv[0]} [FILE.bf]', file = sys.stderr)
         exit(1)
 
     program = parse_program(sys.argv[1])
-    print(f"program before opt: {program}")
-    optimizer = Optimizer(program)
-    program = optimizer.block
-    print(f"optimized program: {program}")
     try:
         program.execute(BFMemory())
     except BFExit:
