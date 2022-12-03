@@ -1,5 +1,5 @@
 from parser_bf import *
-from optimize import Optimizer, Macros
+from optimize import Optimizer
 
 # ---------------------------------------------------------------------#
 # Class to handle Stack
@@ -11,12 +11,37 @@ class Stack:
 
     get_loop : int = property(lambda self : self._loop_num)
 
+    # --------------------------------------------------------------------
+    # Loop helpers
+
     def add_new_loop(self) -> None:
         """ Adds a new loop counter for global program """
         self._loop_num += 1
 
     def scan_loop(self) -> list:
         """ Aux function to access memchr and memrchr for inf loop """
+
+    def simplify_loop(self, instr_set : List[BFInstruction]) -> list:
+        """ Replace simplifiable loop with straight assignment """
+        new_instr = [f'\tmovb (%rax), %r11',]
+        for instr in instr_set:
+            # In this architecture, simplifiable loop cannot have non-incr instr
+            if not isinstance(instr, BFIncrement):
+                raise RuntimeError(f"Simplifiable loop cannot have non-incr instr {instr}")
+            increment = instr.value
+            ptr = instr.ptr
+            new_instr.extend([f'\tmovb {increment}, %r8',
+                              f'\tpushq %rax',
+                              f'\tmovb %r11, %rax',
+                              f'\timulb %r8',
+                              f'\tmovb %rax, %r8',
+                              f'\tpopq %rax',
+                              f'\tmovq %r8, {ptr}(%rax)',
+                              ])
+        return new_instr
+
+    # --------------------------------------------------------------------
+    # Global proc helper
 
     def start_proc(self) -> list:
         """ Adds initial commands when proc is entered """
@@ -101,6 +126,10 @@ class x64ASM:
                 loop_count = self.__stack.get_loop
                 if instr.inf:
                     print("Inf loop found")
+                if instr.simplifiable:
+                    # self.__stack.simplify_loop(instr.body.block)
+                    # continue
+                    pass
                 self.__stack.add_new_loop()
                 self.__asm.extend([f'\n.main.Loop{loop_count}:',                                    f'\tpushq %rax',
                                     f'\tcmpb $0, (%rax)',

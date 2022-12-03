@@ -3,8 +3,14 @@ from parser_bf import *
 """
 NOTE: 
     The 3rd optimization: Increments/decrements at a fixed offset
-    is automatically delt with in my implementation of Postponing Movements
-    
+    is automatically dealt with in my implementation of Postponing Movements
+
+    The 5th optimization: Assignments Cancellation
+    are also automatically dealt with thanks to my code architecture
+
+    The 7th optimization: Copy/multiply loop simplification
+    for this, in our code architecture, we can only have increment instructions in the loop
+
 """
 
 # --------------------------------------------------------------------
@@ -14,6 +20,7 @@ NOTE:
 class Macros:
     """ class of macros used in the compiler """
     all_ops = [BFIncrement, BFPointer]
+    input_output = [BFInput, BFPrint]
 
 # --------------------------------------------------------------------
 # Optimizer Class
@@ -42,7 +49,8 @@ class Optimizer:
                     new_instr.append(instr)
 
             elif isinstance(instr, BFLoop):   # iterate through BFLoop instructions
-                new_instr.append(BFLoop(self.__clean(instr.body.block)))
+                if len(instr.body.block) > 0:
+                    new_instr.append(BFLoop(self.__clean(instr.body.block)))
 
             else:   # append all other instructions
                 new_instr.append(instr)
@@ -88,7 +96,12 @@ class Optimizer:
 
         # run scan loop simplification
         self.__opt_scan_loop(self.__block_instr)
-        print("Scan loop performed")
+        print("Scan inf loop performed")
+
+        # run copy loop simplification
+        unused = self.__opt_loop(self.__block_instr)
+        if unused: print("This is a loopless simplifiable program")
+        print("Simplifiable loop checked\n")
 
     def optimize_two(self) -> None:
         # run postpone optimizations
@@ -194,6 +207,7 @@ class Optimizer:
 
     # --------------------------------------------------------------------
     # Scan loop simplification
+    # TODO can be merged into opt_postpone
 
     def __opt_scan_loop(self, instr_set: List[BFInstruction]) -> None:
         """ Checks loops for potential inf loops modifies linear scanning """
@@ -208,7 +222,29 @@ class Optimizer:
 
     # --------------------------------------------------------------------
     # Copy/multiply loop simplification
-    
+    # TODO can be merged into opt_postpone
+
+    def __opt_loop(self, instr_set : List[BFInstruction]) -> bool:
+        """ Checks if single assignment can be performed in the loop """
+        simplifiable = True
+        self.__incr_counter = 0
+
+        assert(len(instr_set)>0), f"Instr {instr_set} should have been cleaned before"
+        if not (isinstance(instr_set[0], BFIncrement) \
+                and (instr_set[0].ptr, instr_set[0].value) == (0, -1)):
+            simplifiable = False
+
+        for instr in instr_set:
+            if isinstance(instr, BFLoop):
+                instr.set_simplifiable(self.__opt_loop(instr.body.block))
+                simplifiable = False
+
+            # In a simplifiable loop, ptr instr would have been removed before
+            elif not isinstance(instr, BFIncrement):
+                simplifiable = False
+
+        return simplifiable
+
 
 if __name__ == "__main__":
     if len(sys.argv)-1 != 1:

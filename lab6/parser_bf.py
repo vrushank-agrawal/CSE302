@@ -150,9 +150,11 @@ class BFLoop(BFInstruction):
     def __init__(self, body : BFBlock):
         self._body : BFBlock = body
         self.__inf : bool = False
+        self.__simplifiable = False
 
     body = property(lambda self : self._body)
     inf = property(lambda self : self.__inf)
+    simplifiable = property(lambda self: self.__simplifiable)
 
     def execute(self, memory : BFMemory):
         while memory.get():
@@ -161,6 +163,10 @@ class BFLoop(BFInstruction):
     def set_inf(self) -> None:
         """ Sets inf loop flag """
         self.__inf = True
+
+    def set_simplifiable(self, val : bool) -> None:
+        """ Sets inf loop flag """
+        self.__simplifiable = bool
 
     def __str__(self) -> str:
         return "Loop"
