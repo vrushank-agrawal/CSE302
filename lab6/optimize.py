@@ -42,6 +42,19 @@ class Optimizer:
 
         return BFBlock(new_instr)
 
+    def __reverse(self, instr_set : List[BFInstruction]) -> None:
+        """ Reverses Increment and Pointer instr so that incr happens before ptr movement """
+        for index, instr in enumerate(instr_set):
+            if index+1 < len(instr_set):
+                next_instr = instr_set[index+1]
+            else:
+                break
+            if isinstance(instr, BFPointer):
+                if isinstance(next_instr, BFIncrement):
+                    instr_set[index], instr_set[index+1] = next_instr, instr
+            if isinstance(instr, BFLoop):
+                self.__reverse(instr.body.block)
+
     # --------------------------------------------------------------------
     # Optimizations
     # --------------------------------------------------------------------
@@ -50,19 +63,26 @@ class Optimizer:
         """ Runs all optimizations """
         # run contraction optimizations
         self.__opt_add_sub(self.__block_instr)
-        # # run postpone optimizations
-        # self.__opt_postpone(self.__block_instr)
         # clean null instr
         self.__block = self.__clean(self.__block_instr)
         self.__block_instr = self.__block.block
-
-        # print("Optimization performed")
+        
+        # # run postpone optimizations
+        # self.__opt_postpone(self.__block_instr)
+        # # clean null instr
+        # self.__block = self.__clean(self.__block_instr)
+        # self.__block_instr = self.__block.block
+        # # reverse ptr and incr instr
+        # self.__reverse(self.__block_instr)
+        
+        print("Optimization performed")
 
     def optimize_two(self) -> None:
         # print("enter opt_postpone")
         self.__opt_postpone(self.__block_instr)
         self.__block = self.__clean(self.__block_instr)
         self.__block_instr = self.__block.block
+        self.__reverse(self.__block_instr)
         # print("exit opt_postpone")
 
     # --------------------------------------------------------------------
@@ -177,7 +197,7 @@ if __name__ == "__main__":
     print(f"program before opt: {program}\n")
     optimizer = Optimizer(program)
     print(f"1st opt: {optimizer.block}\n")
-    # optimizer.optimize_two()
+    optimizer.optimize_two()
     print(f"2nd opt: {optimizer.block}\n")
     try:
         program.execute(BFMemory())
