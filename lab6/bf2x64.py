@@ -78,7 +78,8 @@ class x64ASM:
         for instr in instr_set:
             if isinstance(instr, BFIncrement):
                 increment = instr.value
-                self.__asm.extend([f'\taddq ${increment}, (%rax)',])
+                ptr = instr.ptr
+                self.__asm.extend([f'\taddq ${increment}, {ptr}(%rax)',])
 
             if isinstance(instr, BFPointer):
                 forward = instr.value

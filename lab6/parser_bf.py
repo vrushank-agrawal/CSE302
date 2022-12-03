@@ -92,16 +92,22 @@ class BFIncrement(BFInstruction):
     def __init__(self, val: int) -> None:
         super().__init__()
         self.__value : int = val
+        self.__ptr : int = 0
  
     def __str__(self) -> str:
-        return f"Incr({self.__value})"
+        return f"Incr({self.__value, self.__ptr})"
 
     def change_val(self, new_val : int) -> None:
         """ Changes value for incrementing """
         self.__value = new_val
 
+    def change_ptr(self, new_val : int) -> None:
+        """ Changes value for incrementing """
+        self.__ptr = new_val
+
     # get the value of the insruction
     value : int = property(lambda self: self.__value)
+    ptr : int = property(lambda self: self.__ptr)
 
 # --------------------------------------------------------------------
 class BFPointer(BFInstruction):
@@ -113,7 +119,7 @@ class BFPointer(BFInstruction):
         self.__value : int = val
 
     def __str__(self) -> str:
-        return f"Fwd({self.__value})"
+        return f"Ptr({self.__value})"
 
     def change_val(self, new_val : int) -> None:
         """ Changes value for incrementing """
