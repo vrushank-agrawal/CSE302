@@ -149,20 +149,20 @@ class x64ASM:
                                     ])
 
             if isinstance(instr, BFLoop):
-                loop_count = self.__stack.get_loop
+                loop_count = instr.id
                 self.__stack.add_new_loop()
                 if instr.inf:
                     simplified_loop = self.__stack.scan_loop(instr.body.block)
                     self.__asm.extend(simplified_loop)
-                    print("Inf loop found")
                     continue
+                    # print("Inf loop found")
+                    pass
                 if instr.simplifiable:
-                    print("simplifiable loop found")
-                    # print(str(instr.simplifiable))
                     simplified_loop = self.__stack.simplify_loop(instr.body.block)
                     self.__asm.extend(simplified_loop)
-                    # print(simplified_loop)
                     continue
+                    # print("simplifiable loop found")
+                    # print(str(instr.simplifiable))
                     pass
                 self.__asm.extend([f'\n.main.Loop{loop_count}:',                                    f'\tpushq %rax',
                                     f'\tcmpb $0, (%rax)',

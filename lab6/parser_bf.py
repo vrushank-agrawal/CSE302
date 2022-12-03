@@ -3,7 +3,6 @@
 # --------------------------------------------------------------------
 import abc
 import sys
-# from optimization import optimize4
 from typing import List
 
 # --------------------------------------------------------------------

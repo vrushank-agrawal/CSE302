@@ -96,6 +96,7 @@ class Optimizer:
 
         # run scan loop simplification
         self.__opt_scan_loop(self.__block_instr)
+        # exit(0)
         print("Scan inf loop performed")
 
         # run copy loop simplification
@@ -216,6 +217,8 @@ class Optimizer:
                 loop_instr = instr.body.block
                 if len(loop_instr) == 1:
                     if isinstance(loop_instr[0], BFPointer) and abs(loop_instr[0].value) == 1:
+                        print(loop_instr[0].value)
+                        print(instr.id)
                         instr.set_inf()
                 else:
                     self.__opt_scan_loop(loop_instr)
