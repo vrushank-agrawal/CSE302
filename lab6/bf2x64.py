@@ -76,13 +76,11 @@ class x64ASM:
         # print(type(instr_set))
 
         for instr in instr_set:
-            # increment or decrement then simply add the value to mem
-            if type(instr) in Macros.arith_ops:
+            if isinstance(instr, BFIncrement):
                 increment = instr.value
                 self.__asm.extend([f'\taddq ${increment}, (%rax)',])
 
-            # forward or backward then simply add the value to pointer
-            if type(instr) in Macros.pointer_ops:
+            if isinstance(instr, BFPointer):
                 forward = instr.value
                 self.__asm.extend([f'\taddq ${forward}, %rax',])
 
@@ -126,8 +124,7 @@ def main():
     assert(fname.endswith(".bf")), "Illegal file format passed"
     program = parse_program(fname)
     optimizer = Optimizer(program)
-    program = optimizer.block
-    asm = x64ASM(program).asm     # store asm instr
+    asm = x64ASM(optimizer.block).asm     # store asm instr
 
     # Save assembly code and create executable
     fname = fname[:-3]

@@ -59,13 +59,13 @@ class BFInstruction(abc.ABC):
         for c in program:
             # print(f"c: {c}")
             if c == '+':
-                stack[-1].append(BFIncrement())
+                stack[-1].append(BFIncrement(1))
             elif c == '-':
-                stack[-1].append(BFDecrement())
+                stack[-1].append(BFIncrement(-1))
             elif c == '>':
-                stack[-1].append(BFForward())
+                stack[-1].append(BFPointer(1))
             elif c == '<':
-                stack[-1].append(BFBackward())
+                stack[-1].append(BFPointer(-1))
             elif c == '.':
                 stack[-1].append(BFPrint())
             elif c == ',':
@@ -89,9 +89,9 @@ class BFIncrement(BFInstruction):
     def execute(self, memory : BFMemory):
         memory.increment()
 
-    def __init__(self) -> None:
+    def __init__(self, val: int) -> None:
         super().__init__()
-        self.__value : int = 1
+        self.__value : int = val
  
     def __str__(self) -> str:
         return f"Incr({self.__value})"
@@ -104,54 +104,16 @@ class BFIncrement(BFInstruction):
     value : int = property(lambda self: self.__value)
 
 # --------------------------------------------------------------------
-class BFDecrement(BFInstruction):
-    def execute(self, memory : BFMemory):
-        memory.decrement()
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.__value : int = -1
-
-    def __str__(self) -> str:
-        return f"Decr({self.__value})"
-
-    def change_val(self, new_val : int) -> None:
-        """ Changes value for incrementing """
-        self.__value = new_val
-
-    # get the value of the insruction
-    value : int = property(lambda self: self.__value)
-
-# --------------------------------------------------------------------
-class BFForward(BFInstruction):
+class BFPointer(BFInstruction):
     def execute(self, memory : BFMemory):
         memory.forward()
 
-    def __init__(self) -> None:
+    def __init__(self, val: int) -> None:
         super().__init__()
-        self.__value : int = 1
+        self.__value : int = val
 
     def __str__(self) -> str:
         return f"Fwd({self.__value})"
-
-    def change_val(self, new_val : int) -> None:
-        """ Changes value for incrementing """
-        self.__value = new_val
-
-    # get the value of the insruction
-    value : int = property(lambda self: self.__value)
-
-# --------------------------------------------------------------------
-class BFBackward(BFInstruction):
-    def execute(self, memory : BFMemory):
-        memory.backward()
-    
-    def __init__(self) -> None:
-        super().__init__()
-        self.__value : int = -1
-
-    def __str__(self) -> str:
-        return f"Bwd({self.__value})"
 
     def change_val(self, new_val : int) -> None:
         """ Changes value for incrementing """

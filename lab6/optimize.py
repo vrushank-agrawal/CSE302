@@ -6,13 +6,7 @@ from parser_bf import *
 
 class Macros:
     """ class of macros used in the compiler """
-
-    arith_ops = [BFIncrement, BFDecrement]
-    pointer_ops = [BFForward, BFBackward]
-    incr_ops = [BFForward, BFIncrement]
-    decr_ops = [BFDecrement, BFBackward]
-
-    all_ops = arith_ops + pointer_ops
+    all_ops = [BFIncrement, BFPointer]
 
 # --------------------------------------------------------------------
 # Counter for Optimizer
@@ -90,7 +84,7 @@ class Optimizer:
             instr = instr_set[index]
 
             # update arith_ops
-            if type(instr) in Macros.arith_ops:
+            if isinstance(instr, BFIncrement):
                 # set the counter to initial value of the
                 # increment/decrement concat loop
                 self.__counter = instr.value
@@ -98,7 +92,7 @@ class Optimizer:
                 while index+1 < instr_len:
                     next_instr = instr_set[index+1]
                     # if next instr not arith_op break
-                    if type(next_instr) not in Macros.arith_ops:
+                    if isinstance(instr, BFIncrement):
                         break
                     self.__counter += instr.value
                     instr.change_val(0)
@@ -107,7 +101,7 @@ class Optimizer:
                 instr.change_val(self.__counter)
 
             # update pointer_ops
-            if type(instr) in Macros.pointer_ops:
+            if isinstance(instr, BFPointer):
                 # set the counter to initial value of the
                 # increment/decrement concat loop
                 self.__counter = instr.value
@@ -115,7 +109,7 @@ class Optimizer:
                 while index+1 < instr_len:
                     next_instr = instr_set[index+1]
                     # if next instr not arith_op break
-                    if type(next_instr) not in Macros.pointer_ops:
+                    if isinstance(instr, BFPointer):
                         break
                     self.__counter += instr.value
                     instr.change_val(0)
@@ -125,8 +119,6 @@ class Optimizer:
 
             # iterate through loop instr
             if isinstance(instr, BFLoop):
-                # print(instr.body.block)
-                # exit(0)
                 self.__opt_add_sub(instr.body.block)
             
             index += 1
