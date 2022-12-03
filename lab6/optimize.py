@@ -45,14 +45,16 @@ class Optimizer:
     def __reverse(self, instr_set : List[BFInstruction]) -> None:
         """ Reverses Increment and Pointer instr so that incr happens before ptr movement """
         for index, instr in enumerate(instr_set):
-            if index+1 < len(instr_set):
-                next_instr = instr_set[index+1]
-            else:
-                break
+            # if a pointer then check for switching
             if isinstance(instr, BFPointer):
-                if isinstance(next_instr, BFIncrement):
-                    instr_set[index], instr_set[index+1] = next_instr, instr
+                if index+1 < len(instr_set):
+                    next_instr = instr_set[index+1]
+                    # if next instr is incr then switch
+                    if isinstance(next_instr, BFIncrement):
+                        # print("reversed")
+                        instr_set[index], instr_set[index+1] = next_instr, instr
             if isinstance(instr, BFLoop):
+                # print("reached loop")
                 self.__reverse(instr.body.block)
 
     # --------------------------------------------------------------------
@@ -67,23 +69,24 @@ class Optimizer:
         self.__block = self.__clean(self.__block_instr)
         self.__block_instr = self.__block.block
         
-        # # run postpone optimizations
-        # self.__opt_postpone(self.__block_instr)
-        # # clean null instr
-        # self.__block = self.__clean(self.__block_instr)
-        # self.__block_instr = self.__block.block
-        # # reverse ptr and incr instr
-        # self.__reverse(self.__block_instr)
+        # run postpone optimizations
+        self.__opt_postpone(self.__block_instr)
+        # clean null instr
+        self.__block = self.__clean(self.__block_instr)
+        self.__block_instr = self.__block.block
+        # reverse ptr and incr instr
+        self.__reverse(self.__block_instr)
         
         print("Optimization performed")
 
     def optimize_two(self) -> None:
-        # print("enter opt_postpone")
+        # run postpone optimizations
         self.__opt_postpone(self.__block_instr)
+        # clean null instr
         self.__block = self.__clean(self.__block_instr)
         self.__block_instr = self.__block.block
+        # reverse ptr and incr instr
         self.__reverse(self.__block_instr)
-        # print("exit opt_postpone")
 
     # --------------------------------------------------------------------
     # Contraction optimizations
@@ -199,8 +202,5 @@ if __name__ == "__main__":
     print(f"1st opt: {optimizer.block}\n")
     optimizer.optimize_two()
     print(f"2nd opt: {optimizer.block}\n")
-    try:
-        program.execute(BFMemory())
-    except BFExit:
-        pass
+
     BFExit
