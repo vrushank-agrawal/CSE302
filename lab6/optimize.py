@@ -1,5 +1,12 @@
 from parser_bf import *
 
+"""
+NOTE: 
+    The 3rd optimization: Increments/decrements at a fixed offset
+    is automatically delt with in my implementation of Postponing Movements
+    
+"""
+
 # --------------------------------------------------------------------
 # Macros
 # --------------------------------------------------------------------
@@ -68,6 +75,7 @@ class Optimizer:
         # clean null instr
         self.__block = self.__clean(self.__block_instr)
         self.__block_instr = self.__block.block
+        print("Contraction performed")
         
         # run postpone optimizations
         self.__opt_postpone(self.__block_instr)
@@ -76,8 +84,11 @@ class Optimizer:
         self.__block_instr = self.__block.block
         # reverse ptr and incr instr
         self.__reverse(self.__block_instr)
-        
-        print("Optimization performed")
+        print("Postponing performed")
+
+        # run scan loop simplification
+        self.__opt_scan_loop(self.__block_instr)
+        print("Scan loop performed")
 
     def optimize_two(self) -> None:
         # run postpone optimizations
@@ -182,10 +193,18 @@ class Optimizer:
             index += 1
 
     # --------------------------------------------------------------------
-    # Assignment Cancellation
-
-    # --------------------------------------------------------------------
     # Scan loop simplification
+
+    def __opt_scan_loop(self, instr_set: List[BFInstruction]) -> None:
+        """ Checks loops for potential inf loops modifies linear scanning """
+        for instr in instr_set:
+            if isinstance(instr, BFLoop):
+                loop_instr = instr.body.block
+                if len(loop_instr) == 1:
+                    if isinstance(loop_instr[0], BFPointer):
+                        instr.set_inf()
+                else:
+                    self.__opt_scan_loop(loop_instr)
 
     # --------------------------------------------------------------------
     # Copy/multiply loop simplification

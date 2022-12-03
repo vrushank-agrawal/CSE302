@@ -148,13 +148,19 @@ class BFBlock(BFInstruction):
 # --------------------------------------------------------------------
 class BFLoop(BFInstruction):
     def __init__(self, body : BFBlock):
-        self._body = body
+        self._body : BFBlock = body
+        self.__inf : bool = False
 
     body = property(lambda self : self._body)
+    inf = property(lambda self : self.__inf)
 
     def execute(self, memory : BFMemory):
         while memory.get():
             self.body.execute(memory)
+
+    def set_inf(self) -> None:
+        """ Sets inf loop flag """
+        self.__inf = True
 
     def __str__(self) -> str:
         return "Loop"

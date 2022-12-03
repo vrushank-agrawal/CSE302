@@ -11,9 +11,12 @@ class Stack:
 
     get_loop : int = property(lambda self : self._loop_num)
 
-    def incr_loop(self) -> None:
-        """ Adds a new loop """
+    def add_new_loop(self) -> None:
+        """ Adds a new loop counter for global program """
         self._loop_num += 1
+
+    def scan_loop(self) -> list:
+        """ Aux function to access memchr and memrchr for inf loop """
 
     def start_proc(self) -> list:
         """ Adds initial commands when proc is entered """
@@ -50,7 +53,6 @@ class x64ASM:
         self.__instrs: BFBlock = instr
         self.__asm: List[str] = list()
         self.__stack: Stack = Stack()
-        self.__loop_counter = 0
         self.create_proc()    # create asm with main instr
 
     asm : List[str] = property(lambda self: self.__asm)
@@ -69,12 +71,6 @@ class x64ASM:
 
     def __create_asm(self, instr_set) -> None:
         """ Translates parsed code into ASM """
-        # print(self.__loop_counter)
-        # self.__loop_counter += 1
-        # print(instr_set[0])
-        # print(type(instr_set[0]))
-        # print(type(instr_set))
-
         for instr in instr_set:
             if isinstance(instr, BFIncrement):
                 increment = instr.value
@@ -103,7 +99,9 @@ class x64ASM:
 
             if isinstance(instr, BFLoop):
                 loop_count = self.__stack.get_loop
-                self.__stack.incr_loop()
+                if instr.inf:
+                    print("Inf loop found")
+                self.__stack.add_new_loop()
                 self.__asm.extend([f'\n.main.Loop{loop_count}:',                                    f'\tpushq %rax',
                                     f'\tcmpb $0, (%rax)',
                                     f'\tjz .main.Loop{loop_count}.exit',
@@ -125,7 +123,8 @@ def main():
     assert(fname.endswith(".bf")), "Illegal file format passed"
     program = parse_program(fname)
     optimizer = Optimizer(program)
-    asm = x64ASM(optimizer.block).asm     # store asm instr
+    program = optimizer.block
+    asm = x64ASM(program).asm     # store asm instr
 
     # Save assembly code and create executable
     fname = fname[:-3]
