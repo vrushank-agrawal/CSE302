@@ -215,7 +215,7 @@ class Optimizer:
             if isinstance(instr, BFLoop):
                 loop_instr = instr.body.block
                 if len(loop_instr) == 1:
-                    if isinstance(loop_instr[0], BFPointer):
+                    if isinstance(loop_instr[0], BFPointer) and abs(loop_instr[0].value) == 1:
                         instr.set_inf()
                 else:
                     self.__opt_scan_loop(loop_instr)
