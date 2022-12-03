@@ -81,7 +81,7 @@ class BFInstruction(abc.ABC):
 
         if len(stack) != 1:
             raise BFError
-        print(f"iterated through all of the characters")
+        # print(f"iterated through all of the characters")
         return BFBlock(stack.pop())
 
 # --------------------------------------------------------------------
@@ -100,9 +100,8 @@ class BFIncrement(BFInstruction):
         """ Changes value for incrementing """
         self.__value = new_val
 
-    def get_value(self) -> int:
-        """Return number of increments"""
-        return self.__value
+    # get the value of the insruction
+    value : int = property(lambda self: self.__value)
 
 # --------------------------------------------------------------------
 class BFDecrement(BFInstruction):
@@ -111,7 +110,7 @@ class BFDecrement(BFInstruction):
 
     def __init__(self) -> None:
         super().__init__()
-        self.__value : int = 1
+        self.__value : int = -1
 
     def __str__(self) -> str:
         return f"Decr({self.__value})"
@@ -120,9 +119,8 @@ class BFDecrement(BFInstruction):
         """ Changes value for incrementing """
         self.__value = new_val
 
-    def get_value(self) -> int:
-        """Return number of decrements"""
-        return self.__value
+    # get the value of the insruction
+    value : int = property(lambda self: self.__value)
 
 # --------------------------------------------------------------------
 class BFForward(BFInstruction):
@@ -134,15 +132,14 @@ class BFForward(BFInstruction):
         self.__value : int = 1
 
     def __str__(self) -> str:
-        return "Fwd"
+        return f"Fwd({self.__value})"
 
     def change_val(self, new_val : int) -> None:
         """ Changes value for incrementing """
         self.__value = new_val
 
-    def get_value(self) -> int:
-        """Return number of Forwards"""
-        return self.__value
+    # get the value of the insruction
+    value : int = property(lambda self: self.__value)
 
 # --------------------------------------------------------------------
 class BFBackward(BFInstruction):
@@ -151,18 +148,17 @@ class BFBackward(BFInstruction):
     
     def __init__(self) -> None:
         super().__init__()
-        self.__value : int = 1
+        self.__value : int = -1
 
     def __str__(self) -> str:
-        return "Bwd"
+        return f"Bwd({self.__value})"
 
     def change_val(self, new_val : int) -> None:
         """ Changes value for incrementing """
         self.__value = new_val
 
-    def get_value(self) -> int:
-        """Return number of Backwards"""
-        return self.__value
+    # get the value of the insruction
+    value : int = property(lambda self: self.__value)
 
 # --------------------------------------------------------------------
 class BFBlock(BFInstruction):
@@ -222,18 +218,12 @@ def parse_program(fname) -> BFBlock:
         program = stream.read()
     return BFInstruction.parse(program)
 
-from optimize import Optimizer
-
 def _main():
     if len(sys.argv)-1 != 1:
         print(f'Usage: {sys.argv[0]} [FILE.bf]', file = sys.stderr)
         exit(1)
 
     program = parse_program(sys.argv[1])
-    print(f"program before opt: {program}")
-    optimizer = Optimizer(program)
-    program = optimizer.block
-    print(f"optimized program: {program}")
     try:
         program.execute(BFMemory())
     except BFExit:

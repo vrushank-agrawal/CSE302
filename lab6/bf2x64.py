@@ -1,5 +1,5 @@
 from parser_bf import *
-from typing import Dict
+from optimize import Optimizer, Macros
 
 # ---------------------------------------------------------------------#
 # Class to handle Stack
@@ -11,7 +11,6 @@ class Stack:
 
     get_loop : int = property(lambda self : self._loop_num)
 
-    # incr_loop : None = property(lambda self : self._loop_num+=1)
     def incr_loop(self) -> None:
         """ Adds a new loop """
         self._loop_num += 1
@@ -75,37 +74,20 @@ class x64ASM:
         # print(instr_set[0])
         # print(type(instr_set[0]))
         # print(type(instr_set))
+
         for instr in instr_set:
-            if isinstance(instr, BFIncrement):
-                increment = instr.get_value()
-                self.__asm.extend([#f'\tmovq {arg1}, %rax',
-                                    f'\taddq ${increment}, (%rax)',
-                                    #f'\tmovq %rax, {result}'
-                                    ])
+            # increment or decrement then simply add the value to mem
+            if type(instr) in Macros.arith_ops:
+                increment = instr.value
+                self.__asm.extend([f'\taddq ${increment}, (%rax)',])
 
-            if isinstance(instr, BFDecrement):
-                decrement = instr.get_value()
-                self.__asm.extend([ #f'\tmovq {arg1}, %rax',
-                                    f'\tsubq ${decrement}, (%rax)',
-                                    #f'\tmovq %rax, {result}'
-                                    ])
-
-            if isinstance(instr, BFForward):
-                forward = instr.get_value()
-                self.__asm.extend([#f'\tmovq {arg1}, %rax',
-                                    f'\taddq ${forward}, %rax',
-                                    #f'\tmovq %rax, {result}'
-                                    ])
-
-            if isinstance(instr, BFBackward):
-                back = instr.get_value()
-                self.__asm.extend([#f'\tmovq {arg1}, %rax',
-                                    f'\tsubq ${back}, %rax',
-                                    #f'\tmovq %rax, {result}'
-                                    ])
+            # forward or backward then simply add the value to pointer
+            if type(instr) in Macros.pointer_ops:
+                forward = instr.value
+                self.__asm.extend([f'\taddq ${forward}, %rax',])
 
             if isinstance(instr, BFPrint):
-                # move first and only arg to 1st arg reg rdi
+                # move first and only arg to last byte in rdi
                 self.__asm.extend([f'\tmovb (%rax), %dil',
                                     f'\tpushq %rax',
                                     f'\tcallq __bf_print',
@@ -143,8 +125,8 @@ def main():
     fname : str = sys.argv[1]
     assert(fname.endswith(".bf")), "Illegal file format passed"
     program = parse_program(fname)
-
-    # asm = x64ASM(program).get_asm()     # store asm instr
+    optimizer = Optimizer(program)
+    program = optimizer.block
     asm = x64ASM(program).asm     # store asm instr
 
     # Save assembly code and create executable
