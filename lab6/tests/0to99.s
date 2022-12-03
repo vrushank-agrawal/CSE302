@@ -14,18 +14,18 @@ main:
 	addq $10, 2(%rax)
 	addq $2, %rax
 
-.main.Loop0:
-	pushq %rax
-	cmpb $0, (%rax)
-	jz .main.Loop0.exit
-	addq $48, 1(%rax)
-	addq $10, 2(%rax)
-	addq $2, %rax
-
 .main.Loop1:
 	pushq %rax
 	cmpb $0, (%rax)
 	jz .main.Loop1.exit
+	addq $48, 1(%rax)
+	addq $10, 2(%rax)
+	addq $2, %rax
+
+.main.Loop0:
+	pushq %rax
+	cmpb $0, (%rax)
+	jz .main.Loop0.exit
 	addq $-3, %rax
 	movb (%rax), %dil
 	pushq %rax
@@ -44,15 +44,15 @@ main:
 	popq %rax
 	addq $-1, 4(%rax)
 	addq $4, %rax
-	jmp .main.Loop1
-.main.Loop1.exit:
+	jmp .main.Loop0
+.main.Loop0.exit:
 
 	addq $-58, -1(%rax)
 	addq $1, -3(%rax)
 	addq $-1, -2(%rax)
 	addq $-2, %rax
-	jmp .main.Loop0
-.main.Loop0.exit:
+	jmp .main.Loop1
+.main.Loop1.exit:
 
 .main.Lexit:
 	xorq %rax, %rax

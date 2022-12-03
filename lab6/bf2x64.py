@@ -174,14 +174,22 @@ class x64ASM:
                                     ])
 
 # --------------------------------------------------------------------
+import argparse
 
 def main():
     """ Program entry point """
-    if len(sys.argv)-1 != 1:
-        print(f'Usage: {sys.argv[0]} [FILE.bf]', file = sys.stderr)
+    if len(sys.argv)-1 < 1:
+        print(f'Usage: {sys.argv[0]} [FILE.bf] -o [options] [.s FILE]', file = sys.stderr)
         exit(1)
+    parse = argparse.ArgumentParser(description='Brainfuck Compiler')
+    parse.add_argument('filename', metavar="FILE", type=str, nargs=1)
+    parse.add_argument('-e', dest='executable', action='store_true', default=False,
+                        help="Creates executable")
+    parse.add_argument('-o', dest='output', type=str,
+                        help='Write output to this file')
+    args = parse.parse_args(sys.argv[1:])
 
-    fname : str = sys.argv[1]
+    fname : str = args.filename[0]
     assert(fname.endswith(".bf")), "Illegal file format passed"
     program = parse_program(fname)
     optimizer = Optimizer(program)
@@ -192,13 +200,20 @@ def main():
     fname = fname[:-3]
     exe_name = fname + '.exe'
     asm_name = fname + '.s'
-    with open(asm_name, 'w') as afp:
-        instr = "\n".join(asm)
-        afp.write(instr)
+    instr = "\n".join(asm)
+    if args.output:
+        with open(args.output, 'w') as afp:
+            afp.write(instr)
 
-    import os
-    os.system(f'gcc -o {exe_name} {asm_name} helper_func.c')
-    print(f"Assembly created for {fname}")
+    if args.executable: # for me
+        import os
+        with open(asm_name, 'w') as afp:
+            afp.write(instr)
+        os.system(f'gcc -o {exe_name} {asm_name} helper_func.c')
+        print(f"Assembly created for {fname}")
+    else:       # for submission
+        print("-----------asm----------\n")
+        print(instr)
 
 # --------------------------------------------------------------------
 if __name__ == '__main__':
