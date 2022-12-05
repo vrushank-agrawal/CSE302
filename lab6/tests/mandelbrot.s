@@ -9,18 +9,42 @@ main:
 	movq %rsp, %rbp
 	leaq buffer(%rip), %rax
 	addb $13, 0(%rax)
-
-.main.Loop0:
-	cmpb $0, (%rax)
-	jz .main.Loop0.exit
-	addb $-1, 0(%rax)
-	addb $2, 1(%rax)
-	addb $5, 4(%rax)
-	addb $2, 5(%rax)
-	addb $1, 6(%rax)
-	jmp .main.Loop0
-.main.Loop0.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $2, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
+	movq $5, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 4(%rax)
+	movq $2, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 5(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 6(%rax)
 	addb $6, 5(%rax)
 	addb $-3, 6(%rax)
 	addb $15, 16(%rax)
@@ -57,14 +81,14 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop5.exit
 	addq $8, %rax
-
-.main.Loop4:
-	cmpb $0, (%rax)
-	jz .main.Loop4.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop4
-.main.Loop4.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
 	jmp .main.Loop5
 .main.Loop5.exit:
@@ -79,14 +103,14 @@ main:
 .main.Loop6.exit:
 
 	addq $8, %rax
-
-.main.Loop7:
-	cmpb $0, (%rax)
-	jz .main.Loop7.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop7
-.main.Loop7.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addb $5, -7(%rax)
 	addq $-7, %rax
@@ -95,15 +119,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop9.exit
 	addb $-1, 0(%rax)
-
-.main.Loop8:
-	cmpb $0, (%rax)
-	jz .main.Loop8.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop8
-.main.Loop8.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addq $9, %rax
 	jmp .main.Loop9
 .main.Loop9.exit:
@@ -120,14 +150,14 @@ main:
 .main.Loop10.exit:
 
 	addq $3, %rax
-
-.main.Loop11:
-	cmpb $0, (%rax)
-	jz .main.Loop11.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop11
-.main.Loop11.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 
 .main.Loop685:
@@ -139,14 +169,14 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop13.exit
 	addq $7, %rax
-
-.main.Loop12:
-	cmpb $0, (%rax)
-	jz .main.Loop12.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop12
-.main.Loop12.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $2, %rax
 	jmp .main.Loop13
 .main.Loop13.exit:
@@ -161,14 +191,14 @@ main:
 .main.Loop14.exit:
 
 	addq $7, %rax
-
-.main.Loop15:
-	cmpb $0, (%rax)
-	jz .main.Loop15.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop15
-.main.Loop15.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addb $4, -6(%rax)
 	addq $-6, %rax
@@ -177,15 +207,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop17.exit
 	addb $-1, 0(%rax)
-
-.main.Loop16:
-	cmpb $0, (%rax)
-	jz .main.Loop16.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop16
-.main.Loop16.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addq $9, %rax
 	jmp .main.Loop17
 .main.Loop17.exit:
@@ -197,15 +233,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop19.exit
 	addb $-1, 0(%rax)
-
-.main.Loop18:
-	cmpb $0, (%rax)
-	jz .main.Loop18.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop18
-.main.Loop18.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addq $9, %rax
 	jmp .main.Loop19
 .main.Loop19.exit:
@@ -225,41 +267,65 @@ main:
 .main.Loop618:
 	cmpb $0, (%rax)
 	jz .main.Loop618.exit
-
-.main.Loop21:
-	cmpb $0, (%rax)
-	jz .main.Loop21.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop21
-.main.Loop21.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $6, %rax
 
 .main.Loop24:
 	cmpb $0, (%rax)
 	jz .main.Loop24.exit
 	addq $7, %rax
-
-.main.Loop22:
-	cmpb $0, (%rax)
-	jz .main.Loop22.exit
-	addb $-1, 0(%rax)
-	addb $1, -6(%rax)
-	jmp .main.Loop22
-.main.Loop22.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -6(%rax)
 	addq $-6, %rax
-
-.main.Loop23:
-	cmpb $0, (%rax)
-	jz .main.Loop23.exit
-	addb $-1, 0(%rax)
-	addb $1, 6(%rax)
-	addb $1, 4(%rax)
-	addb $1, 1(%rax)
-	jmp .main.Loop23
-.main.Loop23.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 6(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 4(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
 	addq $8, %rax
 	jmp .main.Loop24
 .main.Loop24.exit:
@@ -279,27 +345,51 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop28.exit
 	addq $8, %rax
-
-.main.Loop26:
-	cmpb $0, (%rax)
-	jz .main.Loop26.exit
-	addb $-1, 0(%rax)
-	addb $1, -7(%rax)
-	jmp .main.Loop26
-.main.Loop26.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -7(%rax)
 	addq $-7, %rax
-
-.main.Loop27:
-	cmpb $0, (%rax)
-	jz .main.Loop27.exit
-	addb $-1, 0(%rax)
-	addb $1, 7(%rax)
-	addb $1, 5(%rax)
-	addb $1, 2(%rax)
-	jmp .main.Loop27
-.main.Loop27.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 7(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 5(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
 	addq $8, %rax
 	jmp .main.Loop28
 .main.Loop28.exit:
@@ -314,26 +404,44 @@ main:
 .main.Loop29.exit:
 
 	addq $7, %rax
-
-.main.Loop30:
-	cmpb $0, (%rax)
-	jz .main.Loop30.exit
-	addb $-1, 0(%rax)
-	addb $1, -7(%rax)
-	jmp .main.Loop30
-.main.Loop30.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -7(%rax)
 	addq $-7, %rax
-
-.main.Loop31:
-	cmpb $0, (%rax)
-	jz .main.Loop31.exit
-	addb $-1, 0(%rax)
-	addb $1, 7(%rax)
-	addb $1, 5(%rax)
-	jmp .main.Loop31
-.main.Loop31.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 7(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 5(%rax)
 	addb $15, 9(%rax)
 	addq $9, %rax
 
@@ -350,86 +458,86 @@ main:
 
 	addb $1, 0(%rax)
 	addq $1, %rax
-
-.main.Loop33:
-	cmpb $0, (%rax)
-	jz .main.Loop33.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop33
-.main.Loop33.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop34:
-	cmpb $0, (%rax)
-	jz .main.Loop34.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop34
-.main.Loop34.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop35:
-	cmpb $0, (%rax)
-	jz .main.Loop35.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop35
-.main.Loop35.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop36:
-	cmpb $0, (%rax)
-	jz .main.Loop36.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop36
-.main.Loop36.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop37:
-	cmpb $0, (%rax)
-	jz .main.Loop37.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop37
-.main.Loop37.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop38:
-	cmpb $0, (%rax)
-	jz .main.Loop38.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop38
-.main.Loop38.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop39:
-	cmpb $0, (%rax)
-	jz .main.Loop39.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop39
-.main.Loop39.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop40:
-	cmpb $0, (%rax)
-	jz .main.Loop40.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop40
-.main.Loop40.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop41:
-	cmpb $0, (%rax)
-	jz .main.Loop41.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop41
-.main.Loop41.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $-9, %rax
 
 .main.Loop42:
@@ -470,15 +578,21 @@ main:
 	jz .main.Loop56.exit
 	addb $-1, 1(%rax)
 	addq $5, %rax
-
-.main.Loop46:
-	cmpb $0, (%rax)
-	jz .main.Loop46.exit
-	addb $-1, 0(%rax)
-	addb $1, -4(%rax)
-	jmp .main.Loop46
-.main.Loop46.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -4(%rax)
 	addq $-4, %rax
 
 .main.Loop51:
@@ -493,26 +607,44 @@ main:
 	jz .main.Loop49.exit
 	addb $-1, 0(%rax)
 	addq $2, %rax
-
-.main.Loop47:
-	cmpb $0, (%rax)
-	jz .main.Loop47.exit
-	addb $-1, 0(%rax)
-	addb $1, -2(%rax)
-	jmp .main.Loop47
-.main.Loop47.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -2(%rax)
 	addq $-2, %rax
-
-.main.Loop48:
-	cmpb $0, (%rax)
-	jz .main.Loop48.exit
-	addb $-1, 0(%rax)
-	addb $1, 2(%rax)
-	addb $1, 4(%rax)
-	jmp .main.Loop48
-.main.Loop48.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 4(%rax)
 	addb $1, 0(%rax)
 	addq $9, %rax
 	jmp .main.Loop49
@@ -545,29 +677,41 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop54.exit
 	addq $1, %rax
-
-.main.Loop53:
-	cmpb $0, (%rax)
-	jz .main.Loop53.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop53
-.main.Loop53.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addq $-10, %rax
 	jmp .main.Loop54
 .main.Loop54.exit:
 
 	addq $1, %rax
-
-.main.Loop55:
-	cmpb $0, (%rax)
-	jz .main.Loop55.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop55
-.main.Loop55.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addb $1, -1(%rax)
 	addq $7, %rax
 	jmp .main.Loop56
@@ -579,14 +723,14 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop62.exit
 	addq $1, %rax
-
-.main.Loop57:
-	cmpb $0, (%rax)
-	jz .main.Loop57.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop57
-.main.Loop57.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $-1, -1(%rax)
 	addq $3, %rax
 
@@ -607,29 +751,41 @@ main:
 .main.Loop58.exit:
 
 	addq $-1, %rax
-
-.main.Loop59:
-	cmpb $0, (%rax)
-	jz .main.Loop59.exit
-	addb $-1, 0(%rax)
-	addb $1, 1(%rax)
-	jmp .main.Loop59
-.main.Loop59.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
 	addq $4, %rax
 	jmp .main.Loop60
 .main.Loop60.exit:
 
 	addq $-3, %rax
-
-.main.Loop61:
-	cmpb $0, (%rax)
-	jz .main.Loop61.exit
-	addb $-1, 0(%rax)
-	addb $1, 3(%rax)
-	jmp .main.Loop61
-.main.Loop61.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 3(%rax)
 	addb $1, -1(%rax)
 	addq $-10, %rax
 	jmp .main.Loop62
@@ -661,15 +817,21 @@ main:
 	jz .main.Loop75.exit
 	addb $-1, 1(%rax)
 	addq $6, %rax
-
-.main.Loop65:
-	cmpb $0, (%rax)
-	jz .main.Loop65.exit
-	addb $-1, 0(%rax)
-	addb $1, -5(%rax)
-	jmp .main.Loop65
-.main.Loop65.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -5(%rax)
 	addq $-5, %rax
 
 .main.Loop70:
@@ -684,26 +846,44 @@ main:
 	jz .main.Loop68.exit
 	addb $-1, 0(%rax)
 	addq $3, %rax
-
-.main.Loop66:
-	cmpb $0, (%rax)
-	jz .main.Loop66.exit
-	addb $-1, 0(%rax)
-	addb $1, -3(%rax)
-	jmp .main.Loop66
-.main.Loop66.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -3(%rax)
 	addq $-3, %rax
-
-.main.Loop67:
-	cmpb $0, (%rax)
-	jz .main.Loop67.exit
-	addb $-1, 0(%rax)
-	addb $1, 3(%rax)
-	addb $1, 4(%rax)
-	jmp .main.Loop67
-.main.Loop67.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 3(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 4(%rax)
 	addb $1, 0(%rax)
 	addq $9, %rax
 	jmp .main.Loop68
@@ -736,29 +916,41 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop73.exit
 	addq $2, %rax
-
-.main.Loop72:
-	cmpb $0, (%rax)
-	jz .main.Loop72.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop72
-.main.Loop72.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addq $-11, %rax
 	jmp .main.Loop73
 .main.Loop73.exit:
 
 	addq $2, %rax
-
-.main.Loop74:
-	cmpb $0, (%rax)
-	jz .main.Loop74.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop74
-.main.Loop74.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addb $1, -2(%rax)
 	addq $6, %rax
 	jmp .main.Loop75
@@ -770,14 +962,14 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop81.exit
 	addq $1, %rax
-
-.main.Loop76:
-	cmpb $0, (%rax)
-	jz .main.Loop76.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop76
-.main.Loop76.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $-1, -1(%rax)
 	addq $3, %rax
 
@@ -798,29 +990,41 @@ main:
 .main.Loop77.exit:
 
 	addq $-1, %rax
-
-.main.Loop78:
-	cmpb $0, (%rax)
-	jz .main.Loop78.exit
-	addb $-1, 0(%rax)
-	addb $1, 1(%rax)
-	jmp .main.Loop78
-.main.Loop78.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
 	addq $4, %rax
 	jmp .main.Loop79
 .main.Loop79.exit:
 
 	addq $-3, %rax
-
-.main.Loop80:
-	cmpb $0, (%rax)
-	jz .main.Loop80.exit
-	addb $-1, 0(%rax)
-	addb $1, 3(%rax)
-	jmp .main.Loop80
-.main.Loop80.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 3(%rax)
 	addb $1, -1(%rax)
 	addq $-10, %rax
 	jmp .main.Loop81
@@ -832,15 +1036,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop83.exit
 	addq $4, %rax
-
-.main.Loop82:
-	cmpb $0, (%rax)
-	jz .main.Loop82.exit
-	addb $-1, 0(%rax)
-	addb $1, -36(%rax)
-	jmp .main.Loop82
-.main.Loop82.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -36(%rax)
 	addq $5, %rax
 	jmp .main.Loop83
 .main.Loop83.exit:
@@ -900,15 +1110,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop106.exit
 	addq $3, %rax
-
-.main.Loop89:
-	cmpb $0, (%rax)
-	jz .main.Loop89.exit
-	addb $-1, 0(%rax)
-	addb $-1, -3(%rax)
-	jmp .main.Loop89
-.main.Loop89.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -3(%rax)
 	addb $1, 0(%rax)
 	addq $-3, %rax
 
@@ -918,15 +1134,21 @@ main:
 	addb $-1, 0(%rax)
 	addb $-1, 3(%rax)
 	addq $4, %rax
-
-.main.Loop90:
-	cmpb $0, (%rax)
-	jz .main.Loop90.exit
-	addb $-1, 0(%rax)
-	addb $1, -4(%rax)
-	jmp .main.Loop90
-.main.Loop90.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -4(%rax)
 	addq $-4, %rax
 
 .main.Loop94:
@@ -944,14 +1166,14 @@ main:
 .main.Loop91.exit:
 
 	addq $4, %rax
-
-.main.Loop92:
-	cmpb $0, (%rax)
-	jz .main.Loop92.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop92
-.main.Loop92.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $5, %rax
 
@@ -971,15 +1193,21 @@ main:
 
 	addb $1, 0(%rax)
 	addq $4, %rax
-
-.main.Loop96:
-	cmpb $0, (%rax)
-	jz .main.Loop96.exit
-	addb $-1, 0(%rax)
-	addb $-1, -4(%rax)
-	jmp .main.Loop96
-.main.Loop96.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -4(%rax)
 	addb $1, 0(%rax)
 	addq $-4, %rax
 
@@ -989,15 +1217,21 @@ main:
 	addb $-1, 0(%rax)
 	addb $-1, 4(%rax)
 	addq $3, %rax
-
-.main.Loop97:
-	cmpb $0, (%rax)
-	jz .main.Loop97.exit
-	addb $-1, 0(%rax)
-	addb $1, -3(%rax)
-	jmp .main.Loop97
-.main.Loop97.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -3(%rax)
 	addq $-3, %rax
 
 .main.Loop102:
@@ -1015,14 +1249,14 @@ main:
 .main.Loop98.exit:
 
 	addq $3, %rax
-
-.main.Loop99:
-	cmpb $0, (%rax)
-	jz .main.Loop99.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop99
-.main.Loop99.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $6, %rax
 
@@ -1034,14 +1268,14 @@ main:
 .main.Loop100.exit:
 
 	addq $1, %rax
-
-.main.Loop101:
-	cmpb $0, (%rax)
-	jz .main.Loop101.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop101
-.main.Loop101.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $-1, %rax
 	jmp .main.Loop102
@@ -1084,27 +1318,45 @@ main:
 .main.Loop107.exit:
 
 	addq $-7, %rax
-
-.main.Loop108:
-	cmpb $0, (%rax)
-	jz .main.Loop108.exit
-	addb $-1, 0(%rax)
-	addb $1, 1(%rax)
-	addb $-1, 4(%rax)
-	jmp .main.Loop108
-.main.Loop108.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 4(%rax)
 	addb $26, 9(%rax)
 	addq $11, %rax
-
-.main.Loop109:
-	cmpb $0, (%rax)
-	jz .main.Loop109.exit
-	addb $-1, 0(%rax)
-	addb $1, -4(%rax)
-	jmp .main.Loop109
-.main.Loop109.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -4(%rax)
 	addq $-4, %rax
 
 .main.Loop111:
@@ -1113,14 +1365,14 @@ main:
 	addb $-1, 0(%rax)
 	addb $1, 4(%rax)
 	addq $2, %rax
-
-.main.Loop110:
-	cmpb $0, (%rax)
-	jz .main.Loop110.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop110
-.main.Loop110.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $-2, %rax
 	jmp .main.Loop111
 .main.Loop111.exit:
@@ -1140,14 +1392,14 @@ main:
 	addb $1, -1(%rax)
 	addb $1, 3(%rax)
 	addq $1, %rax
-
-.main.Loop112:
-	cmpb $0, (%rax)
-	jz .main.Loop112.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop112
-.main.Loop112.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	jmp .main.Loop113
 .main.Loop113.exit:
 
@@ -1158,16 +1410,28 @@ main:
 	jz .main.Loop115.exit
 	addb $-1, 0(%rax)
 	addq $-2, %rax
-
-.main.Loop114:
-	cmpb $0, (%rax)
-	jz .main.Loop114.exit
-	addb $-1, 0(%rax)
-	addb $1, 1(%rax)
-	addb $-1, 4(%rax)
-	jmp .main.Loop114
-.main.Loop114.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 4(%rax)
 	addq $3, %rax
 	jmp .main.Loop115
 .main.Loop115.exit:
@@ -1178,32 +1442,32 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop119.exit
 	addq $2, %rax
-
-.main.Loop116:
-	cmpb $0, (%rax)
-	jz .main.Loop116.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop116
-.main.Loop116.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop117:
-	cmpb $0, (%rax)
-	jz .main.Loop117.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop117
-.main.Loop117.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop118:
-	cmpb $0, (%rax)
-	jz .main.Loop118.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop118
-.main.Loop118.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $5, %rax
 	jmp .main.Loop119
 .main.Loop119.exit:
@@ -1218,40 +1482,58 @@ main:
 .main.Loop120.exit:
 
 	addq $3, %rax
-
-.main.Loop121:
-	cmpb $0, (%rax)
-	jz .main.Loop121.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop121
-.main.Loop121.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $6, %rax
 
 .main.Loop124:
 	cmpb $0, (%rax)
 	jz .main.Loop124.exit
 	addq $5, %rax
-
-.main.Loop122:
-	cmpb $0, (%rax)
-	jz .main.Loop122.exit
-	addb $-1, 0(%rax)
-	addb $1, -4(%rax)
-	jmp .main.Loop122
-.main.Loop122.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -4(%rax)
 	addq $-4, %rax
-
-.main.Loop123:
-	cmpb $0, (%rax)
-	jz .main.Loop123.exit
-	addb $-1, 0(%rax)
-	addb $1, 4(%rax)
-	addb $1, 1(%rax)
-	jmp .main.Loop123
-.main.Loop123.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 4(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
 	addq $8, %rax
 	jmp .main.Loop124
 .main.Loop124.exit:
@@ -1271,15 +1553,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop127.exit
 	addq $2, %rax
-
-.main.Loop126:
-	cmpb $0, (%rax)
-	jz .main.Loop126.exit
-	addb $-1, 0(%rax)
-	addb $1, -9(%rax)
-	jmp .main.Loop126
-.main.Loop126.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -9(%rax)
 	addq $7, %rax
 	jmp .main.Loop127
 .main.Loop127.exit:
@@ -1309,86 +1597,86 @@ main:
 
 	addb $1, 0(%rax)
 	addq $1, %rax
-
-.main.Loop130:
-	cmpb $0, (%rax)
-	jz .main.Loop130.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop130
-.main.Loop130.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop131:
-	cmpb $0, (%rax)
-	jz .main.Loop131.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop131
-.main.Loop131.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop132:
-	cmpb $0, (%rax)
-	jz .main.Loop132.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop132
-.main.Loop132.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop133:
-	cmpb $0, (%rax)
-	jz .main.Loop133.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop133
-.main.Loop133.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop134:
-	cmpb $0, (%rax)
-	jz .main.Loop134.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop134
-.main.Loop134.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop135:
-	cmpb $0, (%rax)
-	jz .main.Loop135.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop135
-.main.Loop135.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop136:
-	cmpb $0, (%rax)
-	jz .main.Loop136.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop136
-.main.Loop136.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop137:
-	cmpb $0, (%rax)
-	jz .main.Loop137.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop137
-.main.Loop137.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop138:
-	cmpb $0, (%rax)
-	jz .main.Loop138.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop138
-.main.Loop138.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $-9, %rax
 
 .main.Loop139:
@@ -1429,15 +1717,21 @@ main:
 	jz .main.Loop153.exit
 	addb $-1, 1(%rax)
 	addq $6, %rax
-
-.main.Loop143:
-	cmpb $0, (%rax)
-	jz .main.Loop143.exit
-	addb $-1, 0(%rax)
-	addb $1, -5(%rax)
-	jmp .main.Loop143
-.main.Loop143.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -5(%rax)
 	addq $-5, %rax
 
 .main.Loop148:
@@ -1452,26 +1746,44 @@ main:
 	jz .main.Loop146.exit
 	addb $-1, 0(%rax)
 	addq $2, %rax
-
-.main.Loop144:
-	cmpb $0, (%rax)
-	jz .main.Loop144.exit
-	addb $-1, 0(%rax)
-	addb $1, -2(%rax)
-	jmp .main.Loop144
-.main.Loop144.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -2(%rax)
 	addq $-2, %rax
-
-.main.Loop145:
-	cmpb $0, (%rax)
-	jz .main.Loop145.exit
-	addb $-1, 0(%rax)
-	addb $1, 2(%rax)
-	addb $1, 3(%rax)
-	jmp .main.Loop145
-.main.Loop145.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 3(%rax)
 	addb $1, 0(%rax)
 	addq $9, %rax
 	jmp .main.Loop146
@@ -1504,29 +1816,41 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop151.exit
 	addq $1, %rax
-
-.main.Loop150:
-	cmpb $0, (%rax)
-	jz .main.Loop150.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop150
-.main.Loop150.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addq $-10, %rax
 	jmp .main.Loop151
 .main.Loop151.exit:
 
 	addq $1, %rax
-
-.main.Loop152:
-	cmpb $0, (%rax)
-	jz .main.Loop152.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop152
-.main.Loop152.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addb $1, -1(%rax)
 	addq $7, %rax
 	jmp .main.Loop153
@@ -1538,14 +1862,14 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop159.exit
 	addq $1, %rax
-
-.main.Loop154:
-	cmpb $0, (%rax)
-	jz .main.Loop154.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop154
-.main.Loop154.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $-1, -1(%rax)
 	addq $2, %rax
 
@@ -1566,29 +1890,41 @@ main:
 .main.Loop155.exit:
 
 	addq $-1, %rax
-
-.main.Loop156:
-	cmpb $0, (%rax)
-	jz .main.Loop156.exit
-	addb $-1, 0(%rax)
-	addb $1, 1(%rax)
-	jmp .main.Loop156
-.main.Loop156.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
 	addq $3, %rax
 	jmp .main.Loop157
 .main.Loop157.exit:
 
 	addq $-2, %rax
-
-.main.Loop158:
-	cmpb $0, (%rax)
-	jz .main.Loop158.exit
-	addb $-1, 0(%rax)
-	addb $1, 2(%rax)
-	jmp .main.Loop158
-.main.Loop158.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
 	addb $1, -1(%rax)
 	addq $-10, %rax
 	jmp .main.Loop159
@@ -1600,26 +1936,44 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop162.exit
 	addq $6, %rax
-
-.main.Loop160:
-	cmpb $0, (%rax)
-	jz .main.Loop160.exit
-	addb $-1, 0(%rax)
-	addb $1, -5(%rax)
-	jmp .main.Loop160
-.main.Loop160.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -5(%rax)
 	addq $-5, %rax
-
-.main.Loop161:
-	cmpb $0, (%rax)
-	jz .main.Loop161.exit
-	addb $-1, 0(%rax)
-	addb $1, 5(%rax)
-	addb $1, 1(%rax)
-	jmp .main.Loop161
-.main.Loop161.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 5(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
 	addq $8, %rax
 	jmp .main.Loop162
 .main.Loop162.exit:
@@ -1659,15 +2013,21 @@ main:
 	jz .main.Loop176.exit
 	addb $-1, 1(%rax)
 	addq $6, %rax
-
-.main.Loop166:
-	cmpb $0, (%rax)
-	jz .main.Loop166.exit
-	addb $-1, 0(%rax)
-	addb $1, -5(%rax)
-	jmp .main.Loop166
-.main.Loop166.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -5(%rax)
 	addq $-5, %rax
 
 .main.Loop171:
@@ -1682,26 +2042,44 @@ main:
 	jz .main.Loop169.exit
 	addb $-1, 0(%rax)
 	addq $2, %rax
-
-.main.Loop167:
-	cmpb $0, (%rax)
-	jz .main.Loop167.exit
-	addb $-1, 0(%rax)
-	addb $1, -2(%rax)
-	jmp .main.Loop167
-.main.Loop167.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -2(%rax)
 	addq $-2, %rax
-
-.main.Loop168:
-	cmpb $0, (%rax)
-	jz .main.Loop168.exit
-	addb $-1, 0(%rax)
-	addb $1, 2(%rax)
-	addb $1, 4(%rax)
-	jmp .main.Loop168
-.main.Loop168.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 4(%rax)
 	addb $1, 0(%rax)
 	addq $9, %rax
 	jmp .main.Loop169
@@ -1734,29 +2112,41 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop174.exit
 	addq $1, %rax
-
-.main.Loop173:
-	cmpb $0, (%rax)
-	jz .main.Loop173.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop173
-.main.Loop173.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addq $-10, %rax
 	jmp .main.Loop174
 .main.Loop174.exit:
 
 	addq $1, %rax
-
-.main.Loop175:
-	cmpb $0, (%rax)
-	jz .main.Loop175.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop175
-.main.Loop175.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addb $1, -1(%rax)
 	addq $7, %rax
 	jmp .main.Loop176
@@ -1768,14 +2158,14 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop182.exit
 	addq $1, %rax
-
-.main.Loop177:
-	cmpb $0, (%rax)
-	jz .main.Loop177.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop177
-.main.Loop177.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $-1, -1(%rax)
 	addq $3, %rax
 
@@ -1796,29 +2186,41 @@ main:
 .main.Loop178.exit:
 
 	addq $-1, %rax
-
-.main.Loop179:
-	cmpb $0, (%rax)
-	jz .main.Loop179.exit
-	addb $-1, 0(%rax)
-	addb $1, 1(%rax)
-	jmp .main.Loop179
-.main.Loop179.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
 	addq $4, %rax
 	jmp .main.Loop180
 .main.Loop180.exit:
 
 	addq $-3, %rax
-
-.main.Loop181:
-	cmpb $0, (%rax)
-	jz .main.Loop181.exit
-	addb $-1, 0(%rax)
-	addb $1, 3(%rax)
-	jmp .main.Loop181
-.main.Loop181.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 3(%rax)
 	addb $1, -1(%rax)
 	addq $-10, %rax
 	jmp .main.Loop182
@@ -1830,15 +2232,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop184.exit
 	addq $4, %rax
-
-.main.Loop183:
-	cmpb $0, (%rax)
-	jz .main.Loop183.exit
-	addb $-1, 0(%rax)
-	addb $1, -36(%rax)
-	jmp .main.Loop183
-.main.Loop183.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -36(%rax)
 	addq $5, %rax
 	jmp .main.Loop184
 .main.Loop184.exit:
@@ -1858,15 +2266,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop187.exit
 	addq $3, %rax
-
-.main.Loop186:
-	cmpb $0, (%rax)
-	jz .main.Loop186.exit
-	addb $-1, 0(%rax)
-	addb $1, -36(%rax)
-	jmp .main.Loop186
-.main.Loop186.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -36(%rax)
 	addq $6, %rax
 	jmp .main.Loop187
 .main.Loop187.exit:
@@ -1915,26 +2329,44 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop194.exit
 	addq $8, %rax
-
-.main.Loop192:
-	cmpb $0, (%rax)
-	jz .main.Loop192.exit
-	addb $-1, 0(%rax)
-	addb $1, -7(%rax)
-	jmp .main.Loop192
-.main.Loop192.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -7(%rax)
 	addq $-7, %rax
-
-.main.Loop193:
-	cmpb $0, (%rax)
-	jz .main.Loop193.exit
-	addb $-1, 0(%rax)
-	addb $1, 7(%rax)
-	addb $1, 1(%rax)
-	jmp .main.Loop193
-.main.Loop193.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 7(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
 	addq $8, %rax
 	jmp .main.Loop194
 .main.Loop194.exit:
@@ -1954,14 +2386,14 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop197.exit
 	addq $6, %rax
-
-.main.Loop196:
-	cmpb $0, (%rax)
-	jz .main.Loop196.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop196
-.main.Loop196.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $3, %rax
 	jmp .main.Loop197
 .main.Loop197.exit:
@@ -1977,16 +2409,28 @@ main:
 
 	addb $1, 4(%rax)
 	addq $5, %rax
-
-.main.Loop199:
-	cmpb $0, (%rax)
-	jz .main.Loop199.exit
-	addb $-1, 0(%rax)
-	addb $-1, -1(%rax)
-	addb $1, -5(%rax)
-	jmp .main.Loop199
-.main.Loop199.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -1(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -5(%rax)
 	addq $1, %rax
 
 .main.Loop202:
@@ -1994,26 +2438,44 @@ main:
 	jz .main.Loop202.exit
 	addb $-1, 0(%rax)
 	addq $-6, %rax
-
-.main.Loop200:
-	cmpb $0, (%rax)
-	jz .main.Loop200.exit
-	addb $-1, 0(%rax)
-	addb $1, 5(%rax)
-	addb $2, 4(%rax)
-	jmp .main.Loop200
-.main.Loop200.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 5(%rax)
+	movq $2, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 4(%rax)
 	addq $5, %rax
-
-.main.Loop201:
-	cmpb $0, (%rax)
-	jz .main.Loop201.exit
-	addb $-1, 0(%rax)
-	addb $1, -5(%rax)
-	jmp .main.Loop201
-.main.Loop201.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -5(%rax)
 	addb $-1, -1(%rax)
 	addb $1, 0(%rax)
 	addq $1, %rax
@@ -2021,45 +2483,63 @@ main:
 .main.Loop202.exit:
 
 	addq $-1, %rax
-
-.main.Loop203:
-	cmpb $0, (%rax)
-	jz .main.Loop203.exit
-	addb $-1, 0(%rax)
-	addb $1, 1(%rax)
-	jmp .main.Loop203
-.main.Loop203.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
 	addq $-5, %rax
-
-.main.Loop204:
-	cmpb $0, (%rax)
-	jz .main.Loop204.exit
-	addb $-1, 0(%rax)
-	addb $1, 5(%rax)
-	jmp .main.Loop204
-.main.Loop204.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 5(%rax)
 	addq $6, %rax
-
-.main.Loop205:
-	cmpb $0, (%rax)
-	jz .main.Loop205.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop205
-.main.Loop205.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, -6(%rax)
 	addq $-2, %rax
-
-.main.Loop206:
-	cmpb $0, (%rax)
-	jz .main.Loop206.exit
-	addb $-1, 0(%rax)
-	addb $-1, -4(%rax)
-	jmp .main.Loop206
-.main.Loop206.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -4(%rax)
 	addb $1, 0(%rax)
 	addq $-4, %rax
 
@@ -2074,15 +2554,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop224.exit
 	addq $2, %rax
-
-.main.Loop207:
-	cmpb $0, (%rax)
-	jz .main.Loop207.exit
-	addb $-1, 0(%rax)
-	addb $-1, -2(%rax)
-	jmp .main.Loop207
-.main.Loop207.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -2(%rax)
 	addb $1, 0(%rax)
 	addq $-2, %rax
 
@@ -2092,15 +2578,21 @@ main:
 	addb $-1, 0(%rax)
 	addb $-1, 2(%rax)
 	addq $3, %rax
-
-.main.Loop208:
-	cmpb $0, (%rax)
-	jz .main.Loop208.exit
-	addb $-1, 0(%rax)
-	addb $1, -3(%rax)
-	jmp .main.Loop208
-.main.Loop208.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -3(%rax)
 	addq $-3, %rax
 
 .main.Loop212:
@@ -2118,14 +2610,14 @@ main:
 .main.Loop209.exit:
 
 	addq $3, %rax
-
-.main.Loop210:
-	cmpb $0, (%rax)
-	jz .main.Loop210.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop210
-.main.Loop210.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $6, %rax
 
@@ -2145,15 +2637,21 @@ main:
 
 	addb $1, 0(%rax)
 	addq $3, %rax
-
-.main.Loop214:
-	cmpb $0, (%rax)
-	jz .main.Loop214.exit
-	addb $-1, 0(%rax)
-	addb $-1, -3(%rax)
-	jmp .main.Loop214
-.main.Loop214.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -3(%rax)
 	addb $1, 0(%rax)
 	addq $-3, %rax
 
@@ -2163,15 +2661,21 @@ main:
 	addb $-1, 0(%rax)
 	addb $-1, 3(%rax)
 	addq $2, %rax
-
-.main.Loop215:
-	cmpb $0, (%rax)
-	jz .main.Loop215.exit
-	addb $-1, 0(%rax)
-	addb $1, -2(%rax)
-	jmp .main.Loop215
-.main.Loop215.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -2(%rax)
 	addq $-2, %rax
 
 .main.Loop220:
@@ -2189,14 +2693,14 @@ main:
 .main.Loop216.exit:
 
 	addq $4, %rax
-
-.main.Loop217:
-	cmpb $0, (%rax)
-	jz .main.Loop217.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop217
-.main.Loop217.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $5, %rax
 
@@ -2208,14 +2712,14 @@ main:
 .main.Loop218.exit:
 
 	addq $1, %rax
-
-.main.Loop219:
-	cmpb $0, (%rax)
-	jz .main.Loop219.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop219
-.main.Loop219.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $-1, %rax
 	jmp .main.Loop220
@@ -2258,15 +2762,21 @@ main:
 .main.Loop225.exit:
 
 	addq $4, %rax
-
-.main.Loop226:
-	cmpb $0, (%rax)
-	jz .main.Loop226.exit
-	addb $-1, 0(%rax)
-	addb $1, -4(%rax)
-	jmp .main.Loop226
-.main.Loop226.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -4(%rax)
 	addq $-4, %rax
 
 .main.Loop239:
@@ -2281,25 +2791,37 @@ main:
 	jz .main.Loop229.exit
 	addb $1, 1(%rax)
 	addq $3, %rax
-
-.main.Loop227:
-	cmpb $0, (%rax)
-	jz .main.Loop227.exit
-	addb $-1, 0(%rax)
-	addb $-1, -2(%rax)
-	jmp .main.Loop227
-.main.Loop227.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -2(%rax)
 	addq $-2, %rax
-
-.main.Loop228:
-	cmpb $0, (%rax)
-	jz .main.Loop228.exit
-	addb $-1, 0(%rax)
-	addb $1, 2(%rax)
-	jmp .main.Loop228
-.main.Loop228.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
 	addq $8, %rax
 	jmp .main.Loop229
 .main.Loop229.exit:
@@ -2326,30 +2848,48 @@ main:
 	addb $-1, 4(%rax)
 	addb $1, -10(%rax)
 	addq $1, %rax
-
-.main.Loop230:
-	cmpb $0, (%rax)
-	jz .main.Loop230.exit
-	addb $-1, 0(%rax)
-	addb $1, 3(%rax)
-	jmp .main.Loop230
-.main.Loop230.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 3(%rax)
 	addq $-1, %rax
 	jmp .main.Loop231
 .main.Loop231.exit:
 
 	addq $1, %rax
-
-.main.Loop232:
-	cmpb $0, (%rax)
-	jz .main.Loop232.exit
-	addb $-1, 0(%rax)
-	addb $-1, 3(%rax)
-	addb $1, -11(%rax)
-	jmp .main.Loop232
-.main.Loop232.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 3(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -11(%rax)
 	addq $-2, %rax
 	jmp .main.Loop233
 .main.Loop233.exit:
@@ -2362,57 +2902,81 @@ main:
 	addb $-1, 0(%rax)
 	addb $1, 4(%rax)
 	addq $1, %rax
-
-.main.Loop234:
-	cmpb $0, (%rax)
-	jz .main.Loop234.exit
-	addb $-1, 0(%rax)
-	addb $-1, 3(%rax)
-	addb $1, -11(%rax)
-	jmp .main.Loop234
-.main.Loop234.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 3(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -11(%rax)
 	addq $-1, %rax
 	jmp .main.Loop235
 .main.Loop235.exit:
 
 	addq $1, %rax
-
-.main.Loop236:
-	cmpb $0, (%rax)
-	jz .main.Loop236.exit
-	addb $-1, 0(%rax)
-	addb $1, 3(%rax)
-	jmp .main.Loop236
-.main.Loop236.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 3(%rax)
 	addq $-12, %rax
 	jmp .main.Loop237
 .main.Loop237.exit:
 
 	addq $4, %rax
-
-.main.Loop238:
-	cmpb $0, (%rax)
-	jz .main.Loop238.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop238
-.main.Loop238.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $-4, %rax
 	jmp .main.Loop239
 .main.Loop239.exit:
 
 	addq $3, %rax
-
-.main.Loop240:
-	cmpb $0, (%rax)
-	jz .main.Loop240.exit
-	addb $-1, 0(%rax)
-	addb $1, -3(%rax)
-	jmp .main.Loop240
-.main.Loop240.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -3(%rax)
 	addq $-3, %rax
 
 .main.Loop252:
@@ -2427,25 +2991,37 @@ main:
 	jz .main.Loop243.exit
 	addb $1, 1(%rax)
 	addq $2, %rax
-
-.main.Loop241:
-	cmpb $0, (%rax)
-	jz .main.Loop241.exit
-	addb $-1, 0(%rax)
-	addb $-1, -1(%rax)
-	jmp .main.Loop241
-.main.Loop241.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -1(%rax)
 	addq $-1, %rax
-
-.main.Loop242:
-	cmpb $0, (%rax)
-	jz .main.Loop242.exit
-	addb $-1, 0(%rax)
-	addb $1, 1(%rax)
-	jmp .main.Loop242
-.main.Loop242.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
 	addq $8, %rax
 	jmp .main.Loop243
 .main.Loop243.exit:
@@ -2472,30 +3048,48 @@ main:
 	addb $-1, 3(%rax)
 	addb $1, -11(%rax)
 	addq $-1, %rax
-
-.main.Loop244:
-	cmpb $0, (%rax)
-	jz .main.Loop244.exit
-	addb $-1, 0(%rax)
-	addb $1, 4(%rax)
-	jmp .main.Loop244
-.main.Loop244.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 4(%rax)
 	addq $1, %rax
 	jmp .main.Loop245
 .main.Loop245.exit:
 
 	addq $-1, %rax
-
-.main.Loop246:
-	cmpb $0, (%rax)
-	jz .main.Loop246.exit
-	addb $-1, 0(%rax)
-	addb $-1, 4(%rax)
-	addb $1, -10(%rax)
-	jmp .main.Loop246
-.main.Loop246.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 4(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -10(%rax)
 	addq $-1, %rax
 	jmp .main.Loop247
 .main.Loop247.exit:
@@ -2508,30 +3102,48 @@ main:
 	addb $-1, 0(%rax)
 	addb $1, 3(%rax)
 	addq $-1, %rax
-
-.main.Loop248:
-	cmpb $0, (%rax)
-	jz .main.Loop248.exit
-	addb $-1, 0(%rax)
-	addb $-1, 4(%rax)
-	addb $1, -10(%rax)
-	jmp .main.Loop248
-.main.Loop248.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 4(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -10(%rax)
 	addq $1, %rax
 	jmp .main.Loop249
 .main.Loop249.exit:
 
 	addq $-1, %rax
-
-.main.Loop250:
-	cmpb $0, (%rax)
-	jz .main.Loop250.exit
-	addb $-1, 0(%rax)
-	addb $1, 4(%rax)
-	jmp .main.Loop250
-.main.Loop250.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 4(%rax)
 	addq $-11, %rax
 	jmp .main.Loop251
 .main.Loop251.exit:
@@ -2544,15 +3156,21 @@ main:
 .main.Loop253.exit:
 
 	addq $4, %rax
-
-.main.Loop254:
-	cmpb $0, (%rax)
-	jz .main.Loop254.exit
-	addb $-1, 0(%rax)
-	addb $1, -4(%rax)
-	jmp .main.Loop254
-.main.Loop254.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -4(%rax)
 	addq $-4, %rax
 
 .main.Loop264:
@@ -2590,30 +3208,48 @@ main:
 	addb $-1, 4(%rax)
 	addb $1, -10(%rax)
 	addq $1, %rax
-
-.main.Loop256:
-	cmpb $0, (%rax)
-	jz .main.Loop256.exit
-	addb $-1, 0(%rax)
-	addb $1, 3(%rax)
-	jmp .main.Loop256
-.main.Loop256.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 3(%rax)
 	addq $-1, %rax
 	jmp .main.Loop257
 .main.Loop257.exit:
 
 	addq $1, %rax
-
-.main.Loop258:
-	cmpb $0, (%rax)
-	jz .main.Loop258.exit
-	addb $-1, 0(%rax)
-	addb $-1, 3(%rax)
-	addb $1, -11(%rax)
-	jmp .main.Loop258
-.main.Loop258.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 3(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -11(%rax)
 	addq $-2, %rax
 	jmp .main.Loop259
 .main.Loop259.exit:
@@ -2626,30 +3262,48 @@ main:
 	addb $-1, 0(%rax)
 	addb $1, 4(%rax)
 	addq $1, %rax
-
-.main.Loop260:
-	cmpb $0, (%rax)
-	jz .main.Loop260.exit
-	addb $-1, 0(%rax)
-	addb $-1, 3(%rax)
-	addb $1, -11(%rax)
-	jmp .main.Loop260
-.main.Loop260.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 3(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -11(%rax)
 	addq $-1, %rax
 	jmp .main.Loop261
 .main.Loop261.exit:
 
 	addq $1, %rax
-
-.main.Loop262:
-	cmpb $0, (%rax)
-	jz .main.Loop262.exit
-	addb $-1, 0(%rax)
-	addb $1, 3(%rax)
-	jmp .main.Loop262
-.main.Loop262.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 3(%rax)
 	addq $-12, %rax
 	jmp .main.Loop263
 .main.Loop263.exit:
@@ -2658,55 +3312,55 @@ main:
 .main.Loop264.exit:
 
 	addq $1, %rax
-
-.main.Loop265:
-	cmpb $0, (%rax)
-	jz .main.Loop265.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop265
-.main.Loop265.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $2, %rax
-
-.main.Loop266:
-	cmpb $0, (%rax)
-	jz .main.Loop266.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop266
-.main.Loop266.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop267:
-	cmpb $0, (%rax)
-	jz .main.Loop267.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop267
-.main.Loop267.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $5, %rax
 
 .main.Loop270:
 	cmpb $0, (%rax)
 	jz .main.Loop270.exit
 	addq $2, %rax
-
-.main.Loop268:
-	cmpb $0, (%rax)
-	jz .main.Loop268.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop268
-.main.Loop268.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop269:
-	cmpb $0, (%rax)
-	jz .main.Loop269.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop269
-.main.Loop269.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $6, %rax
 	jmp .main.Loop270
 .main.Loop270.exit:
@@ -2726,26 +3380,44 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop274.exit
 	addq $5, %rax
-
-.main.Loop272:
-	cmpb $0, (%rax)
-	jz .main.Loop272.exit
-	addb $-1, 0(%rax)
-	addb $1, -4(%rax)
-	jmp .main.Loop272
-.main.Loop272.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -4(%rax)
 	addq $-4, %rax
-
-.main.Loop273:
-	cmpb $0, (%rax)
-	jz .main.Loop273.exit
-	addb $-1, 0(%rax)
-	addb $1, 4(%rax)
-	addb $1, 1(%rax)
-	jmp .main.Loop273
-.main.Loop273.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 4(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
 	addq $8, %rax
 	jmp .main.Loop274
 .main.Loop274.exit:
@@ -2775,86 +3447,86 @@ main:
 
 	addb $1, 0(%rax)
 	addq $1, %rax
-
-.main.Loop277:
-	cmpb $0, (%rax)
-	jz .main.Loop277.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop277
-.main.Loop277.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop278:
-	cmpb $0, (%rax)
-	jz .main.Loop278.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop278
-.main.Loop278.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop279:
-	cmpb $0, (%rax)
-	jz .main.Loop279.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop279
-.main.Loop279.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop280:
-	cmpb $0, (%rax)
-	jz .main.Loop280.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop280
-.main.Loop280.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop281:
-	cmpb $0, (%rax)
-	jz .main.Loop281.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop281
-.main.Loop281.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop282:
-	cmpb $0, (%rax)
-	jz .main.Loop282.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop282
-.main.Loop282.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop283:
-	cmpb $0, (%rax)
-	jz .main.Loop283.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop283
-.main.Loop283.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop284:
-	cmpb $0, (%rax)
-	jz .main.Loop284.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop284
-.main.Loop284.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop285:
-	cmpb $0, (%rax)
-	jz .main.Loop285.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop285
-.main.Loop285.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $-9, %rax
 
 .main.Loop286:
@@ -2895,15 +3567,21 @@ main:
 	jz .main.Loop300.exit
 	addb $-1, 1(%rax)
 	addq $5, %rax
-
-.main.Loop290:
-	cmpb $0, (%rax)
-	jz .main.Loop290.exit
-	addb $-1, 0(%rax)
-	addb $1, -4(%rax)
-	jmp .main.Loop290
-.main.Loop290.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -4(%rax)
 	addq $-4, %rax
 
 .main.Loop295:
@@ -2918,26 +3596,44 @@ main:
 	jz .main.Loop293.exit
 	addb $-1, 0(%rax)
 	addq $2, %rax
-
-.main.Loop291:
-	cmpb $0, (%rax)
-	jz .main.Loop291.exit
-	addb $-1, 0(%rax)
-	addb $1, -2(%rax)
-	jmp .main.Loop291
-.main.Loop291.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -2(%rax)
 	addq $-2, %rax
-
-.main.Loop292:
-	cmpb $0, (%rax)
-	jz .main.Loop292.exit
-	addb $-1, 0(%rax)
-	addb $1, 2(%rax)
-	addb $1, 3(%rax)
-	jmp .main.Loop292
-.main.Loop292.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 3(%rax)
 	addb $1, 0(%rax)
 	addq $9, %rax
 	jmp .main.Loop293
@@ -2970,29 +3666,41 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop298.exit
 	addq $1, %rax
-
-.main.Loop297:
-	cmpb $0, (%rax)
-	jz .main.Loop297.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop297
-.main.Loop297.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addq $-10, %rax
 	jmp .main.Loop298
 .main.Loop298.exit:
 
 	addq $1, %rax
-
-.main.Loop299:
-	cmpb $0, (%rax)
-	jz .main.Loop299.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop299
-.main.Loop299.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addb $1, -1(%rax)
 	addq $7, %rax
 	jmp .main.Loop300
@@ -3004,14 +3712,14 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop306.exit
 	addq $1, %rax
-
-.main.Loop301:
-	cmpb $0, (%rax)
-	jz .main.Loop301.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop301
-.main.Loop301.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $-1, -1(%rax)
 	addq $2, %rax
 
@@ -3032,29 +3740,41 @@ main:
 .main.Loop302.exit:
 
 	addq $-1, %rax
-
-.main.Loop303:
-	cmpb $0, (%rax)
-	jz .main.Loop303.exit
-	addb $-1, 0(%rax)
-	addb $1, 1(%rax)
-	jmp .main.Loop303
-.main.Loop303.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
 	addq $3, %rax
 	jmp .main.Loop304
 .main.Loop304.exit:
 
 	addq $-2, %rax
-
-.main.Loop305:
-	cmpb $0, (%rax)
-	jz .main.Loop305.exit
-	addb $-1, 0(%rax)
-	addb $1, 2(%rax)
-	jmp .main.Loop305
-.main.Loop305.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
 	addb $1, -1(%rax)
 	addq $-10, %rax
 	jmp .main.Loop306
@@ -3066,15 +3786,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop308.exit
 	addq $3, %rax
-
-.main.Loop307:
-	cmpb $0, (%rax)
-	jz .main.Loop307.exit
-	addb $-1, 0(%rax)
-	addb $1, -36(%rax)
-	jmp .main.Loop307
-.main.Loop307.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -36(%rax)
 	addq $6, %rax
 	jmp .main.Loop308
 .main.Loop308.exit:
@@ -3089,14 +3815,14 @@ main:
 .main.Loop309.exit:
 
 	addq $5, %rax
-
-.main.Loop310:
-	cmpb $0, (%rax)
-	jz .main.Loop310.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop310
-.main.Loop310.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $15, 4(%rax)
 	addq $4, %rax
 
@@ -3132,15 +3858,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop331.exit
 	addq $3, %rax
-
-.main.Loop314:
-	cmpb $0, (%rax)
-	jz .main.Loop314.exit
-	addb $-1, 0(%rax)
-	addb $-1, -3(%rax)
-	jmp .main.Loop314
-.main.Loop314.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -3(%rax)
 	addb $1, 0(%rax)
 	addq $-3, %rax
 
@@ -3150,15 +3882,21 @@ main:
 	addb $-1, 0(%rax)
 	addb $-1, 3(%rax)
 	addq $4, %rax
-
-.main.Loop315:
-	cmpb $0, (%rax)
-	jz .main.Loop315.exit
-	addb $-1, 0(%rax)
-	addb $1, -4(%rax)
-	jmp .main.Loop315
-.main.Loop315.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -4(%rax)
 	addq $-4, %rax
 
 .main.Loop319:
@@ -3176,14 +3914,14 @@ main:
 .main.Loop316.exit:
 
 	addq $4, %rax
-
-.main.Loop317:
-	cmpb $0, (%rax)
-	jz .main.Loop317.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop317
-.main.Loop317.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $5, %rax
 
@@ -3203,15 +3941,21 @@ main:
 
 	addb $1, 0(%rax)
 	addq $4, %rax
-
-.main.Loop321:
-	cmpb $0, (%rax)
-	jz .main.Loop321.exit
-	addb $-1, 0(%rax)
-	addb $-1, -4(%rax)
-	jmp .main.Loop321
-.main.Loop321.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -4(%rax)
 	addb $1, 0(%rax)
 	addq $-4, %rax
 
@@ -3221,15 +3965,21 @@ main:
 	addb $-1, 0(%rax)
 	addb $-1, 4(%rax)
 	addq $3, %rax
-
-.main.Loop322:
-	cmpb $0, (%rax)
-	jz .main.Loop322.exit
-	addb $-1, 0(%rax)
-	addb $1, -3(%rax)
-	jmp .main.Loop322
-.main.Loop322.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -3(%rax)
 	addq $-3, %rax
 
 .main.Loop327:
@@ -3247,14 +3997,14 @@ main:
 .main.Loop323.exit:
 
 	addq $3, %rax
-
-.main.Loop324:
-	cmpb $0, (%rax)
-	jz .main.Loop324.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop324
-.main.Loop324.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $6, %rax
 
@@ -3266,14 +4016,14 @@ main:
 .main.Loop325.exit:
 
 	addq $1, %rax
-
-.main.Loop326:
-	cmpb $0, (%rax)
-	jz .main.Loop326.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop326
-.main.Loop326.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $-1, %rax
 	jmp .main.Loop327
@@ -3316,15 +4066,21 @@ main:
 .main.Loop332.exit:
 
 	addq $3, %rax
-
-.main.Loop333:
-	cmpb $0, (%rax)
-	jz .main.Loop333.exit
-	addb $-1, 0(%rax)
-	addb $1, -3(%rax)
-	jmp .main.Loop333
-.main.Loop333.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -3(%rax)
 	addq $-3, %rax
 
 .main.Loop345:
@@ -3339,25 +4095,37 @@ main:
 	jz .main.Loop336.exit
 	addb $1, 1(%rax)
 	addq $4, %rax
-
-.main.Loop334:
-	cmpb $0, (%rax)
-	jz .main.Loop334.exit
-	addb $-1, 0(%rax)
-	addb $-1, -3(%rax)
-	jmp .main.Loop334
-.main.Loop334.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -3(%rax)
 	addq $-3, %rax
-
-.main.Loop335:
-	cmpb $0, (%rax)
-	jz .main.Loop335.exit
-	addb $-1, 0(%rax)
-	addb $1, 3(%rax)
-	jmp .main.Loop335
-.main.Loop335.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 3(%rax)
 	addq $8, %rax
 	jmp .main.Loop336
 .main.Loop336.exit:
@@ -3384,30 +4152,48 @@ main:
 	addb $-1, -1(%rax)
 	addb $1, -11(%rax)
 	addq $1, %rax
-
-.main.Loop337:
-	cmpb $0, (%rax)
-	jz .main.Loop337.exit
-	addb $-1, 0(%rax)
-	addb $1, -2(%rax)
-	jmp .main.Loop337
-.main.Loop337.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -2(%rax)
 	addq $-1, %rax
 	jmp .main.Loop338
 .main.Loop338.exit:
 
 	addq $1, %rax
-
-.main.Loop339:
-	cmpb $0, (%rax)
-	jz .main.Loop339.exit
-	addb $-1, 0(%rax)
-	addb $-1, -2(%rax)
-	addb $1, -12(%rax)
-	jmp .main.Loop339
-.main.Loop339.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -2(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -12(%rax)
 	addq $-3, %rax
 	jmp .main.Loop340
 .main.Loop340.exit:
@@ -3420,30 +4206,48 @@ main:
 	addb $-1, 0(%rax)
 	addb $1, -1(%rax)
 	addq $1, %rax
-
-.main.Loop341:
-	cmpb $0, (%rax)
-	jz .main.Loop341.exit
-	addb $-1, 0(%rax)
-	addb $-1, -2(%rax)
-	addb $1, -12(%rax)
-	jmp .main.Loop341
-.main.Loop341.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -2(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -12(%rax)
 	addq $-1, %rax
 	jmp .main.Loop342
 .main.Loop342.exit:
 
 	addq $1, %rax
-
-.main.Loop343:
-	cmpb $0, (%rax)
-	jz .main.Loop343.exit
-	addb $-1, 0(%rax)
-	addb $1, -2(%rax)
-	jmp .main.Loop343
-.main.Loop343.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -2(%rax)
 	addq $-13, %rax
 	jmp .main.Loop344
 .main.Loop344.exit:
@@ -3452,15 +4256,21 @@ main:
 .main.Loop345.exit:
 
 	addq $4, %rax
-
-.main.Loop346:
-	cmpb $0, (%rax)
-	jz .main.Loop346.exit
-	addb $-1, 0(%rax)
-	addb $1, -4(%rax)
-	jmp .main.Loop346
-.main.Loop346.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -4(%rax)
 	addq $-4, %rax
 
 .main.Loop358:
@@ -3475,25 +4285,37 @@ main:
 	jz .main.Loop349.exit
 	addb $1, 1(%rax)
 	addq $3, %rax
-
-.main.Loop347:
-	cmpb $0, (%rax)
-	jz .main.Loop347.exit
-	addb $-1, 0(%rax)
-	addb $-1, -2(%rax)
-	jmp .main.Loop347
-.main.Loop347.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -2(%rax)
 	addq $-2, %rax
-
-.main.Loop348:
-	cmpb $0, (%rax)
-	jz .main.Loop348.exit
-	addb $-1, 0(%rax)
-	addb $1, 2(%rax)
-	jmp .main.Loop348
-.main.Loop348.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
 	addq $8, %rax
 	jmp .main.Loop349
 .main.Loop349.exit:
@@ -3520,30 +4342,48 @@ main:
 	addb $-1, -2(%rax)
 	addb $1, -12(%rax)
 	addq $-1, %rax
-
-.main.Loop350:
-	cmpb $0, (%rax)
-	jz .main.Loop350.exit
-	addb $-1, 0(%rax)
-	addb $1, -1(%rax)
-	jmp .main.Loop350
-.main.Loop350.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -1(%rax)
 	addq $1, %rax
 	jmp .main.Loop351
 .main.Loop351.exit:
 
 	addq $-1, %rax
-
-.main.Loop352:
-	cmpb $0, (%rax)
-	jz .main.Loop352.exit
-	addb $-1, 0(%rax)
-	addb $-1, -1(%rax)
-	addb $1, -11(%rax)
-	jmp .main.Loop352
-.main.Loop352.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -1(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -11(%rax)
 	addq $-2, %rax
 	jmp .main.Loop353
 .main.Loop353.exit:
@@ -3556,30 +4396,48 @@ main:
 	addb $-1, 0(%rax)
 	addb $1, -2(%rax)
 	addq $-1, %rax
-
-.main.Loop354:
-	cmpb $0, (%rax)
-	jz .main.Loop354.exit
-	addb $-1, 0(%rax)
-	addb $-1, -1(%rax)
-	addb $1, -11(%rax)
-	jmp .main.Loop354
-.main.Loop354.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -1(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -11(%rax)
 	addq $1, %rax
 	jmp .main.Loop355
 .main.Loop355.exit:
 
 	addq $-1, %rax
-
-.main.Loop356:
-	cmpb $0, (%rax)
-	jz .main.Loop356.exit
-	addb $-1, 0(%rax)
-	addb $1, -1(%rax)
-	jmp .main.Loop356
-.main.Loop356.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -1(%rax)
 	addq $-12, %rax
 	jmp .main.Loop357
 .main.Loop357.exit:
@@ -3594,32 +4452,32 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop362.exit
 	addq $3, %rax
-
-.main.Loop359:
-	cmpb $0, (%rax)
-	jz .main.Loop359.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop359
-.main.Loop359.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop360:
-	cmpb $0, (%rax)
-	jz .main.Loop360.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop360
-.main.Loop360.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop361:
-	cmpb $0, (%rax)
-	jz .main.Loop361.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop361
-.main.Loop361.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $4, %rax
 	jmp .main.Loop362
 .main.Loop362.exit:
@@ -3634,49 +4492,67 @@ main:
 .main.Loop363.exit:
 
 	addq $3, %rax
-
-.main.Loop364:
-	cmpb $0, (%rax)
-	jz .main.Loop364.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop364
-.main.Loop364.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop365:
-	cmpb $0, (%rax)
-	jz .main.Loop365.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop365
-.main.Loop365.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $5, %rax
 
 .main.Loop368:
 	cmpb $0, (%rax)
 	jz .main.Loop368.exit
 	addq $7, %rax
-
-.main.Loop366:
-	cmpb $0, (%rax)
-	jz .main.Loop366.exit
-	addb $-1, 0(%rax)
-	addb $1, -6(%rax)
-	jmp .main.Loop366
-.main.Loop366.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -6(%rax)
 	addq $-6, %rax
-
-.main.Loop367:
-	cmpb $0, (%rax)
-	jz .main.Loop367.exit
-	addb $-1, 0(%rax)
-	addb $1, 6(%rax)
-	addb $1, 2(%rax)
-	jmp .main.Loop367
-.main.Loop367.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 6(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
 	addq $8, %rax
 	jmp .main.Loop368
 .main.Loop368.exit:
@@ -3692,16 +4568,28 @@ main:
 
 	addb $1, 4(%rax)
 	addq $5, %rax
-
-.main.Loop370:
-	cmpb $0, (%rax)
-	jz .main.Loop370.exit
-	addb $-1, 0(%rax)
-	addb $-1, -1(%rax)
-	addb $1, -5(%rax)
-	jmp .main.Loop370
-.main.Loop370.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -1(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -5(%rax)
 	addq $2, %rax
 
 .main.Loop373:
@@ -3709,26 +4597,44 @@ main:
 	jz .main.Loop373.exit
 	addb $-1, 0(%rax)
 	addq $-7, %rax
-
-.main.Loop371:
-	cmpb $0, (%rax)
-	jz .main.Loop371.exit
-	addb $-1, 0(%rax)
-	addb $1, 5(%rax)
-	addb $2, 4(%rax)
-	jmp .main.Loop371
-.main.Loop371.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 5(%rax)
+	movq $2, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 4(%rax)
 	addq $5, %rax
-
-.main.Loop372:
-	cmpb $0, (%rax)
-	jz .main.Loop372.exit
-	addb $-1, 0(%rax)
-	addb $1, -5(%rax)
-	jmp .main.Loop372
-.main.Loop372.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -5(%rax)
 	addb $-1, -1(%rax)
 	addb $1, 0(%rax)
 	addq $2, %rax
@@ -3736,36 +4642,54 @@ main:
 .main.Loop373.exit:
 
 	addq $-2, %rax
-
-.main.Loop374:
-	cmpb $0, (%rax)
-	jz .main.Loop374.exit
-	addb $-1, 0(%rax)
-	addb $1, 2(%rax)
-	jmp .main.Loop374
-.main.Loop374.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
 	addq $-5, %rax
-
-.main.Loop375:
-	cmpb $0, (%rax)
-	jz .main.Loop375.exit
-	addb $-1, 0(%rax)
-	addb $1, 5(%rax)
-	jmp .main.Loop375
-.main.Loop375.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 5(%rax)
 	addb $1, 0(%rax)
 	addq $4, %rax
-
-.main.Loop376:
-	cmpb $0, (%rax)
-	jz .main.Loop376.exit
-	addb $-1, 0(%rax)
-	addb $-1, -4(%rax)
-	jmp .main.Loop376
-.main.Loop376.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -4(%rax)
 	addb $1, 0(%rax)
 	addq $-4, %rax
 
@@ -3780,15 +4704,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop394.exit
 	addq $3, %rax
-
-.main.Loop377:
-	cmpb $0, (%rax)
-	jz .main.Loop377.exit
-	addb $-1, 0(%rax)
-	addb $-1, -3(%rax)
-	jmp .main.Loop377
-.main.Loop377.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -3(%rax)
 	addb $1, 0(%rax)
 	addq $-3, %rax
 
@@ -3798,15 +4728,21 @@ main:
 	addb $-1, 0(%rax)
 	addb $-1, 3(%rax)
 	addq $2, %rax
-
-.main.Loop378:
-	cmpb $0, (%rax)
-	jz .main.Loop378.exit
-	addb $-1, 0(%rax)
-	addb $1, -2(%rax)
-	jmp .main.Loop378
-.main.Loop378.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -2(%rax)
 	addq $-2, %rax
 
 .main.Loop382:
@@ -3824,14 +4760,14 @@ main:
 .main.Loop379.exit:
 
 	addq $4, %rax
-
-.main.Loop380:
-	cmpb $0, (%rax)
-	jz .main.Loop380.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop380
-.main.Loop380.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $5, %rax
 
@@ -3851,15 +4787,21 @@ main:
 
 	addb $1, 0(%rax)
 	addq $2, %rax
-
-.main.Loop384:
-	cmpb $0, (%rax)
-	jz .main.Loop384.exit
-	addb $-1, 0(%rax)
-	addb $-1, -2(%rax)
-	jmp .main.Loop384
-.main.Loop384.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -2(%rax)
 	addb $1, 0(%rax)
 	addq $-2, %rax
 
@@ -3869,15 +4811,21 @@ main:
 	addb $-1, 0(%rax)
 	addb $-1, 2(%rax)
 	addq $3, %rax
-
-.main.Loop385:
-	cmpb $0, (%rax)
-	jz .main.Loop385.exit
-	addb $-1, 0(%rax)
-	addb $1, -3(%rax)
-	jmp .main.Loop385
-.main.Loop385.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -3(%rax)
 	addq $-3, %rax
 
 .main.Loop390:
@@ -3895,14 +4843,14 @@ main:
 .main.Loop386.exit:
 
 	addq $3, %rax
-
-.main.Loop387:
-	cmpb $0, (%rax)
-	jz .main.Loop387.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop387
-.main.Loop387.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $6, %rax
 
@@ -3914,14 +4862,14 @@ main:
 .main.Loop388.exit:
 
 	addq $1, %rax
-
-.main.Loop389:
-	cmpb $0, (%rax)
-	jz .main.Loop389.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop389
-.main.Loop389.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $-1, %rax
 	jmp .main.Loop390
@@ -3964,15 +4912,21 @@ main:
 .main.Loop395.exit:
 
 	addq $3, %rax
-
-.main.Loop396:
-	cmpb $0, (%rax)
-	jz .main.Loop396.exit
-	addb $-1, 0(%rax)
-	addb $1, -3(%rax)
-	jmp .main.Loop396
-.main.Loop396.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -3(%rax)
 	addq $-3, %rax
 
 .main.Loop411:
@@ -3987,25 +4941,37 @@ main:
 	jz .main.Loop399.exit
 	addb $1, 1(%rax)
 	addq $2, %rax
-
-.main.Loop397:
-	cmpb $0, (%rax)
-	jz .main.Loop397.exit
-	addb $-1, 0(%rax)
-	addb $-1, -1(%rax)
-	jmp .main.Loop397
-.main.Loop397.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -1(%rax)
 	addq $-1, %rax
-
-.main.Loop398:
-	cmpb $0, (%rax)
-	jz .main.Loop398.exit
-	addb $-1, 0(%rax)
-	addb $1, 1(%rax)
-	jmp .main.Loop398
-.main.Loop398.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
 	addq $8, %rax
 	jmp .main.Loop399
 .main.Loop399.exit:
@@ -4032,30 +4998,48 @@ main:
 	addb $-1, 2(%rax)
 	addb $1, -11(%rax)
 	addq $-1, %rax
-
-.main.Loop400:
-	cmpb $0, (%rax)
-	jz .main.Loop400.exit
-	addb $-1, 0(%rax)
-	addb $1, 3(%rax)
-	jmp .main.Loop400
-.main.Loop400.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 3(%rax)
 	addq $1, %rax
 	jmp .main.Loop401
 .main.Loop401.exit:
 
 	addq $-1, %rax
-
-.main.Loop402:
-	cmpb $0, (%rax)
-	jz .main.Loop402.exit
-	addb $-1, 0(%rax)
-	addb $-1, 3(%rax)
-	addb $1, -10(%rax)
-	jmp .main.Loop402
-.main.Loop402.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 3(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -10(%rax)
 	addq $-1, %rax
 	jmp .main.Loop403
 .main.Loop403.exit:
@@ -4068,77 +5052,119 @@ main:
 	addb $-1, 0(%rax)
 	addb $1, 2(%rax)
 	addq $-1, %rax
-
-.main.Loop404:
-	cmpb $0, (%rax)
-	jz .main.Loop404.exit
-	addb $-1, 0(%rax)
-	addb $-1, 3(%rax)
-	addb $1, -10(%rax)
-	jmp .main.Loop404
-.main.Loop404.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 3(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -10(%rax)
 	addq $1, %rax
 	jmp .main.Loop405
 .main.Loop405.exit:
 
 	addq $-1, %rax
-
-.main.Loop406:
-	cmpb $0, (%rax)
-	jz .main.Loop406.exit
-	addb $-1, 0(%rax)
-	addb $1, 3(%rax)
-	jmp .main.Loop406
-.main.Loop406.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 3(%rax)
 	addq $-11, %rax
 	jmp .main.Loop407
 .main.Loop407.exit:
 
 	addq $5, %rax
-
-.main.Loop408:
-	cmpb $0, (%rax)
-	jz .main.Loop408.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop408
-.main.Loop408.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $2, %rax
-
-.main.Loop409:
-	cmpb $0, (%rax)
-	jz .main.Loop409.exit
-	addb $-1, 0(%rax)
-	addb $1, -7(%rax)
-	jmp .main.Loop409
-.main.Loop409.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -7(%rax)
 	addq $-7, %rax
-
-.main.Loop410:
-	cmpb $0, (%rax)
-	jz .main.Loop410.exit
-	addb $-1, 0(%rax)
-	addb $1, 7(%rax)
-	addb $1, 5(%rax)
-	jmp .main.Loop410
-.main.Loop410.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 7(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 5(%rax)
 	jmp .main.Loop411
 .main.Loop411.exit:
 
 	addq $4, %rax
-
-.main.Loop412:
-	cmpb $0, (%rax)
-	jz .main.Loop412.exit
-	addb $-1, 0(%rax)
-	addb $1, -4(%rax)
-	jmp .main.Loop412
-.main.Loop412.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -4(%rax)
 	addq $-4, %rax
 
 .main.Loop424:
@@ -4153,25 +5179,37 @@ main:
 	jz .main.Loop415.exit
 	addb $1, 1(%rax)
 	addq $3, %rax
-
-.main.Loop413:
-	cmpb $0, (%rax)
-	jz .main.Loop413.exit
-	addb $-1, 0(%rax)
-	addb $-1, -2(%rax)
-	jmp .main.Loop413
-.main.Loop413.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -2(%rax)
 	addq $-2, %rax
-
-.main.Loop414:
-	cmpb $0, (%rax)
-	jz .main.Loop414.exit
-	addb $-1, 0(%rax)
-	addb $1, 2(%rax)
-	jmp .main.Loop414
-.main.Loop414.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
 	addq $8, %rax
 	jmp .main.Loop415
 .main.Loop415.exit:
@@ -4198,30 +5236,48 @@ main:
 	addb $-1, 3(%rax)
 	addb $1, -10(%rax)
 	addq $1, %rax
-
-.main.Loop416:
-	cmpb $0, (%rax)
-	jz .main.Loop416.exit
-	addb $-1, 0(%rax)
-	addb $1, 2(%rax)
-	jmp .main.Loop416
-.main.Loop416.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
 	addq $-1, %rax
 	jmp .main.Loop417
 .main.Loop417.exit:
 
 	addq $1, %rax
-
-.main.Loop418:
-	cmpb $0, (%rax)
-	jz .main.Loop418.exit
-	addb $-1, 0(%rax)
-	addb $-1, 2(%rax)
-	addb $1, -11(%rax)
-	jmp .main.Loop418
-.main.Loop418.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 2(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -11(%rax)
 	addq $-2, %rax
 	jmp .main.Loop419
 .main.Loop419.exit:
@@ -4234,30 +5290,48 @@ main:
 	addb $-1, 0(%rax)
 	addb $1, 3(%rax)
 	addq $1, %rax
-
-.main.Loop420:
-	cmpb $0, (%rax)
-	jz .main.Loop420.exit
-	addb $-1, 0(%rax)
-	addb $-1, 2(%rax)
-	addb $1, -11(%rax)
-	jmp .main.Loop420
-.main.Loop420.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 2(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -11(%rax)
 	addq $-1, %rax
 	jmp .main.Loop421
 .main.Loop421.exit:
 
 	addq $1, %rax
-
-.main.Loop422:
-	cmpb $0, (%rax)
-	jz .main.Loop422.exit
-	addb $-1, 0(%rax)
-	addb $1, 2(%rax)
-	jmp .main.Loop422
-.main.Loop422.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
 	addq $-12, %rax
 	jmp .main.Loop423
 .main.Loop423.exit:
@@ -4266,28 +5340,34 @@ main:
 .main.Loop424.exit:
 
 	addq $4, %rax
-
-.main.Loop425:
-	cmpb $0, (%rax)
-	jz .main.Loop425.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop425
-.main.Loop425.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $-4, %rax
 	jmp .main.Loop426
 .main.Loop426.exit:
 
 	addq $4, %rax
-
-.main.Loop427:
-	cmpb $0, (%rax)
-	jz .main.Loop427.exit
-	addb $-1, 0(%rax)
-	addb $1, -4(%rax)
-	jmp .main.Loop427
-.main.Loop427.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -4(%rax)
 	addq $-4, %rax
 
 .main.Loop440:
@@ -4296,35 +5376,53 @@ main:
 	addb $-1, 0(%rax)
 	addb $1, 4(%rax)
 	addq $5, %rax
-
-.main.Loop428:
-	cmpb $0, (%rax)
-	jz .main.Loop428.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop428
-.main.Loop428.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $2, %rax
-
-.main.Loop429:
-	cmpb $0, (%rax)
-	jz .main.Loop429.exit
-	addb $-1, 0(%rax)
-	addb $1, -7(%rax)
-	jmp .main.Loop429
-.main.Loop429.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -7(%rax)
 	addq $-7, %rax
-
-.main.Loop430:
-	cmpb $0, (%rax)
-	jz .main.Loop430.exit
-	addb $-1, 0(%rax)
-	addb $1, 7(%rax)
-	addb $1, 5(%rax)
-	jmp .main.Loop430
-.main.Loop430.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 7(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 5(%rax)
 	addq $9, %rax
 
 .main.Loop431:
@@ -4355,30 +5453,48 @@ main:
 	addb $-1, 3(%rax)
 	addb $1, -10(%rax)
 	addq $1, %rax
-
-.main.Loop432:
-	cmpb $0, (%rax)
-	jz .main.Loop432.exit
-	addb $-1, 0(%rax)
-	addb $1, 2(%rax)
-	jmp .main.Loop432
-.main.Loop432.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
 	addq $-1, %rax
 	jmp .main.Loop433
 .main.Loop433.exit:
 
 	addq $1, %rax
-
-.main.Loop434:
-	cmpb $0, (%rax)
-	jz .main.Loop434.exit
-	addb $-1, 0(%rax)
-	addb $-1, 2(%rax)
-	addb $1, -11(%rax)
-	jmp .main.Loop434
-.main.Loop434.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 2(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -11(%rax)
 	addq $-2, %rax
 	jmp .main.Loop435
 .main.Loop435.exit:
@@ -4391,30 +5507,48 @@ main:
 	addb $-1, 0(%rax)
 	addb $1, 3(%rax)
 	addq $1, %rax
-
-.main.Loop436:
-	cmpb $0, (%rax)
-	jz .main.Loop436.exit
-	addb $-1, 0(%rax)
-	addb $-1, 2(%rax)
-	addb $1, -11(%rax)
-	jmp .main.Loop436
-.main.Loop436.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 2(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -11(%rax)
 	addq $-1, %rax
 	jmp .main.Loop437
 .main.Loop437.exit:
 
 	addq $1, %rax
-
-.main.Loop438:
-	cmpb $0, (%rax)
-	jz .main.Loop438.exit
-	addb $-1, 0(%rax)
-	addb $1, 2(%rax)
-	jmp .main.Loop438
-.main.Loop438.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
 	addq $-12, %rax
 	jmp .main.Loop439
 .main.Loop439.exit:
@@ -4428,23 +5562,23 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop443.exit
 	addq $2, %rax
-
-.main.Loop441:
-	cmpb $0, (%rax)
-	jz .main.Loop441.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop441
-.main.Loop441.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop442:
-	cmpb $0, (%rax)
-	jz .main.Loop442.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop442
-.main.Loop442.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $6, %rax
 	jmp .main.Loop443
 .main.Loop443.exit:
@@ -4459,49 +5593,67 @@ main:
 .main.Loop444.exit:
 
 	addq $3, %rax
-
-.main.Loop445:
-	cmpb $0, (%rax)
-	jz .main.Loop445.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop445
-.main.Loop445.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop446:
-	cmpb $0, (%rax)
-	jz .main.Loop446.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop446
-.main.Loop446.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $5, %rax
 
 .main.Loop449:
 	cmpb $0, (%rax)
 	jz .main.Loop449.exit
 	addq $5, %rax
-
-.main.Loop447:
-	cmpb $0, (%rax)
-	jz .main.Loop447.exit
-	addb $-1, 0(%rax)
-	addb $1, -4(%rax)
-	jmp .main.Loop447
-.main.Loop447.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -4(%rax)
 	addq $-4, %rax
-
-.main.Loop448:
-	cmpb $0, (%rax)
-	jz .main.Loop448.exit
-	addb $-1, 0(%rax)
-	addb $1, 4(%rax)
-	addb $1, 1(%rax)
-	jmp .main.Loop448
-.main.Loop448.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 4(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
 	addq $8, %rax
 	jmp .main.Loop449
 .main.Loop449.exit:
@@ -4521,26 +5673,44 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop453.exit
 	addq $6, %rax
-
-.main.Loop451:
-	cmpb $0, (%rax)
-	jz .main.Loop451.exit
-	addb $-1, 0(%rax)
-	addb $1, -5(%rax)
-	jmp .main.Loop451
-.main.Loop451.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -5(%rax)
 	addq $-5, %rax
-
-.main.Loop452:
-	cmpb $0, (%rax)
-	jz .main.Loop452.exit
-	addb $-1, 0(%rax)
-	addb $1, 5(%rax)
-	addb $1, 2(%rax)
-	jmp .main.Loop452
-.main.Loop452.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 5(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
 	addq $8, %rax
 	jmp .main.Loop453
 .main.Loop453.exit:
@@ -4570,86 +5740,86 @@ main:
 
 	addb $1, 0(%rax)
 	addq $1, %rax
-
-.main.Loop456:
-	cmpb $0, (%rax)
-	jz .main.Loop456.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop456
-.main.Loop456.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop457:
-	cmpb $0, (%rax)
-	jz .main.Loop457.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop457
-.main.Loop457.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop458:
-	cmpb $0, (%rax)
-	jz .main.Loop458.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop458
-.main.Loop458.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop459:
-	cmpb $0, (%rax)
-	jz .main.Loop459.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop459
-.main.Loop459.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop460:
-	cmpb $0, (%rax)
-	jz .main.Loop460.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop460
-.main.Loop460.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop461:
-	cmpb $0, (%rax)
-	jz .main.Loop461.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop461
-.main.Loop461.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop462:
-	cmpb $0, (%rax)
-	jz .main.Loop462.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop462
-.main.Loop462.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop463:
-	cmpb $0, (%rax)
-	jz .main.Loop463.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop463
-.main.Loop463.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop464:
-	cmpb $0, (%rax)
-	jz .main.Loop464.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop464
-.main.Loop464.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $-9, %rax
 
 .main.Loop465:
@@ -4690,15 +5860,21 @@ main:
 	jz .main.Loop479.exit
 	addb $-1, 1(%rax)
 	addq $5, %rax
-
-.main.Loop469:
-	cmpb $0, (%rax)
-	jz .main.Loop469.exit
-	addb $-1, 0(%rax)
-	addb $1, -4(%rax)
-	jmp .main.Loop469
-.main.Loop469.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -4(%rax)
 	addq $-4, %rax
 
 .main.Loop474:
@@ -4713,26 +5889,44 @@ main:
 	jz .main.Loop472.exit
 	addb $-1, 0(%rax)
 	addq $2, %rax
-
-.main.Loop470:
-	cmpb $0, (%rax)
-	jz .main.Loop470.exit
-	addb $-1, 0(%rax)
-	addb $1, -2(%rax)
-	jmp .main.Loop470
-.main.Loop470.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -2(%rax)
 	addq $-2, %rax
-
-.main.Loop471:
-	cmpb $0, (%rax)
-	jz .main.Loop471.exit
-	addb $-1, 0(%rax)
-	addb $1, 2(%rax)
-	addb $1, 4(%rax)
-	jmp .main.Loop471
-.main.Loop471.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 4(%rax)
 	addb $1, 0(%rax)
 	addq $9, %rax
 	jmp .main.Loop472
@@ -4765,29 +5959,41 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop477.exit
 	addq $1, %rax
-
-.main.Loop476:
-	cmpb $0, (%rax)
-	jz .main.Loop476.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop476
-.main.Loop476.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addq $-10, %rax
 	jmp .main.Loop477
 .main.Loop477.exit:
 
 	addq $1, %rax
-
-.main.Loop478:
-	cmpb $0, (%rax)
-	jz .main.Loop478.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop478
-.main.Loop478.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addb $1, -1(%rax)
 	addq $7, %rax
 	jmp .main.Loop479
@@ -4799,14 +6005,14 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop485.exit
 	addq $1, %rax
-
-.main.Loop480:
-	cmpb $0, (%rax)
-	jz .main.Loop480.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop480
-.main.Loop480.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $-1, -1(%rax)
 	addq $3, %rax
 
@@ -4827,29 +6033,41 @@ main:
 .main.Loop481.exit:
 
 	addq $-1, %rax
-
-.main.Loop482:
-	cmpb $0, (%rax)
-	jz .main.Loop482.exit
-	addb $-1, 0(%rax)
-	addb $1, 1(%rax)
-	jmp .main.Loop482
-.main.Loop482.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
 	addq $4, %rax
 	jmp .main.Loop483
 .main.Loop483.exit:
 
 	addq $-3, %rax
-
-.main.Loop484:
-	cmpb $0, (%rax)
-	jz .main.Loop484.exit
-	addb $-1, 0(%rax)
-	addb $1, 3(%rax)
-	jmp .main.Loop484
-.main.Loop484.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 3(%rax)
 	addb $1, -1(%rax)
 	addq $-10, %rax
 	jmp .main.Loop485
@@ -4881,15 +6099,21 @@ main:
 	jz .main.Loop498.exit
 	addb $-1, 1(%rax)
 	addq $6, %rax
-
-.main.Loop488:
-	cmpb $0, (%rax)
-	jz .main.Loop488.exit
-	addb $-1, 0(%rax)
-	addb $1, -5(%rax)
-	jmp .main.Loop488
-.main.Loop488.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -5(%rax)
 	addq $-5, %rax
 
 .main.Loop493:
@@ -4904,26 +6128,44 @@ main:
 	jz .main.Loop491.exit
 	addb $-1, 0(%rax)
 	addq $3, %rax
-
-.main.Loop489:
-	cmpb $0, (%rax)
-	jz .main.Loop489.exit
-	addb $-1, 0(%rax)
-	addb $1, -3(%rax)
-	jmp .main.Loop489
-.main.Loop489.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -3(%rax)
 	addq $-3, %rax
-
-.main.Loop490:
-	cmpb $0, (%rax)
-	jz .main.Loop490.exit
-	addb $-1, 0(%rax)
-	addb $1, 3(%rax)
-	addb $1, 4(%rax)
-	jmp .main.Loop490
-.main.Loop490.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 3(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 4(%rax)
 	addb $1, 0(%rax)
 	addq $9, %rax
 	jmp .main.Loop491
@@ -4956,29 +6198,41 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop496.exit
 	addq $2, %rax
-
-.main.Loop495:
-	cmpb $0, (%rax)
-	jz .main.Loop495.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop495
-.main.Loop495.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addq $-11, %rax
 	jmp .main.Loop496
 .main.Loop496.exit:
 
 	addq $2, %rax
-
-.main.Loop497:
-	cmpb $0, (%rax)
-	jz .main.Loop497.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop497
-.main.Loop497.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addb $1, -2(%rax)
 	addq $6, %rax
 	jmp .main.Loop498
@@ -4990,14 +6244,14 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop504.exit
 	addq $1, %rax
-
-.main.Loop499:
-	cmpb $0, (%rax)
-	jz .main.Loop499.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop499
-.main.Loop499.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $-1, -1(%rax)
 	addq $3, %rax
 
@@ -5018,29 +6272,41 @@ main:
 .main.Loop500.exit:
 
 	addq $-1, %rax
-
-.main.Loop501:
-	cmpb $0, (%rax)
-	jz .main.Loop501.exit
-	addb $-1, 0(%rax)
-	addb $1, 1(%rax)
-	jmp .main.Loop501
-.main.Loop501.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
 	addq $4, %rax
 	jmp .main.Loop502
 .main.Loop502.exit:
 
 	addq $-3, %rax
-
-.main.Loop503:
-	cmpb $0, (%rax)
-	jz .main.Loop503.exit
-	addb $-1, 0(%rax)
-	addb $1, 3(%rax)
-	jmp .main.Loop503
-.main.Loop503.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 3(%rax)
 	addb $1, -1(%rax)
 	addq $-10, %rax
 	jmp .main.Loop504
@@ -5052,15 +6318,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop506.exit
 	addq $4, %rax
-
-.main.Loop505:
-	cmpb $0, (%rax)
-	jz .main.Loop505.exit
-	addb $-1, 0(%rax)
-	addb $1, -36(%rax)
-	jmp .main.Loop505
-.main.Loop505.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -36(%rax)
 	addq $5, %rax
 	jmp .main.Loop506
 .main.Loop506.exit:
@@ -5120,15 +6392,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop529.exit
 	addq $3, %rax
-
-.main.Loop512:
-	cmpb $0, (%rax)
-	jz .main.Loop512.exit
-	addb $-1, 0(%rax)
-	addb $-1, -3(%rax)
-	jmp .main.Loop512
-.main.Loop512.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -3(%rax)
 	addb $1, 0(%rax)
 	addq $-3, %rax
 
@@ -5138,15 +6416,21 @@ main:
 	addb $-1, 0(%rax)
 	addb $-1, 3(%rax)
 	addq $4, %rax
-
-.main.Loop513:
-	cmpb $0, (%rax)
-	jz .main.Loop513.exit
-	addb $-1, 0(%rax)
-	addb $1, -4(%rax)
-	jmp .main.Loop513
-.main.Loop513.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -4(%rax)
 	addq $-4, %rax
 
 .main.Loop517:
@@ -5164,14 +6448,14 @@ main:
 .main.Loop514.exit:
 
 	addq $4, %rax
-
-.main.Loop515:
-	cmpb $0, (%rax)
-	jz .main.Loop515.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop515
-.main.Loop515.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $5, %rax
 
@@ -5191,15 +6475,21 @@ main:
 
 	addb $1, 0(%rax)
 	addq $4, %rax
-
-.main.Loop519:
-	cmpb $0, (%rax)
-	jz .main.Loop519.exit
-	addb $-1, 0(%rax)
-	addb $-1, -4(%rax)
-	jmp .main.Loop519
-.main.Loop519.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -4(%rax)
 	addb $1, 0(%rax)
 	addq $-4, %rax
 
@@ -5209,15 +6499,21 @@ main:
 	addb $-1, 0(%rax)
 	addb $-1, 4(%rax)
 	addq $3, %rax
-
-.main.Loop520:
-	cmpb $0, (%rax)
-	jz .main.Loop520.exit
-	addb $-1, 0(%rax)
-	addb $1, -3(%rax)
-	jmp .main.Loop520
-.main.Loop520.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -3(%rax)
 	addq $-3, %rax
 
 .main.Loop525:
@@ -5235,14 +6531,14 @@ main:
 .main.Loop521.exit:
 
 	addq $3, %rax
-
-.main.Loop522:
-	cmpb $0, (%rax)
-	jz .main.Loop522.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop522
-.main.Loop522.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $6, %rax
 
@@ -5254,14 +6550,14 @@ main:
 .main.Loop523.exit:
 
 	addq $1, %rax
-
-.main.Loop524:
-	cmpb $0, (%rax)
-	jz .main.Loop524.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop524
-.main.Loop524.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $-1, %rax
 	jmp .main.Loop525
@@ -5305,15 +6601,21 @@ main:
 
 	addb $-1, 2(%rax)
 	addq $4, %rax
-
-.main.Loop531:
-	cmpb $0, (%rax)
-	jz .main.Loop531.exit
-	addb $-1, 0(%rax)
-	addb $1, -4(%rax)
-	jmp .main.Loop531
-.main.Loop531.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -4(%rax)
 	addq $-4, %rax
 
 .main.Loop533:
@@ -5322,14 +6624,14 @@ main:
 	addb $-1, 0(%rax)
 	addb $1, 4(%rax)
 	addq $2, %rax
-
-.main.Loop532:
-	cmpb $0, (%rax)
-	jz .main.Loop532.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop532
-.main.Loop532.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $-2, %rax
 	jmp .main.Loop533
 .main.Loop533.exit:
@@ -5340,15 +6642,21 @@ main:
 
 	addb $1, -2(%rax)
 	addq $2, %rax
-
-.main.Loop535:
-	cmpb $0, (%rax)
-	jz .main.Loop535.exit
-	addb $-1, 0(%rax)
-	addb $-1, -4(%rax)
-	jmp .main.Loop535
-.main.Loop535.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -4(%rax)
 	addb $1, 0(%rax)
 	addq $-4, %rax
 
@@ -5382,118 +6690,118 @@ main:
 .main.Loop537.exit:
 
 	addq $-3, %rax
-
-.main.Loop538:
-	cmpb $0, (%rax)
-	jz .main.Loop538.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop538
-.main.Loop538.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop539:
-	cmpb $0, (%rax)
-	jz .main.Loop539.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop539
-.main.Loop539.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop540:
-	cmpb $0, (%rax)
-	jz .main.Loop540.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop540
-.main.Loop540.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop541:
-	cmpb $0, (%rax)
-	jz .main.Loop541.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop541
-.main.Loop541.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop542:
-	cmpb $0, (%rax)
-	jz .main.Loop542.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop542
-.main.Loop542.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop543:
-	cmpb $0, (%rax)
-	jz .main.Loop543.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop543
-.main.Loop543.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $3, %rax
 
 .main.Loop550:
 	cmpb $0, (%rax)
 	jz .main.Loop550.exit
 	addq $1, %rax
-
-.main.Loop544:
-	cmpb $0, (%rax)
-	jz .main.Loop544.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop544
-.main.Loop544.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop545:
-	cmpb $0, (%rax)
-	jz .main.Loop545.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop545
-.main.Loop545.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop546:
-	cmpb $0, (%rax)
-	jz .main.Loop546.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop546
-.main.Loop546.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop547:
-	cmpb $0, (%rax)
-	jz .main.Loop547.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop547
-.main.Loop547.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop548:
-	cmpb $0, (%rax)
-	jz .main.Loop548.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop548
-.main.Loop548.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
-
-.main.Loop549:
-	cmpb $0, (%rax)
-	jz .main.Loop549.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop549
-.main.Loop549.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $3, %rax
 	jmp .main.Loop550
 .main.Loop550.exit:
@@ -5513,14 +6821,14 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop553.exit
 	addq $5, %rax
-
-.main.Loop552:
-	cmpb $0, (%rax)
-	jz .main.Loop552.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop552
-.main.Loop552.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $4, %rax
 	jmp .main.Loop553
 .main.Loop553.exit:
@@ -5541,15 +6849,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop556.exit
 	addb $-1, 0(%rax)
-
-.main.Loop555:
-	cmpb $0, (%rax)
-	jz .main.Loop555.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop555
-.main.Loop555.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addq $9, %rax
 	jmp .main.Loop556
 .main.Loop556.exit:
@@ -5566,15 +6880,21 @@ main:
 .main.Loop557.exit:
 
 	addq $7, %rax
-
-.main.Loop558:
-	cmpb $0, (%rax)
-	jz .main.Loop558.exit
-	addb $-1, 0(%rax)
-	addb $1, -7(%rax)
-	jmp .main.Loop558
-.main.Loop558.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -7(%rax)
 	addq $-7, %rax
 
 .main.Loop566:
@@ -5583,14 +6903,14 @@ main:
 	addb $-1, 0(%rax)
 	addb $1, 7(%rax)
 	addq $7, %rax
-
-.main.Loop559:
-	cmpb $0, (%rax)
-	jz .main.Loop559.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop559
-.main.Loop559.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $2, %rax
 
 .main.Loop560:
@@ -5606,15 +6926,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop565.exit
 	addq $7, %rax
-
-.main.Loop561:
-	cmpb $0, (%rax)
-	jz .main.Loop561.exit
-	addb $-1, 0(%rax)
-	addb $1, -6(%rax)
-	jmp .main.Loop561
-.main.Loop561.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -6(%rax)
 	addq $-6, %rax
 
 .main.Loop564:
@@ -5632,14 +6958,14 @@ main:
 .main.Loop562.exit:
 
 	addq $7, %rax
-
-.main.Loop563:
-	cmpb $0, (%rax)
-	jz .main.Loop563.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop563
-.main.Loop563.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $3, %rax
 	jmp .main.Loop564
@@ -5653,15 +6979,21 @@ main:
 .main.Loop566.exit:
 
 	addq $7, %rax
-
-.main.Loop567:
-	cmpb $0, (%rax)
-	jz .main.Loop567.exit
-	addb $-1, 0(%rax)
-	addb $1, -7(%rax)
-	jmp .main.Loop567
-.main.Loop567.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -7(%rax)
 	addq $-7, %rax
 
 .main.Loop581:
@@ -5676,25 +7008,37 @@ main:
 	jz .main.Loop570.exit
 	addb $1, 1(%rax)
 	addq $5, %rax
-
-.main.Loop568:
-	cmpb $0, (%rax)
-	jz .main.Loop568.exit
-	addb $-1, 0(%rax)
-	addb $-1, -4(%rax)
-	jmp .main.Loop568
-.main.Loop568.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -4(%rax)
 	addq $-4, %rax
-
-.main.Loop569:
-	cmpb $0, (%rax)
-	jz .main.Loop569.exit
-	addb $-1, 0(%rax)
-	addb $1, 4(%rax)
-	jmp .main.Loop569
-.main.Loop569.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 4(%rax)
 	addq $8, %rax
 	jmp .main.Loop570
 .main.Loop570.exit:
@@ -5706,15 +7050,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop572.exit
 	addq $5, %rax
-
-.main.Loop571:
-	cmpb $0, (%rax)
-	jz .main.Loop571.exit
-	addb $-1, 0(%rax)
-	addb $1, 2(%rax)
-	jmp .main.Loop571
-.main.Loop571.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
 	addq $-14, %rax
 	jmp .main.Loop572
 .main.Loop572.exit:
@@ -5734,14 +7084,14 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop579.exit
 	addq $1, %rax
-
-.main.Loop574:
-	cmpb $0, (%rax)
-	jz .main.Loop574.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop574
-.main.Loop574.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $-1, -1(%rax)
 	addq $6, %rax
 
@@ -5762,29 +7112,41 @@ main:
 .main.Loop575.exit:
 
 	addq $-1, %rax
-
-.main.Loop576:
-	cmpb $0, (%rax)
-	jz .main.Loop576.exit
-	addb $-1, 0(%rax)
-	addb $1, 1(%rax)
-	jmp .main.Loop576
-.main.Loop576.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
 	addq $7, %rax
 	jmp .main.Loop577
 .main.Loop577.exit:
 
 	addq $-6, %rax
-
-.main.Loop578:
-	cmpb $0, (%rax)
-	jz .main.Loop578.exit
-	addb $-1, 0(%rax)
-	addb $1, 6(%rax)
-	jmp .main.Loop578
-.main.Loop578.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 6(%rax)
 	addb $1, -1(%rax)
 	addq $-10, %rax
 	jmp .main.Loop579
@@ -5792,14 +7154,14 @@ main:
 
 	addb $-1, 7(%rax)
 	addq $3, %rax
-
-.main.Loop580:
-	cmpb $0, (%rax)
-	jz .main.Loop580.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop580
-.main.Loop580.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $-3, %rax
 	jmp .main.Loop581
@@ -5807,15 +7169,21 @@ main:
 
 	addb $1, 0(%rax)
 	addq $7, %rax
-
-.main.Loop582:
-	cmpb $0, (%rax)
-	jz .main.Loop582.exit
-	addb $-1, 0(%rax)
-	addb $-1, -7(%rax)
-	jmp .main.Loop582
-.main.Loop582.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -7(%rax)
 	addb $1, 0(%rax)
 	addq $-7, %rax
 
@@ -5830,15 +7198,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop584.exit
 	addq $5, %rax
-
-.main.Loop583:
-	cmpb $0, (%rax)
-	jz .main.Loop583.exit
-	addb $-1, 0(%rax)
-	addb $1, 2(%rax)
-	jmp .main.Loop583
-.main.Loop583.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
 	addq $4, %rax
 	jmp .main.Loop584
 .main.Loop584.exit:
@@ -5849,14 +7223,14 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop590.exit
 	addq $1, %rax
-
-.main.Loop585:
-	cmpb $0, (%rax)
-	jz .main.Loop585.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop585
-.main.Loop585.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $-1, -1(%rax)
 	addq $6, %rax
 
@@ -5877,29 +7251,41 @@ main:
 .main.Loop586.exit:
 
 	addq $-1, %rax
-
-.main.Loop587:
-	cmpb $0, (%rax)
-	jz .main.Loop587.exit
-	addb $-1, 0(%rax)
-	addb $1, 1(%rax)
-	jmp .main.Loop587
-.main.Loop587.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
 	addq $7, %rax
 	jmp .main.Loop588
 .main.Loop588.exit:
 
 	addq $-6, %rax
-
-.main.Loop589:
-	cmpb $0, (%rax)
-	jz .main.Loop589.exit
-	addb $-1, 0(%rax)
-	addb $1, 6(%rax)
-	jmp .main.Loop589
-.main.Loop589.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 6(%rax)
 	addb $1, -1(%rax)
 	addq $-10, %rax
 	jmp .main.Loop590
@@ -5912,15 +7298,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop592.exit
 	addb $-1, 0(%rax)
-
-.main.Loop591:
-	cmpb $0, (%rax)
-	jz .main.Loop591.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop591
-.main.Loop591.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addq $9, %rax
 	jmp .main.Loop592
 .main.Loop592.exit:
@@ -5941,15 +7333,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop611.exit
 	addq $5, %rax
-
-.main.Loop594:
-	cmpb $0, (%rax)
-	jz .main.Loop594.exit
-	addb $-1, 0(%rax)
-	addb $-1, -5(%rax)
-	jmp .main.Loop594
-.main.Loop594.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -5(%rax)
 	addb $1, 0(%rax)
 	addq $-5, %rax
 
@@ -5959,15 +7357,21 @@ main:
 	addb $-1, 0(%rax)
 	addb $-1, 5(%rax)
 	addq $7, %rax
-
-.main.Loop595:
-	cmpb $0, (%rax)
-	jz .main.Loop595.exit
-	addb $-1, 0(%rax)
-	addb $1, -7(%rax)
-	jmp .main.Loop595
-.main.Loop595.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -7(%rax)
 	addq $-7, %rax
 
 .main.Loop599:
@@ -5985,14 +7389,14 @@ main:
 .main.Loop596.exit:
 
 	addq $4, %rax
-
-.main.Loop597:
-	cmpb $0, (%rax)
-	jz .main.Loop597.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop597
-.main.Loop597.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $5, %rax
 
@@ -6012,15 +7416,21 @@ main:
 
 	addb $1, 0(%rax)
 	addq $7, %rax
-
-.main.Loop601:
-	cmpb $0, (%rax)
-	jz .main.Loop601.exit
-	addb $-1, 0(%rax)
-	addb $-1, -7(%rax)
-	jmp .main.Loop601
-.main.Loop601.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -7(%rax)
 	addb $1, 0(%rax)
 	addq $-7, %rax
 
@@ -6030,15 +7440,21 @@ main:
 	addb $-1, 0(%rax)
 	addb $-1, 7(%rax)
 	addq $5, %rax
-
-.main.Loop602:
-	cmpb $0, (%rax)
-	jz .main.Loop602.exit
-	addb $-1, 0(%rax)
-	addb $1, -5(%rax)
-	jmp .main.Loop602
-.main.Loop602.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -5(%rax)
 	addq $-5, %rax
 
 .main.Loop607:
@@ -6056,14 +7472,14 @@ main:
 .main.Loop603.exit:
 
 	addq $3, %rax
-
-.main.Loop604:
-	cmpb $0, (%rax)
-	jz .main.Loop604.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop604
-.main.Loop604.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $6, %rax
 
@@ -6075,14 +7491,14 @@ main:
 .main.Loop605.exit:
 
 	addq $1, %rax
-
-.main.Loop606:
-	cmpb $0, (%rax)
-	jz .main.Loop606.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop606
-.main.Loop606.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $-1, %rax
 	jmp .main.Loop607
@@ -6125,14 +7541,14 @@ main:
 .main.Loop612.exit:
 
 	addq $4, %rax
-
-.main.Loop613:
-	cmpb $0, (%rax)
-	jz .main.Loop613.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop613
-.main.Loop613.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $5, -3(%rax)
 	addq $-3, %rax
 
@@ -6140,15 +7556,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop615.exit
 	addb $-1, 0(%rax)
-
-.main.Loop614:
-	cmpb $0, (%rax)
-	jz .main.Loop614.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop614
-.main.Loop614.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addq $9, %rax
 	jmp .main.Loop615
 .main.Loop615.exit:
@@ -6181,14 +7603,14 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop620.exit
 	addq $6, %rax
-
-.main.Loop619:
-	cmpb $0, (%rax)
-	jz .main.Loop619.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop619
-.main.Loop619.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $3, %rax
 	jmp .main.Loop620
 .main.Loop620.exit:
@@ -6209,15 +7631,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop623.exit
 	addb $-1, 0(%rax)
-
-.main.Loop622:
-	cmpb $0, (%rax)
-	jz .main.Loop622.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop622
-.main.Loop622.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addq $9, %rax
 	jmp .main.Loop623
 .main.Loop623.exit:
@@ -6234,15 +7662,21 @@ main:
 .main.Loop624.exit:
 
 	addq $8, %rax
-
-.main.Loop625:
-	cmpb $0, (%rax)
-	jz .main.Loop625.exit
-	addb $-1, 0(%rax)
-	addb $1, -8(%rax)
-	jmp .main.Loop625
-.main.Loop625.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -8(%rax)
 	addq $-8, %rax
 
 .main.Loop633:
@@ -6251,14 +7685,14 @@ main:
 	addb $-1, 0(%rax)
 	addb $1, 8(%rax)
 	addq $8, %rax
-
-.main.Loop626:
-	cmpb $0, (%rax)
-	jz .main.Loop626.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop626
-.main.Loop626.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addq $1, %rax
 
 .main.Loop627:
@@ -6274,15 +7708,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop632.exit
 	addq $8, %rax
-
-.main.Loop628:
-	cmpb $0, (%rax)
-	jz .main.Loop628.exit
-	addb $-1, 0(%rax)
-	addb $1, -7(%rax)
-	jmp .main.Loop628
-.main.Loop628.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -7(%rax)
 	addq $-7, %rax
 
 .main.Loop631:
@@ -6300,14 +7740,14 @@ main:
 .main.Loop629.exit:
 
 	addq $8, %rax
-
-.main.Loop630:
-	cmpb $0, (%rax)
-	jz .main.Loop630.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop630
-.main.Loop630.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $2, %rax
 	jmp .main.Loop631
@@ -6321,15 +7761,21 @@ main:
 .main.Loop633.exit:
 
 	addq $8, %rax
-
-.main.Loop634:
-	cmpb $0, (%rax)
-	jz .main.Loop634.exit
-	addb $-1, 0(%rax)
-	addb $1, -8(%rax)
-	jmp .main.Loop634
-.main.Loop634.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -8(%rax)
 	addq $-8, %rax
 
 .main.Loop648:
@@ -6344,25 +7790,37 @@ main:
 	jz .main.Loop637.exit
 	addb $1, 1(%rax)
 	addq $6, %rax
-
-.main.Loop635:
-	cmpb $0, (%rax)
-	jz .main.Loop635.exit
-	addb $-1, 0(%rax)
-	addb $-1, -5(%rax)
-	jmp .main.Loop635
-.main.Loop635.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -5(%rax)
 	addq $-5, %rax
-
-.main.Loop636:
-	cmpb $0, (%rax)
-	jz .main.Loop636.exit
-	addb $-1, 0(%rax)
-	addb $1, 5(%rax)
-	jmp .main.Loop636
-.main.Loop636.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 5(%rax)
 	addq $8, %rax
 	jmp .main.Loop637
 .main.Loop637.exit:
@@ -6374,15 +7832,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop639.exit
 	addq $6, %rax
-
-.main.Loop638:
-	cmpb $0, (%rax)
-	jz .main.Loop638.exit
-	addb $-1, 0(%rax)
-	addb $1, 2(%rax)
-	jmp .main.Loop638
-.main.Loop638.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
 	addq $-15, %rax
 	jmp .main.Loop639
 .main.Loop639.exit:
@@ -6402,14 +7866,14 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop646.exit
 	addq $1, %rax
-
-.main.Loop641:
-	cmpb $0, (%rax)
-	jz .main.Loop641.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop641
-.main.Loop641.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $-1, -1(%rax)
 	addq $7, %rax
 
@@ -6430,29 +7894,41 @@ main:
 .main.Loop642.exit:
 
 	addq $-1, %rax
-
-.main.Loop643:
-	cmpb $0, (%rax)
-	jz .main.Loop643.exit
-	addb $-1, 0(%rax)
-	addb $1, 1(%rax)
-	jmp .main.Loop643
-.main.Loop643.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
 	addq $8, %rax
 	jmp .main.Loop644
 .main.Loop644.exit:
 
 	addq $-7, %rax
-
-.main.Loop645:
-	cmpb $0, (%rax)
-	jz .main.Loop645.exit
-	addb $-1, 0(%rax)
-	addb $1, 7(%rax)
-	jmp .main.Loop645
-.main.Loop645.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 7(%rax)
 	addb $1, -1(%rax)
 	addq $-10, %rax
 	jmp .main.Loop646
@@ -6460,14 +7936,14 @@ main:
 
 	addb $-1, 8(%rax)
 	addq $3, %rax
-
-.main.Loop647:
-	cmpb $0, (%rax)
-	jz .main.Loop647.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop647
-.main.Loop647.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $-3, %rax
 	jmp .main.Loop648
@@ -6475,15 +7951,21 @@ main:
 
 	addb $1, 0(%rax)
 	addq $8, %rax
-
-.main.Loop649:
-	cmpb $0, (%rax)
-	jz .main.Loop649.exit
-	addb $-1, 0(%rax)
-	addb $-1, -8(%rax)
-	jmp .main.Loop649
-.main.Loop649.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -8(%rax)
 	addb $1, 0(%rax)
 	addq $-8, %rax
 
@@ -6498,15 +7980,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop651.exit
 	addq $6, %rax
-
-.main.Loop650:
-	cmpb $0, (%rax)
-	jz .main.Loop650.exit
-	addb $-1, 0(%rax)
-	addb $1, 2(%rax)
-	jmp .main.Loop650
-.main.Loop650.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 2(%rax)
 	addq $3, %rax
 	jmp .main.Loop651
 .main.Loop651.exit:
@@ -6517,14 +8005,14 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop657.exit
 	addq $1, %rax
-
-.main.Loop652:
-	cmpb $0, (%rax)
-	jz .main.Loop652.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop652
-.main.Loop652.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $-1, -1(%rax)
 	addq $7, %rax
 
@@ -6545,29 +8033,41 @@ main:
 .main.Loop653.exit:
 
 	addq $-1, %rax
-
-.main.Loop654:
-	cmpb $0, (%rax)
-	jz .main.Loop654.exit
-	addb $-1, 0(%rax)
-	addb $1, 1(%rax)
-	jmp .main.Loop654
-.main.Loop654.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 1(%rax)
 	addq $8, %rax
 	jmp .main.Loop655
 .main.Loop655.exit:
 
 	addq $-7, %rax
-
-.main.Loop656:
-	cmpb $0, (%rax)
-	jz .main.Loop656.exit
-	addb $-1, 0(%rax)
-	addb $1, 7(%rax)
-	jmp .main.Loop656
-.main.Loop656.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 7(%rax)
 	addb $1, -1(%rax)
 	addq $-10, %rax
 	jmp .main.Loop657
@@ -6580,15 +8080,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop659.exit
 	addb $-1, 0(%rax)
-
-.main.Loop658:
-	cmpb $0, (%rax)
-	jz .main.Loop658.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop658
-.main.Loop658.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addq $9, %rax
 	jmp .main.Loop659
 .main.Loop659.exit:
@@ -6610,15 +8116,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop678.exit
 	addq $6, %rax
-
-.main.Loop661:
-	cmpb $0, (%rax)
-	jz .main.Loop661.exit
-	addb $-1, 0(%rax)
-	addb $-1, -6(%rax)
-	jmp .main.Loop661
-.main.Loop661.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -6(%rax)
 	addb $1, 0(%rax)
 	addq $-6, %rax
 
@@ -6628,15 +8140,21 @@ main:
 	addb $-1, 0(%rax)
 	addb $-1, 6(%rax)
 	addq $8, %rax
-
-.main.Loop662:
-	cmpb $0, (%rax)
-	jz .main.Loop662.exit
-	addb $-1, 0(%rax)
-	addb $1, -8(%rax)
-	jmp .main.Loop662
-.main.Loop662.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -8(%rax)
 	addq $-8, %rax
 
 .main.Loop666:
@@ -6654,14 +8172,14 @@ main:
 .main.Loop663.exit:
 
 	addq $4, %rax
-
-.main.Loop664:
-	cmpb $0, (%rax)
-	jz .main.Loop664.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop664
-.main.Loop664.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $5, %rax
 
@@ -6681,15 +8199,21 @@ main:
 
 	addb $1, 0(%rax)
 	addq $8, %rax
-
-.main.Loop668:
-	cmpb $0, (%rax)
-	jz .main.Loop668.exit
-	addb $-1, 0(%rax)
-	addb $-1, -8(%rax)
-	jmp .main.Loop668
-.main.Loop668.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, -8(%rax)
 	addb $1, 0(%rax)
 	addq $-8, %rax
 
@@ -6699,15 +8223,21 @@ main:
 	addb $-1, 0(%rax)
 	addb $-1, 8(%rax)
 	addq $6, %rax
-
-.main.Loop669:
-	cmpb $0, (%rax)
-	jz .main.Loop669.exit
-	addb $-1, 0(%rax)
-	addb $1, -6(%rax)
-	jmp .main.Loop669
-.main.Loop669.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, -6(%rax)
 	addq $-6, %rax
 
 .main.Loop674:
@@ -6725,14 +8255,14 @@ main:
 .main.Loop670.exit:
 
 	addq $3, %rax
-
-.main.Loop671:
-	cmpb $0, (%rax)
-	jz .main.Loop671.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop671
-.main.Loop671.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $6, %rax
 
@@ -6744,14 +8274,14 @@ main:
 .main.Loop672.exit:
 
 	addq $1, %rax
-
-.main.Loop673:
-	cmpb $0, (%rax)
-	jz .main.Loop673.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop673
-.main.Loop673.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $1, 0(%rax)
 	addq $-1, %rax
 	jmp .main.Loop674
@@ -6794,14 +8324,14 @@ main:
 .main.Loop679.exit:
 
 	addq $4, %rax
-
-.main.Loop680:
-	cmpb $0, (%rax)
-	jz .main.Loop680.exit
-	addb $-1, 0(%rax)
-	jmp .main.Loop680
-.main.Loop680.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
 	addb $5, -3(%rax)
 	addq $-3, %rax
 
@@ -6809,15 +8339,21 @@ main:
 	cmpb $0, (%rax)
 	jz .main.Loop682.exit
 	addb $-1, 0(%rax)
-
-.main.Loop681:
-	cmpb $0, (%rax)
-	jz .main.Loop681.exit
-	addb $-1, 0(%rax)
-	addb $1, 9(%rax)
-	jmp .main.Loop681
-.main.Loop681.exit:
-
+	movzbq (%rax), %r11
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	subq %r10, 0(%rax)
+	movq $1, %r10
+	pushq %rax
+	movzbq %r11b, %rax
+	imulq %r10
+	movzbq %al, %r10
+	popq %rax
+	addq %r10, 9(%rax)
 	addq $9, %rax
 	jmp .main.Loop682
 .main.Loop682.exit:
@@ -6841,7 +8377,7 @@ main:
 .main.Loop685.exit:
 
 .main.Lexit:
-	xorq %rax, %rax
+	movq $0, %rax
 	movq %rbp, %rsp
 	popq %rbp
 	retq

@@ -86,6 +86,8 @@ class BFInstruction(abc.ABC):
 
 # --------------------------------------------------------------------
 class BFIncrement(BFInstruction):
+    """ Single class for Incr/Decr values """
+
     def execute(self, memory : BFMemory):
         memory.increment()
 
@@ -105,12 +107,18 @@ class BFIncrement(BFInstruction):
         """ Changes value for incrementing """
         self.__ptr = new_val
 
+    def asm_instr(self) -> List[str]:
+        """ Returns asm instr for BFIncrement """
+        return [f'\taddb ${self.__value}, {self.__ptr}(%rax)',]
+
     # get the value of the insruction
     value : int = property(lambda self: self.__value)
     ptr : int = property(lambda self: self.__ptr)
 
 # --------------------------------------------------------------------
 class BFPointer(BFInstruction):
+    """ Single class for forward/backward movement """
+
     def execute(self, memory : BFMemory):
         memory.forward()
 
@@ -124,6 +132,10 @@ class BFPointer(BFInstruction):
     def change_val(self, new_val : int) -> None:
         """ Changes value for incrementing """
         self.__value = new_val
+
+    def asm_instr(self) -> List[str]:
+        """ Returns asm instr for BFPointer """
+        return [f'\taddq ${self.__value}, %rax',]
 
     # get the value of the insruction
     value : int = property(lambda self: self.__value)
@@ -179,6 +191,13 @@ class BFPrint(BFInstruction):
         sys.stdout.write(chr(memory.get()))
         sys.stdout.flush()
 
+    def asm_instr(self) -> List[str]:
+        """ Returns asm instr for BFPrint """
+        return [f'\tmovzbq (%rax), %rdi',
+                f'\tpushq %rax',
+                f'\tcallq __bf_print',
+                f'\tpopq %rax',]
+
     def __str__(self) -> str:
         return "Print"
 
@@ -189,6 +208,14 @@ class BFInput(BFInstruction):
         if len(c) == 0:
             raise BFExit
         memory.set(ord(c))
+
+    def asm_instr(self) -> List[str]:
+        """ Returns asm instr for BFPrint """
+        return [f'\tpushq %rax',
+                f'\tcallq __bf_get',
+                f'\tmovzbq %al, %r11',
+                f'\tpopq %rax',
+                f'\tmovb %r11b, (%rax)',]
 
     def __str__(self) -> str:
         return "Input"
