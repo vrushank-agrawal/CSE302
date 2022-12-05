@@ -21,8 +21,8 @@ class Stack:
 
     def scan_loop(self, val: int) -> list:
         """ Aux function to access memchr and memrchr for inf loop """
-        # this is how scan instr should look in my opinion
         assert(abs(val)==1), f'Value for scan loop can only be -1, or 1 not {val} for {self._loop_num}'
+
         instr = [f'\tmovq $0, %rsi',     # compare with 0 in 2nd arg
                  f'\tmovq %rax, %rdi',   # move curr ptr as start dest for 1st arg
                  f'\tlea buffer(%rip), %r8',   # move start address to rdi
@@ -42,20 +42,20 @@ class Stack:
 
     def simplify_loop(self, instr_set : List[BFInstruction]) -> list:
         """ Replace simplifiable loop with straight assignment """
-        new_instr = [f'\tmovzbq (%rax), %r11',]   # n -> r11
+        new_instr = [f'\tmovq (%rax), %r11',]   # n -> r11
         for instr in instr_set:
             # In this architecture, simplifiable loop cannot have non-Incr instr
             if not isinstance(instr, BFIncrement):
                 raise RuntimeError(f"Simplifiable loop cannot have non-incr instr {instr} in {self._loop_num}")
             increment = instr.value
             ptr = instr.ptr
-            if increment > 0: op = "addq"   # if incr then add val at the ptr
+            if increment >= 0: op = "addq"   # if incr then add val at the ptr
             else: op = "subq"               # if decr then sub val at the ptr 
-            new_instr.extend([f'\tmovq ${abs(increment)}, %r10', # x_i -> r8 
+            new_instr.extend([f'\tmovq ${abs(increment)}, %r10', # |x_i| -> r10
                               f'\tpushq %rax',              # save rax
                               f'\tmovzbq %r11b, %rax',      # n -> rax
-                              f'\timulq %r10',              # x_i*n -> rax
-                              f'\tmovzbq %al, %r10',        # store byte res in r8
+                              f'\timulq %r10',              # |x_i*n| -> rax
+                              f'\tmovzbq %al, %r10',        # store byte res in r10
                               f'\tpopq %rax',
                               f'\t{op} %r10, {ptr}(%rax)',  # store final byte val at data ptr
                             ])            
@@ -66,7 +66,7 @@ class Stack:
 
     def start_proc(self) -> list:
         """ Adds initial commands when proc is entered """
-        # We use rax as the temporary to
+        # We use rax as the data pointer temporary
         return [f'\t.bss',
                 f'buffer:',
                 f'\t.zero {self.__buff_size}',
@@ -81,7 +81,6 @@ class Stack:
 
     def end_proc(self) -> list:
         """ Adds final commands to end the proc """
-        # Reset the base pointer to the stack pointer
         return [f'.main.Lexit:',
                 f'\tmovq $0, %rax',     # nullify any output
                 f'\tmovq %rbp, %rsp',   # restore rsp
@@ -103,12 +102,9 @@ class x64ASM:
 
     def create_proc(self) -> None:
         """ Adds start and end proc asm code """
-        # convert brainfuck to asm
-        self.__create_asm(self.__instrs.block)    # create asm with main instr
-        # add initial instr when entering prog
-        self.__asm[:0] = self.__stack.start_proc()
-        # add final instr when exiting proc
-        self.__asm.extend(self.__stack.end_proc())
+        self.__create_asm(self.__instrs.block)      # convert brainfuck to asm
+        self.__asm[:0] = self.__stack.start_proc()  # add initial instr when entering prog
+        self.__asm.extend(self.__stack.end_proc())  # add final instr when exiting proc
 
     # --------------------------------------------------------------------
     # converts the brainfuck instr classes to asm
@@ -162,8 +158,7 @@ def main():
     program = optimizer.block
     asm = x64ASM(program).asm     # store asm instr
 
-    # Save assembly code and create executable
-    fname = fname[:-3]
+    fname = fname[:-3]      # Save assembly code and create executable
     exe_name = fname + '.exe'
     asm_name = fname + '.s'
     instr = "\n".join(asm)
