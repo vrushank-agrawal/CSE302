@@ -48,7 +48,7 @@ class Stack:
 
     def simplify_loop(self, instr_set : List[BFInstruction]) -> list:
         """ Replace simplifiable loop with straight assignment """
-        new_instr = [f'\tmovb (%rax), %r11b',]   # n -> r11
+        new_instr = [f'\tmovzbq (%rax), %r11',]   # n -> r11
         for instr in instr_set:
             # In this architecture, simplifiable loop cannot have non-incr instr
             if not isinstance(instr, BFIncrement):
@@ -80,9 +80,8 @@ class Stack:
                 f'\t.globl main',
                 f'main:',
                 f'\tpushq %rbp',
-                f'\tpushq %rax',
                 f'\tmovq %rsp, %rbp',
-                f'\tlea buffer(%rip), %rax',
+                f'\tleaq buffer(%rip), %rax',
                 ]
 
     def end_proc(self) -> list:
@@ -92,7 +91,6 @@ class Stack:
                 f'\txorq %rax, %rax',   # nullify any output
                 f'\tmovq %rbp, %rsp',   # restore rsp
                 f'\tpopq %rbp',         # restore rbp
-                f'\tpopq %rax',         # restore rax
                 f'\tretq\n']
 
 # ---------------------------------------------------------------------#
@@ -126,7 +124,7 @@ class x64ASM:
             if isinstance(instr, BFIncrement):
                 increment = instr.value
                 ptr = instr.ptr
-                self.__asm.extend([f'\taddq ${increment}, {ptr}(%rax)',])
+                self.__asm.extend([f'\taddb ${increment}, {ptr}(%rax)',])
 
             if isinstance(instr, BFPointer):
                 forward = instr.value
@@ -134,7 +132,7 @@ class x64ASM:
 
             if isinstance(instr, BFPrint):
                 # move first and only arg to last byte in rdi
-                self.__asm.extend([f'\tmovb (%rax), %dil',
+                self.__asm.extend([f'\tmovzbq (%rax), %rdi',
                                     f'\tpushq %rax',
                                     f'\tcallq __bf_print',
                                     f'\tpopq %rax',
@@ -143,7 +141,7 @@ class x64ASM:
             if isinstance(instr, BFInput):
                 self.__asm.extend([f'\tpushq %rax',
                                     f'\tcallq __bf_get',
-                                    f'\tmovq %rax, %r11',
+                                    f'\tmovzbq %al, %r11',
                                     f'\tpopq %rax',
                                     f'\tmovb %r11b, (%rax)',
                                     ])
@@ -164,7 +162,7 @@ class x64ASM:
                     # print("simplifiable loop found")
                     # print(str(instr.simplifiable))
                     pass
-                self.__asm.extend([f'\n.main.Loop{loop_count}:',                                    f'\tpushq %rax',
+                self.__asm.extend([f'\n.main.Loop{loop_count}:',
                                     f'\tcmpb $0, (%rax)',
                                     f'\tjz .main.Loop{loop_count}.exit',
                                     ])
@@ -209,7 +207,7 @@ def main():
         import os
         with open(asm_name, 'w') as afp:
             afp.write(instr)
-        os.system(f'gcc -o {exe_name} {asm_name} helper_func.c')
+        os.system(f'gcc -g -o {exe_name} {asm_name} helper_func.c')
         print(f"Assembly created for {fname}")
     else:       # for submission
         print("-----------asm----------\n")
