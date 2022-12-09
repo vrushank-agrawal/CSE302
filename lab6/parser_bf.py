@@ -215,7 +215,7 @@ class BFInput(BFInstruction):
                 f'\tcallq __bf_get',
                 f'\tmovzbq %al, %r11',
                 f'\tpopq %rax',
-                f'\tmovb %r11b, (%rax)',]
+                f'\tmovq %r11, (%rax)',]
 
     def __str__(self) -> str:
         return "Input"

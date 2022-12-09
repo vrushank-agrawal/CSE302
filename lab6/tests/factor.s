@@ -61,7 +61,7 @@ main:
 	callq __bf_get
 	movzbq %al, %r11
 	popq %rax
-	movb %r11b, (%rax)
+	movq %r11, (%rax)
 	addb $-10, 0(%rax)
 	jmp .main.Loop4
 .main.Loop4.exit:
