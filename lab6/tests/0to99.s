@@ -6,57 +6,53 @@ buffer:
 	.globl main
 main:
 	pushq %rbp
-	pushq %rax
 	movq %rsp, %rbp
-	lea buffer(%rip), %rax
-	addq $10, 0(%rax)
-	addq $48, 1(%rax)
-	addq $10, 2(%rax)
+	leaq buffer(%rip), %rax
+	addb $10, 0(%rax)
+	addb $48, 1(%rax)
+	addb $10, 2(%rax)
 	addq $2, %rax
 
 .main.Loop1:
-	pushq %rax
 	cmpb $0, (%rax)
 	jz .main.Loop1.exit
-	addq $48, 1(%rax)
-	addq $10, 2(%rax)
+	addb $48, 1(%rax)
+	addb $10, 2(%rax)
 	addq $2, %rax
 
 .main.Loop0:
-	pushq %rax
 	cmpb $0, (%rax)
 	jz .main.Loop0.exit
 	addq $-3, %rax
-	movb (%rax), %dil
+	movzbq (%rax), %rdi
 	pushq %rax
 	callq __bf_print
 	popq %rax
 	addq $2, %rax
-	movb (%rax), %dil
+	movzbq (%rax), %rdi
 	pushq %rax
 	callq __bf_print
 	popq %rax
-	addq $1, 0(%rax)
+	addb $1, 0(%rax)
 	addq $-3, %rax
-	movb (%rax), %dil
+	movzbq (%rax), %rdi
 	pushq %rax
 	callq __bf_print
 	popq %rax
-	addq $-1, 4(%rax)
+	addb $-1, 4(%rax)
 	addq $4, %rax
 	jmp .main.Loop0
 .main.Loop0.exit:
 
-	addq $-58, -1(%rax)
-	addq $1, -3(%rax)
-	addq $-1, -2(%rax)
+	addb $-58, -1(%rax)
+	addb $1, -3(%rax)
+	addb $-1, -2(%rax)
 	addq $-2, %rax
 	jmp .main.Loop1
 .main.Loop1.exit:
 
 .main.Lexit:
-	xorq %rax, %rax
+	movq $0, %rax
 	movq %rbp, %rsp
 	popq %rbp
-	popq %rax
 	retq
